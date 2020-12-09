@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/manzo">
+    <Resource auth="Container"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+              maxActive="20"
+              minIdle="2"
+              maxIdle="6"
+              maxWait="-1"
+              name="jdbc/manzo"
+              username="root"
+              password="root"
+              type="javax.sql.DataSource"
+              url="jdbc:mysql://localhost:3306/manzo?useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Rome"
+              testOnBorrow="true"
+              validationQuery="SELECT 1" />
+
+    <Realm className="org.apache.catalina.realm.DataSourceRealm"
+           dataSourceName="jdbc/manzo"
+           localDataSource="true"
+           userTable="utenti" userNameCol="email" userCredCol="pass"
+           userRoleTable="utenti" roleNameCol="ruolo">
+        <CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler"
+                           algorithm="SHA-256"
+                           iterations="1"
+                           saltlenght="0"
+        />
+    </Realm>
+</Context>
+

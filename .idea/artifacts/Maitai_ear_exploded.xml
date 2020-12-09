@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Maitai:ear exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Maitai_ear_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="Maitai/javaeeApplication/javaEEApplication" />
+      <element id="directory" name="web.war">
+        <element id="artifact" artifact-name="Maitai:war exploded" />
+      </element>
+    </root>
+  </artifact>
+</component>
