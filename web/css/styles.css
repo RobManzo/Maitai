@@ -10515,3 +10515,22 @@ section#contact form#contactForm :-ms-input-placeholder {
     width: 124px;
     height: 124px;
 }
+
+.st0{
+  fill: #1c7430;
+
+}
+
+.st0-occupied{
+  fill: #740712;
+}
+
+.st0-selected{
+  fill: #b37904;
+}
+
+.st1:hover{
+  fill: rgba(0, 0, 0, 0.05);
+}
+
+

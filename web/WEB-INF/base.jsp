@@ -20,7 +20,7 @@
 
 <body>
 <!-- Navigation -->
-<%@ include file="/WEB-INF/navbar.jsp"%>s
+<%@ include file="/WEB-INF/navbar.jsp"%>
 
 
 

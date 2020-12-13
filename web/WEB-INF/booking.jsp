@@ -22,19 +22,8 @@
     <!-- Navigation -->
     <%@ include file="/WEB-INF/navbar.jsp"%>
 
-
-    <div class="container align-items-center" id="piantina">
-        <!--iframe src="/Maitai/assets/img/svg/lido.svg" frameborder="0" width="100%" height="100%"></iframe-->
-        <script>
-            window.onload = function () {
-                var s = Snap("#piantina");
-                Snap.load("/Maitai/assets/img/svg/lido.svg", onSVGLoaded );
-
-                function onSVGLoaded( data ){
-                    s.append( data );
-                }
-            }
-        </script>
+    <div class="page-section align-items-center">
+        <div class="align-items-center" id="postazioni"></div>
     </div>
 
     <!-- Footer-->
@@ -51,6 +40,7 @@
     <!-- Core theme JS-->
     <script src="/Maitai/js/scripts.js"></script>
     <script src="/Maitai/js/snap.svg.js"></script>
+    <script src="/Maitai/js/booking.js"></script>
 
 </body>
 
