@@ -17,7 +17,9 @@
     <!-- Core theme CSS (includes Bootstrap) -->
     <link href="/Maitai/css/styles.css" rel="stylesheet" />
     <style>
-
+        #second, #third{
+            display: none;
+        }
     </style>
 
 </head>
@@ -31,68 +33,126 @@
 
         <div class="page-section justify-content-center" style="padding-top: 8rem;">
             <div class="container col-md-4 bg-light p-4 rounded">
+
                 <h5 class="text-center text-light bg-success mb-2 p-2 rounded lead" id="result">Registrazione</h5>
-                <div class="progress-bar bg-danger rounded" role="progressbar" style="width:20%;" id="progressBar">
-                    <b class="lead" id="progressText">Step - 1</b>
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger rounded" role="progressbar" style="width:30%;" id="progressBar">
+                    STEP 1
                 </div>
 
                 <div class="container pt-2">
 
                     <form action="" method="post" id="register">
 
-                        <!-- <div id="first">
-                             <h4 class="text-center bg-primary pt-1 rounded text-light"> Informazioni Personali</h4>
-                             <div class="form-group">
-                                 <label for="nome">Nome</label>
-                                 <input type="text" id="nome" class="form-control" placeholder="Nome">
-                             </div>
+                        <div id="first">
+                            <div class="form-row">
+                                 <div class="form-group col-md-6">
+                                        <label for="nome">Nome</label>
+                                        <input type="text" id="nome" class="form-control" placeholder="Inserisci il tuo nome">
+                                </div>
 
-                             <div class="form-group">
-                                 <label for="cognome">Cognome</label>
-                                 <input type="text" id="cognome" class="form-control" placeholder="Cognome">
-                             </div>
+                                 <div class="form-group col-md-6">
+                                     <label for="cognome">Cognome</label>
+                                     <input type="text" id="cognome" class="form-control" placeholder="Inserisci il tuo cognome">
+                                 </div>
+                            </div>
 
-                             <div class="form-group">
-                                 <label for="birthdate">Data di Nascita</label><br>
-                                 <input type="date" class="form-control" id="birthdate" name="birthdate" min="1900-01-01" max="2020-12-31" pattern="\d{2}/\d{2}/\d{4}" required>
-                                 <div class="valid-feedback">Valido</div>
-                                 <div class="invalid-feedback">Per favore riempi questo campo</div>
-                             </div>
+                            <div class="form-row">
 
-                             <div class="form-group">
-                                 <a href="" class="btn-danger" id="next-1">Avanti</a>
-                             </div>
+                                <div class="form-group col-md-6">
+                                    <label for="birthdate">Data di Nascita</label>
+                                    <input type="date" class="form-control" id="birthdate" name="birthdate" min="1900-01-01" max="2020-12-31" pattern="\d{2}/\d{2}/\d{4}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="codfisc">Codice Fiscale</label>
+                                    <input type="text" id="codfisc" class="form-control" name="codfisc" placeholder="Inserisci Codice Fiscale (CNS)">
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="address">Indirizzo domicilio</label>
+                                    <input type="text" id="address" class="form-control" name="address" placeholder="Via/Piazza - Numero civico">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="prov">Provincia</label>
+                                    <input type="text" id="prov" class="form-control" name="prov" placeholder="es: Palermo">
+                                </div>
+
+                            </div>
+
+                            <div class="form-row justify-content-between">
+                                <div class="form-group col-4"></div>
+                                <div class="form-group col-4">
+                                    <a class="btn btn-danger" id="next-1">Avanti</a>
+                                </div>
+                            </div>
+
                          </div>
-                         -->
 
-                        <!--<div id="second">
-                              <div class="form-group">
-                                  <label for="phone">Numero di cellulare</label>
-                                  <input type="tel" id="phone" name="phone" pattern="[0-9]{9}" required>
-                                  <div class="valid-feedback">Valido</div>
-                                  <div class="invalid-feedback">Inserire un numero di cellulare valido</div>
-                              </div>
+                        <div id="second">
 
-                              <div class="form-group">
-                                  <label for="email">Email</label>
-                                  <input type="email" id="email" name="email" placeholder="Inserire Email" required>
-                                  <div class="valid-feedback">Ok</div>
-                                  <div class="invalid-feedback">Inserire email valida</div>
-                              </div>
-                              -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" class="form-control" name="email" placeholder="Inserire Email">
+                                </div>
 
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" minlength="7" required>
-                            <div class="valid-feedback">Ok</div>
-                            <div class="invalid-feedback">La password deve essere composta da almeno 7 lettere di cui una lettera maiuscola, una minuscola e un numero</div>
+                                <div class="form-group col-md-6">
+                                    <label for="confemail">Conferma Email</label>
+                                    <input type="email" id="confemail" class="form-control" name="confemail" placeholder="Re-Inserire Email">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" class="form-control" name="password">
+                                    <span id="passmess"></span>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="confirmpassword">Conferma Password</label>
+                                    <input type="password" id="confirmpassword" class="form-control" name="confirmpassword">
+                                    <span id="confmess"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="phone">Numero di cellulare</label>
+                                    <input type="tel" id="phone" class="form-control" name="phone" pattern="[0-9]{9}">
+                                </div>
+                            </div>
+
+                            <div class="form-row justify-content-between">
+                                <div class="form-group col-4">
+                                    <a class="btn btn-danger" id="prev-2">Indietro</a>
+                                </div>
+
+                                <div class="form-group col-4">
+                                    <a class="btn btn-danger" id="next-2">Avanti</a>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="form-group">
-                            <label for="confirmpassword">Conferma Password</label>
-                            <input type="password" id="confirmpassword" name="confirmpassword" onkeyup="validator()" required>
+                        <div id="third">
+
+                            <div class="form-row justify-content-between">
+                                <div class="form-group col-4">
+                                    <a class="btn btn-danger" id="prev-3">Indietro</a>
+                                </div>
+
+                                <div class="form-group col-4">
+                                    <a class="btn btn-danger" id="confirm">Confirm</a>
+                                </div>
+                            </div>
+
                         </div>
-                        <!--/div-->
+
                     </form>
 
                 </div>
@@ -105,27 +165,6 @@
     <!-- Footer-->
     <%@ include file="/WEB-INF/footer.jsp"%>
 
-   <!-- <script>
-        function validator() {
-                var valid = $("#register").validate({
-                    rules: {
-                        password: "required",
-                        confirmpassword: {
-                            equalTo: "#password"
-                        }
-                    },
-                    messages: {
-                        password: " Enter Password",
-                        confirmpassword: " Enter Confirm Password Same as Password"
-                    }
-                });
-                if (valid.form()) {
-                    alert('Sucess');
-                }
-        }
-
-    </script>-->
-
     <!-- Bootstrap core JS-->
     <script src="/Maitai/jquery/jquery.min.js"></script>
     <script src="/Maitai/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -136,6 +175,7 @@
     <script src="/Maitai/assets/mail/contact_me.js"></script>
     <!-- Core theme JS-->
     <script src="/Maitai/js/scripts.js"></script>
+    <script src="/Maitai/js/signin.js"></script>
 
 </body>
 

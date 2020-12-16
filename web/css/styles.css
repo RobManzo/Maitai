@@ -10531,6 +10531,13 @@ section#contact form#contactForm :-ms-input-placeholder {
 
 .st1:hover{
   fill: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 }
+
+label{
+  display: block;
+}
+
+
 
 
