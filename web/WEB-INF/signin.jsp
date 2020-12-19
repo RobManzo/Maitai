@@ -60,11 +60,11 @@
 
                             <div class="form-row">
 
-                                <div class="form-group col-md-6">
+                                <!--<div class="form-group col-md-6">
                                     <label for="birthdate">Data di Nascita</label>
                                     <input type="date" class="form-control" id="birthdate" name="birthdate" min="1900-01-01" max="2020-12-31" pattern="\d{2}/\d{2}/\d{4}">
                                     <small></small>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group col-md-6">
                                     <label for="codfisc">Codice Fiscale</label>
@@ -104,13 +104,13 @@
                                 <div class="form-group col-md-6">
                                     <label for="email">Email</label>
                                     <input type="email" id="email" class="form-control" name="email" placeholder="Inserire Email">
-                                    <small></small>
+                                    <small id="emailhelp"></small>
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="confemail">Conferma Email</label>
-                                    <input type="email" id="confemail" class="form-control" name="confemail" placeholder="Re-Inserire Email">
-                                    <small></small>
+                                    <label for="confirmemail">Conferma Email</label>
+                                    <input type="email" id="confirmemail" class="form-control" name="confemail" placeholder="Re-Inserire Email">
+                                    <small id="confemailhelp"></small>
                                 </div>
                             </div>
 
@@ -118,13 +118,14 @@
                                 <div class="form-group col-md-6">
                                     <label for="password">Password</label>
                                     <input type="password" id="password" class="form-control" name="password">
-                                    <small></small>
+                                    <small id="passhelp"></small>
                                 </div>
+
 
                                 <div class="form-group col-md-6">
                                     <label for="confirmpassword">Conferma Password</label>
                                     <input type="password" id="confirmpassword" class="form-control" name="confirmpassword">
-                                    <small></small>
+                                    <small id="confpasshelp"></small>
                                 </div>
                             </div>
 
@@ -132,7 +133,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="phone">Numero di cellulare</label>
                                     <input type="tel" id="phone" class="form-control" name="phone" pattern="[0-9]{9}">
-                                    <small></small>
+                                    <small id="phonehelp"></small>
                                 </div>
                             </div>
 
@@ -142,7 +143,7 @@
                                 </div>
 
                                 <div class="form-group col-4">
-                                    <a class="btn btn-danger disabled" id="next-2">Avanti</a>
+                                    <a class="btn btn-danger" id="next-2">Avanti</a>
                                 </div>
                             </div>
 

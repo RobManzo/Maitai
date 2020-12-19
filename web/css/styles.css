@@ -10545,13 +10545,6 @@ label{
   left: 0;
 }
 
-.form-control.success input{
-  border-color: #1c7430;
-}
-
-.form-control.error input{
-  border-color: #a71d2a;
-}
 
 
 
