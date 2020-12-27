@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Agency - Start Bootstrap Theme</title>
+    <title>Maitai - Index</title>
     <link rel="icon" type="image/x-icon" href="/Maitai/assets/img/favicon.ico" />
     <!-- Font Awesome icons (free version) -->
     <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
@@ -36,8 +36,8 @@
 
 
   <body>
-      <!-- Navigation -->
-      <%@ include file="/WEB-INF/navbar.jsp"%>
+    <!-- Navigation -->
+    <%@ include file="/WEB-INF/navbar.jsp"%>
 
     <!-- Masthead -->
     <header class="masthead">
@@ -55,27 +55,30 @@
           <h2 class="section-heading text-uppercase">I Nostri Servizi</h2>
           <!--<h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
         </div>
+
         <div class="row text-center">
           <div class="col-md-4">
-                            <div class="limit">
-                                 <img class="img-responsive" src="\Maitai\assets\img\beach.png">
-                            </div>
-            <h4 class="my-3">Goditi la riva</h4>
-            <p class="text-muted">Una comodissima postazione dotata di lettino e ombrellone, garantendoti tutta la privacy.</p>
+              <div class="limit">
+                  <img class="img-responsive" src="\Maitai\assets\img\beach.png">
+              </div>
+              <h4 class="my-3">Goditi la riva</h4>
+              <p class="text-muted">Una comodissima postazione dotata di lettino e ombrellone, garantendoti tutta la privacy.</p>
           </div>
+
           <div class="col-md-4">
-                           <div class="limit">
-                                <img class="img-responsive" src="\Maitai\assets\img\drink.png">
-                           </div>
-            <h4 class="my-3">Bar e Ristorazione</h4>
-            <p class="text-muted">I nostri chef e i nostri baristi sono sempre a tua disposizione per qualsiasi tuo desiderio.</p>
+              <div class="limit">
+                  <img class="img-responsive" src="\Maitai\assets\img\drink.png">
+              </div>
+              <h4 class="my-3">Bar e Ristorazione</h4>
+              <p class="text-muted">I nostri chef e i nostri baristi sono sempre a tua disposizione per qualsiasi tuo desiderio.</p>
           </div>
+
           <div class="col-md-4">
-                          <div class="limit">
-                            <img class="img-responsive" src="\Maitai\assets\img\salvagente.png">
-                          </div>
-            <h4 class="my-3">Il nostro Staff</h4>
-            <p class="text-muted">Il nostro personale altamente qualificato ti assicurerà una permanenza indimenticabile.</p>
+              <div class="limit">
+                  <img class="img-responsive" src="\Maitai\assets\img\salvagente.png">
+              </div>
+              <h4 class="my-3">Il nostro Staff</h4>
+              <p class="text-muted">Il nostro personale altamente qualificato ti assicurerà una permanenza indimenticabile.</p>
           </div>
         </div>
       </div>
@@ -84,19 +87,18 @@
 
     <!-- Google Map -->
     <section class="page-section" id="findus">
-      <div class="container">
-        <div class="text-center">
-          <h2 class="section-heading text-uppercase">Dove Siamo</h2>
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Dove Siamo</h2>
+            </div>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d932.200111320649!2d13.332567980815664!3d38.19747577451334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1319e938b2a8432b%3A0xb6afdee4c47ab5d2!2sMondello%20beach!5e0!3m2!1sit!2sit!4v1606302842084!5m2!1sit!2sit" width="auto" height="auto" frameborder="0" style="border:0;" allowfullscreen="0" aria-hidden="false" tabindex="0"></iframe>
+            </div>
         </div>
-        <div class="embed-responsive embed-responsive-16by9">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d932.200111320649!2d13.332567980815664!3d38.19747577451334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1319e938b2a8432b%3A0xb6afdee4c47ab5d2!2sMondello%20beach!5e0!3m2!1sit!2sit!4v1606302842084!5m2!1sit!2sit" width="auto" height="auto" frameborder="0" style="border:0;" allowfullscreen="0" aria-hidden="false" tabindex="0">
-          </iframe>
-        </div>
-      </div>
     </section>
 
     <!-- Footer-->
-    <%@ include file="/WEB-INF/footer.jsp"%>
+   <%@ include file="/WEB-INF/footer.jsp"%>
 
     <!-- Bootstrap core JS-->
     <script src="/Maitai/jquery/jquery.min.js"></script>
@@ -110,4 +112,5 @@
     <script src="/Maitai/js/scripts.js"></script>
 
   </body>
+
 </html>

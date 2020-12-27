@@ -27,7 +27,7 @@
     </div>
 
     <!-- Footer-->
-    <%@ include file="/WEB-INF/footer.jsp"%>
+    <div class="footer"><%@ include file="/WEB-INF/footer.jsp"%></div>
 
     <!-- Bootstrap core JS-->
     <script src="/Maitai/jquery/jquery.min.js"></script>

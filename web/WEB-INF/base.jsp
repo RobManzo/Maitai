@@ -19,24 +19,25 @@
 </head>
 
 <body>
-<!-- Navigation -->
-<%@ include file="/WEB-INF/navbar.jsp"%>
+
+    <!-- Navigation -->
+    <%@ include file="/WEB-INF/navbar.jsp"%>
 
 
 
-<!-- Footer-->
-<%@ include file="/WEB-INF/footer.jsp"%>
+    <!-- Footer-->
+    <div class="footer"><%@ include file="/WEB-INF/footer.jsp"%></div>
 
-<!-- Bootstrap core JS-->
-<script src="/Maitai/jquery/jquery.min.js"></script>
-<script src="/Maitai/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Third party plugin JS-->
-<script src="/Maitai/jquery-easing/jquery.easing.min.js"></script>
-<!-- Contact form JS-->
-<script src="/Maitai/assets/mail/jqBootstrapValidation.js"></script>
-<script src="/Maitai/assets/mail/contact_me.js"></script>
-<!-- Core theme JS-->
-<script src="/Maitai/js/scripts.js"></script>
+    <!-- Bootstrap core JS-->
+    <script src="/Maitai/jquery/jquery.min.js"></script>
+    <script src="/Maitai/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="/Maitai/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Contact form JS-->
+    <script src="/Maitai/assets/mail/jqBootstrapValidation.js"></script>
+    <script src="/Maitai/assets/mail/contact_me.js"></script>
+    <!-- Core theme JS-->
+    <script src="/Maitai/js/scripts.js"></script>
 
 </body>
 
