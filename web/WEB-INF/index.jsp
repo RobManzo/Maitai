@@ -25,15 +25,13 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap) -->
     <link href="/Maitai/css/styles.css" rel="stylesheet" />
-
-    <style>
-      @media (min-width: 992px) {
-        #mainNav {
-          background: transparent;
-        }
-      }
-    </style>
-
+      <style>
+          @media (min-width: 992px) {
+              #mainNav {
+                  background: transparent;
+              }
+          }
+      </style>
 
   <body>
     <!-- Navigation -->

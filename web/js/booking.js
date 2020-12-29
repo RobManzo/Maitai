@@ -1,5 +1,9 @@
 //Script per il caricamento e la gestione della mappa interattiva
 
+var posSelected = [];
+var posOccupied = [];
+
+
 $(document).ready(function () {
     var s = Snap('#postazioni');
 
@@ -36,8 +40,10 @@ $(document).ready(function () {
     });
 
 
-
 });
+function selection() {
+
+}
 
 function load(){
 

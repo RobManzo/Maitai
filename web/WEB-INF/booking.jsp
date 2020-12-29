@@ -18,13 +18,15 @@
     <link href="/Maitai/css/styles.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="pt-5">
     <!-- Navigation -->
-    <%@ include file="/WEB-INF/navbar.jsp"%>
+    <div><%@ include file="/WEB-INF/navbar.jsp"%></div>
 
-    <div class="page-section align-items-center">
-        <div class="align-items-center" id="postazioni"></div>
+    <div class="page-section row">
+        <div class="container container-bg rounded shadow col-md-4 align-items-center py-2" id="postazioni"></div>
+        <div class="container col-md-4 align-items-end pt-4" id="notes"> AO BELO</div>
     </div>
+
 
     <!-- Footer-->
     <div class="footer"><%@ include file="/WEB-INF/footer.jsp"%></div>

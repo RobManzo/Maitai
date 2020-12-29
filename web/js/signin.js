@@ -126,26 +126,77 @@ function checkEmail(){
 };
 
 function checkPass(){
+    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.{8,})");
 
-    if ($('#password').val() == $('#confirmpassword').val() && $('#confirmpassword').val() && $('#password').val()) {
-        $('#passhelp').html('Ok').css('color', 'green');
-        $('#confpasshelp').html('Ok').css('color', 'green');
-        $('#password').removeClass('wrong');
-        $('#confirmpassword').removeClass('wrong');
-        return true;
-
-    } else if (!$('#password').val() || !$('#confirmpassword').val()){
+    if(strongRegex.test($('#password').val()) || $('#password').val() == '') {
         $('#passhelp').html('');
-        $('#confpasshelp').html('');
-        $('#password').removeClass('wrong');
-        $('#confirmpassword').removeClass('wrong');
-        return false;
-    } else {
-        $('#passhelp').html('Le password non coincidono.').css('color', 'red');
-        $('#confpasshelp').html('Le password non coincidono').css('color', 'red');
-        $('#password').addClass('wrong');
-        $('#confirmpassword').addClass('wrong');
-        return false;
+
+        if ($('#password').val() == $('#confirmpassword').val() && $('#confirmpassword').val() && $('#password').val()) {
+            $('#passhelp').html('Ok').css('color', 'green');
+            $('#confpasshelp').html('Ok').css('color', 'green');
+            $('#password').removeClass('wrong');
+            $('#confirmpassword').removeClass('wrong');
+            return true;
+
+        } else if (!$('#password').val() || !$('#confirmpassword').val()) {
+            $('#passhelp').html('');
+            $('#confpasshelp').html('');
+            $('#password').removeClass('wrong');
+            $('#confirmpassword').removeClass('wrong');
+            return false;
+        } else {
+            $('#passhelp').html('Le password non coincidono.').css('color', 'red');
+            $('#confpasshelp').html('Le password non coincidono').css('color', 'red');
+            $('#password').addClass('wrong');
+            $('#confirmpassword').addClass('wrong');
+            return false;
+        }
+    } else{
+        $('#passhelp').html('Usa una password con almeno 8 caratteri, di cui almeno una lettera maiuscola.').css('color', 'red');
     }
+
+};
+
+function submitform(){
+    var nome = $('#nome').val();
+    var cognome = $('#cognome').val();
+    var birthdate = $('#birthdate').val();
+    var codfisc = $('#codfisc').val();
+    var address = $('#address').val();
+    var prov = $('#prov').val();
+    var email = $('#email').val();
+    var password = $('#password').val();
+    var phone = $('#phone').val();
+
+    $.ajax({                            //Da fare
+        url: './signin',
+        dataType: 'json',
+        type: 'post',
+        data: {
+            'Nome': nome,
+            'Cognome': cognome,
+            'Birthdate' : birthdate,
+            'CFiscale' : codfisc,
+            'Indirizzo' : address,
+            'Provincia' : prov,
+            'Email' : email,
+            'Password' : password,
+            'Telefono' : phone,
+        },
+        success: function (data) {
+            var typemessage = data.RESPONSE == 'Confirm'?"alert-success":"alert-danger";
+            // Prenotazione Effettuata o errore con messaggio
+            $('#checkoutModal').modal('hide');
+            reset();
+            load();
+            let text='<div class="row" style="justify-content: center">' +
+                '<div class="alert '+typemessage+' alert-dismissible" role="alert">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>'+ data.MESSAGE +'</div> </div>';
+            $('#message-alert').append(text);
+        },
+        error: function (errorThrown) {
+            console.log(errorThrown);
+        }
+    });
 
 };

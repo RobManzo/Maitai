@@ -10,7 +10,7 @@
 <head> </head>
     <body>
 
-        <footer class="footer py-2">
+        <footer class="footer shadow py-2">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-4 text-lg-left text-light">Copyright © Manzo 2020</div>

@@ -73,7 +73,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="codfisc">Codice Fiscale</label>
-                                    <input type="text" id="codfisc" class="form-control" name="codfisc" placeholder="Inserisci Codice Fiscale (CNS)" onchange="checkCodFisc()">
+                                    <input type="text" id="codfisc" class="form-control" name="codfisc" placeholder="Inserisci Codice Fiscale (CNS)" oninput="checkCodFisc()">
                                     <small></small>
                                 </div>
 
@@ -109,27 +109,27 @@
                                 <div class="form-group col-md-6">
                                     <label for="email">Email</label>
                                     <input type="email" id="email" class="form-control" name="email" placeholder="Inserire Email" onchange="checkEmail()">
-                                    <small id="emailhelp"></small>
+                                    <small class="pb-1" id="emailhelp"></small>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="confirmemail">Conferma Email</label>
                                     <input type="email" id="confirmemail" class="form-control" name="confemail" placeholder="Re-Inserire Email" onchange="checkEmail()">
-                                    <small id="confemailhelp"></small>
+                                    <small class="pb-1" id="confemailhelp"></small>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="password">Password</label>
-                                    <input type="password" id="password" class="form-control" name="password" onchange="checkPass()">
+                                    <input type="password" id="password" class="form-control" name="password" oninput="checkPass()">
                                     <small id="passhelp"></small>
                                 </div>
 
 
                                 <div class="form-group col-md-6">
                                     <label for="confirmpassword">Conferma Password</label>
-                                    <input type="password" id="confirmpassword" class="form-control" name="confirmpassword" onchange="checkPass()">
+                                    <input type="password" id="confirmpassword" class="form-control" name="confirmpassword" oninput="checkPass()">
                                     <small id="confpasshelp"></small>
                                 </div>
                             </div>

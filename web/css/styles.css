@@ -10560,6 +10560,15 @@ label{
   background: #844c04;
 }
 
+small{
+  display: block;
+}
 
+.container-bg{
+  background-image: url("../assets/img/beachbg2.png");
+  width: 100%;
+  height: auto;
+  background-size: cover;
+}
 
 
