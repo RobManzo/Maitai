@@ -63,7 +63,7 @@
 
                             </div>
 
-                            <div class="form-row">
+                            <div class="form-row py-0">
 
                                 <div class="form-group col-md-6">
                                     <label for="birthdate">Data di Nascita</label>

@@ -10545,19 +10545,20 @@ label{
   display: block;
 }
 
-.form-control small{
-  visibility: hidden;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
 .wrong{
   border-color: red;
 }
 
 #result{
   background: #844c04;
+}
+
+.form-group > small{
+  position: absolute;
+  bottom: 0;
+  left: 0.5rem;
+  top: 4.4rem;
+  margin-top: 0.05rem;
 }
 
 small{
@@ -10571,4 +10572,8 @@ small{
   background-size: cover;
 }
 
+.form-group{
+  padding-bottom: 0.05rem;
+  padding-top: 0.05rem;
+}
 

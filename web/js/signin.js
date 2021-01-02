@@ -181,7 +181,7 @@ function submitform(){
             'Provincia' : prov,
             'Email' : email,
             'Password' : password,
-            'Telefono' : phone,
+            'Telefono' : phone
         },
         success: function (data) {
             var typemessage = data.RESPONSE == 'Confirm'?"alert-success":"alert-danger";
