@@ -73,19 +73,20 @@ public class Database {
      * @param password
      * @throws SQLException
      */
-    public static void userSignIn(String nome, String cognome, String email, String codFisc, String telefono, LocalDate dataNasc, String password) throws SQLException{
-        String query1 = "INSERT INTO manzo.utenti (email, password, nome, cognome, codFisc, telefono, dataNasc) " +
-                "VALUES (?, SHA2(?, 256), ?, ?,  ?, ?, ?, ?)";
+    public static void userSignIn(String nome, String cognome, String email, String codFisc, String telefono, LocalDate dataNasc, String password, String indirizzo, String provincia) throws SQLException{
+        String query1 = "INSERT INTO manzo.utenti (email, pass, nome, cognome, codFisc, telefono, dataNasc, ruolo, indirizzo, provincia) " +
+                "VALUES (?, SHA2(?, 256), ?, ?, ?, ?, ?, ?, ?, ?)";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query1)) {
-
-            statement.setString(3, nome);
-            statement.setString(4, cognome);
             statement.setString(1, email);
             statement.setString(2, password);
+            statement.setString(3, nome);
+            statement.setString(4, cognome);
             statement.setString(5, codFisc);
             statement.setString(6, telefono);
             statement.setDate(7, Date.valueOf(dataNasc));
             statement.setString(8, "User");
+            statement.setString(9, indirizzo);
+            statement.setString(10, provincia);
             statement.executeUpdate();
         }
     }
@@ -96,17 +97,19 @@ public class Database {
      * @return
      * @throws SQLException
      */
-    public static boolean checkAlreadyReg(String email) throws SQLException{
-        String query = "SELECT U.email FROM manzo.utenti AS U WHERE u.email=?";
-        boolean res=false;
+
+    public static boolean checkExist(String email, String codfisc) throws SQLException{
+        String query = "SELECT U.email FROM manzo.utenti AS U WHERE u.email=? OR U.codFisc=?";
+        boolean ris=false;
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
+            statement.setString(2, codfisc);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                res = true;
+                ris = true;
             }
             result.close();
-            return res;
+            return ris;
         }
     }
 

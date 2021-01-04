@@ -6,6 +6,7 @@ $(document).ready(function () {
 
     emptyfields1();
     emptyfields2();
+    parseProvince();
 
     $("#next-1").click(function () {
         $("#first").hide();
@@ -125,8 +126,25 @@ function checkEmail(){
     }
 };
 
+/*function checkRegex() {
+    var regex = /^[A-Za-z]+$/;
+
+    $('#nome').on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
+        if(!$('#nome').val().match(regex)){
+            $('#nome').html('');
+        }
+    });
+
+    $('#cognome').on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
+        if(!$('#cognome').val().match(regex)){
+            $('#cognome').val('');
+        }
+    });
+
+}*/
+
 function checkPass(){
-    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.{8,})");
+    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
 
     if(strongRegex.test($('#password').val()) || $('#password').val() == '') {
         $('#passhelp').html('');
@@ -157,16 +175,42 @@ function checkPass(){
 
 };
 
+var dati;
+
+function parseProvince() {
+    $.ajax({
+        url: './assets/misc/comuni.csv',
+        dataType: 'text',
+    }).done(function (data) {
+        var value = data.split("\n");
+        dati = value;
+        $.each(value, function(key, val){
+            console.log(val);
+            document.getElementById("prov").innerHTML +=
+                "<option>" + val + "</option>";
+
+        });
+        /*for(com in value){
+            console.log(com);
+            console.log(value);
+            document.getElementById("prov").innerHTML +=
+                "<option>" + com + "</option>";
+        }*/
+    });
+
+}
+
 function submitform(){
     var nome = $('#nome').val();
     var cognome = $('#cognome').val();
-    var birthdate = $('#birthdate').val();
     var codfisc = $('#codfisc').val();
     var address = $('#address').val();
     var prov = $('#prov').val();
     var email = $('#email').val();
     var password = $('#password').val();
+    var confpass = $('#confirmpassword').val();
     var phone = $('#phone').val();
+    var birthdate = ($('#birthdate').val());
 
     $.ajax({                            //Da fare
         url: './signin',
@@ -181,18 +225,27 @@ function submitform(){
             'Provincia' : prov,
             'Email' : email,
             'Password' : password,
+            'Confpass' : confpass,
             'Telefono' : phone
         },
         success: function (data) {
-            var typemessage = data.RESPONSE == 'Confirm'?"alert-success":"alert-danger";
-            // Prenotazione Effettuata o errore con messaggio
-            $('#checkoutModal').modal('hide');
-            reset();
-            load();
-            let text='<div class="row" style="justify-content: center">' +
-                '<div class="alert '+typemessage+' alert-dismissible" role="alert">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>'+ data.MESSAGE +'</div> </div>';
-            $('#message-alert').append(text);
+            var text ='<div class="row" style="justify-content: center">' +
+                '<div class="alert ' + ' alert-dismissible" role="alert">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>'+ data.Message +'</div> </div>';
+
+            if(data.RESPONSE == 'Correct'){
+                $('#progressBar').css("width", "100%").removeClass('bg-danger').addClass('bg-success').html("COMPLETE");
+                $('#response').html(text);
+                setTimeout(function(){
+                    window.location.href = './';
+                }, 10000);
+            }  else{
+                $('#progressBar').css("width", "100%").html("ERROR");
+                $('#response').html(text);
+                setTimeout(function(){
+                    window.location.href = './signin';
+                }, 10000);
+            }
         },
         error: function (errorThrown) {
             console.log(errorThrown);

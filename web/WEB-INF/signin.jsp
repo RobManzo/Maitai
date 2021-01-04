@@ -51,7 +51,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="nome">Nome</label>
-                                    <input type="text" id="nome" class="form-control" placeholder="Inserisci il tuo nome"/>
+                                    <input type="text" id="nome" class="form-control" placeholder="Inserisci il tuo nome">
                                     <small></small>
                                 </div>
 
@@ -88,7 +88,9 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="prov">Provincia</label>
-                                    <input type="text" id="prov" class="form-control" name="prov" placeholder="es: Palermo">
+                                    <select id="prov" class="form-control" name="prov" placeholder="Province">
+
+                                    </select>
                                     <small></small>
                                 </div>
 
@@ -161,12 +163,17 @@
                                     <a class="btn btn-danger" id="prev-3">Indietro</a>
                                 </div>
 
-                                <div class="form-group col-4">
+                                <div class="form-group col-4" onclick="submitform()">
                                     <a class="btn btn-danger" id="confirm">Conferma</a>
                                 </div>
                             </div>
                         </div>
-                        <small>Ricorda che tutti i campi sono obbligatori.</small>
+
+                        <div id="response">
+                            <small>Ricorda che tutti i campi sono obbligatori.</small>
+                        </div>
+
+
                     </form>
                 </div>
             </div>
