@@ -84,7 +84,7 @@ public class Database {
             statement.setString(5, codFisc);
             statement.setString(6, telefono);
             statement.setDate(7, Date.valueOf(dataNasc));
-            statement.setString(8, "User");
+            statement.setString(8, "cliente");
             statement.setString(9, indirizzo);
             statement.setString(10, provincia);
             statement.executeUpdate();

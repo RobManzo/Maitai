@@ -36,7 +36,7 @@
         <!-- Navigation -->
         <%@ include file="/WEB-INF/navbar.jsp"%>
 
-        <header class="masthead">
+        <div class="page-section" id="reg">
             <div class="container col-md-6 bg-light p-4 rounded shadow">
                 <h5 class="text-center text-light mb-2 p-2 rounded lead" id="result">Registrazione</h5>
                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger rounded" role="progressbar" style="width:30%;" id="progressBar">
@@ -63,7 +63,7 @@
 
                             </div>
 
-                            <div class="form-row py-0">
+                            <div class="form-row">
 
                                 <div class="form-group col-md-6">
                                     <label for="birthdate">Data di Nascita</label>
@@ -117,7 +117,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="confirmemail">Conferma Email</label>
                                     <input type="email" id="confirmemail" class="form-control" name="confemail" placeholder="Re-Inserire Email" onchange="checkEmail()">
-                                    <small class="pb-1" id="confemailhelp"></small>
+                                    <small id="confemailhelp"></small>
                                 </div>
                             </div>
 
@@ -139,7 +139,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="phone">Numero di cellulare</label>
-                                    <input type="text" id="phone" class="form-control" name="phone" pattern="[0-9]{9}">
+                                    <input type="text" id="phone" class="form-control" name="phone" onchange="checkPhone()">
                                     <small id="phonehelp"></small>
                                 </div>
                             </div>
@@ -177,7 +177,7 @@
                     </form>
                 </div>
             </div>
-        </header>
+        </div>
 
         <!-- Footer-->
         <%@ include file="/WEB-INF/footer.jsp"%>

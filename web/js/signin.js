@@ -73,7 +73,7 @@ function emptyfields2(){
             }
         });
 
-        if (empty == 0 && checkPass() && checkEmail()){         //verifica prima che i campi non siano vuoti, poi passa alla checkpass e checkemail - Devo valutare le espressioni contemporaneamente
+        if (empty == 0 && checkPass() && checkEmail() && checkPhone()){         //verifica prima che i campi non siano vuoti, poi passa alla checkpass e checkemail - Devo valutare le espressioni contemporaneamente
             $('#next-2').removeClass('disabled');
 
         } else{
@@ -144,9 +144,9 @@ function checkEmail(){
 }*/
 
 function checkPass(){
-    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
+    var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
 
-    if(strongRegex.test($('#password').val()) || $('#password').val() == '') {
+    if(regex.test($('#password').val()) || $('#password').val() == '') {
         $('#passhelp').html('');
 
         if ($('#password').val() == $('#confirmpassword').val() && $('#confirmpassword').val() && $('#password').val()) {
@@ -170,13 +170,29 @@ function checkPass(){
             return false;
         }
     } else{
-        $('#passhelp').html('Usa una password con almeno 8 caratteri, di cui almeno una lettera maiuscola.').css('color', 'red');
+        $('#passhelp').html('Almeno 8 caratteri, una maiuscola minimo.').css('color', 'red');
     }
 
 };
 
-var dati;
+function checkPhone() {
+    var regex = new RegExp("[0-9]{10}$");
 
+    if(regex.test($('#phone').val())){
+        $('#phone').removeClass('wrong');
+        $('#phonehelp').css('color', '').html('');
+        return true;
+    } else {
+        $('#phonehelp').css('color', 'red').html('Inserire un numero di telefono corretto.');
+        $('#phone').addClass('wrong');
+        return false;
+    }
+
+};
+
+
+
+var dati;
 function parseProvince() {
     $.ajax({
         url: './assets/misc/comuni.csv',
@@ -185,7 +201,6 @@ function parseProvince() {
         var value = data.split("\n");
         dati = value;
         $.each(value, function(key, val){
-            console.log(val);
             document.getElementById("prov").innerHTML +=
                 "<option>" + val + "</option>";
 
