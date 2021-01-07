@@ -10530,6 +10530,7 @@ section#contact form#contactForm :-ms-input-placeholder {
 
 .st0-occupied{
   fill: #740712;
+  cursor: not-allowed;
 }
 
 .st0-selected{
@@ -10588,4 +10589,36 @@ small{
   justify-content: center;
   align-items: center;
   height: -webkit-fill-available;
+}
+
+#book{
+  background-color: antiquewhite;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: -webkit-fill-available;
+}
+
+#details{
+
+}
+
+#selectday{
+
+}
+
+#timepick{
+  margin-left: 0;
+}
+
+#fullday{
+
+}
+
+@media screen and (max-width: 900px) {
+  .nomobile{
+    visibility: hidden;
+    display: none;
+  }
 }

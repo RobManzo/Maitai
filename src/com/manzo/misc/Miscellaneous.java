@@ -30,7 +30,7 @@ public class Miscellaneous {
         if(!birthdate.matches(regex))
             return "La data di birthdate non rispetta il formato richiesto.";
 
-        regex = "[0-9]{10}";
+        regex = "[0-9]{10}$";
         if( (!telefono.replaceAll("\\s+","").contentEquals("") && !telefono.matches(regex)))
             return "Il telefono non rispetta il formato richiesto.";
 

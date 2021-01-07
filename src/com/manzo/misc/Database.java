@@ -1,5 +1,6 @@
 package com.manzo.misc;
 
+import com.manzo.entities.Prenotazione;
 import com.manzo.entities.Utente;
 
 import javax.naming.Context;
@@ -153,5 +154,19 @@ public class Database {
             }
         }
 
+    }
+
+    public static List<Integer> getPrenotazione(LocalDate thisday, String timeslot) throws SQLException {
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.fasciaOraria=?";
+        List<Integer> pren = new ArrayList<Integer>();
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDate(1, Date.valueOf(thisday));
+            statement.setString(2, timeslot);
+            ResultSet result = statement.executeQuery();
+            while(result.next()){
+                pren.add(result.getInt("idPostazione"));
+            }
+            return pren;
+        }
     }
 }

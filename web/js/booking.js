@@ -7,7 +7,10 @@ var posOccupied = [];
 $(document).ready(function () {
     var s = Snap('#postazioni');
 
+
     Snap.load("/Maitai/assets/img/svg/lido.svg", function(f){
+
+        seatState();
 
         f.selectAll('[id^="r-"]').forEach(function(el){
 
@@ -39,38 +42,75 @@ $(document).ready(function () {
         s.append(f);
     });
 
+    selectdate();
 
 });
+
 function selection() {
 
 }
 
-function load(){
+function seatState(){
+    var thisday = $('#selectday').val();
+    var timeslot = $('#selectday').val();
 
-    var element;
 
-    for (let i=10; i<60; i++){
-        element=Snap.select('#pos_'+i);
-        element.data('status', 'F');
+        $.ajax({
+            url: './booking',
+            dataType: 'json',
+            type: 'post',
+            data: {
+                'DataPrenotazione': thisday,
+                'FasciaOraria': 2
+            },
+            success: function (data) {
+                $.each(data.Id, function(key, val){
+                    var group = '#r-0'+val;
+                    var pos = '#p-0'+val;
+                    console.log(group);
+                    $('#r-0'+val).data('status', 'O');
+                    $('#p-0'+val).removeClass("st0").addClass("st0-occupied");                                                                //Selezionare i vari svg
+                });
+                console.log(data);
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
+}
+
+/* Funzione per inserire i giorni nel select box*/
+function selectdate() {
+
+    var timestamp = new Date();
+    var dd = timestamp.getDate();
+    var mm = timestamp.getMonth()+1;
+    var yyyy = timestamp.getFullYear();
+
+    if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+
+    var today = dd+'/'+mm+'/'+yyyy;
+    $('#selectday').append('<option selected>'+today+'</option>');
+
+    for(i=1; i<=6; i++){
+        timestamp.setDate(new Date().getDate()+i);
+        var dd = timestamp.getDate();
+        var mm = timestamp.getMonth()+1;
+        var yyyy = timestamp.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+        var curr = dd+'/'+mm+'/'+yyyy;
+        var succ = '<option>'+curr+'</option>';
+        $('#selectday').append(succ);
     }
 }
-
-/*function setSelected(id, elem){
-    $(id+' ellipse.st1').removeClass("st1").removeClass("st1-occupied").removeClass("st1-selected").addClass("st1-selected");
-    $(id+' rect.st2').removeClass("st2 st2-occupied st2-selected").addClass("st2-selected");
-    $(id+' path.st3').removeClass("st3 st3-occupied st3-selected").addClass("st3-selected");
-    elem.data('status', 'S');
-
-}
-function setOccupied(id, elem){
-    $(id+' ellipse.st1').removeClass("st1 st1-occupied st1-selected").addClass("st1-occupied");
-    $(id+' rect.st2').removeClass("st2 st2-occupied st2-selected").addClass("st2-occupied");
-    $(id+' path.st3').removeClass("st3 st3-occupied st3-selected").addClass("st3-occupied");
-    elem.data('status', 'O');
-}
-function setUnselected(id, elem){
-    $(id+' ellipse.st1-selected').removeClass("st1-selected").addClass("st1");
-    $(id+' rect.st2-selected').removeClass("st2-selected").addClass("st2");
-    $(id+' path.st3-selected').removeClass("st3-selected").addClass("st3");
-    elem.data('status', 'F');
-}*/

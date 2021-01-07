@@ -16,15 +16,72 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap) -->
     <link href="/Maitai/css/styles.css" rel="stylesheet" />
+
 </head>
 
-<body class="pt-5">
+<body>
     <!-- Navigation -->
     <div><%@ include file="/WEB-INF/navbar.jsp"%></div>
 
-    <div class="page-section row">
-        <div class="container container-bg rounded shadow col-md-4 align-items-center py-2" id="postazioni"></div>
-        <div class="container col-md-4 align-items-end pt-4" id="notes"> AO BELO</div>
+    <div class="page-section row" id="book">
+        <div class="container col-md-4 align-items-center py-2">
+            <div class="d-flex">
+                <div class="input-group mb-3 col-md-6 align-self-center">
+                    <div class="input-group-prepend" style="fill: #844c04">
+                        <label class="input-group-text" for="selectday">Giorno</label>
+                    </div>
+                    <select class="custom-select" id="selectday">
+                    </select>
+                </div>
+                <div class="btn-group btn-group-toggle col-md-6 align-self-start pb-3" id="timeslot" data-toggle="buttons">
+                    <label class="btn btn-secondary active"> Full Day
+                        <input type="radio" name="options" id="fullday" checked> H 8/18
+                    </label>
+                    <label class="btn btn-secondary"> Mattina
+                        <input type="radio" name="options" id="morning"> H 8/13
+                    </label>
+                    <label class="btn btn-secondary"> Pomeriggio
+                        <input type="radio" name="options" id="afternoon"> H 13/18
+                    </label>
+                </div>
+            </div>
+            <div class="container-bg rounded shadow p-2" id="postazioni"></div>
+        </div>
+
+        <div class="container col-md-4 align-items-end pt-4" id="details">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">POS #</th>
+                        <th scope="col">Tipologia</th>
+                        <th scope="col">Prezzo</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
 
