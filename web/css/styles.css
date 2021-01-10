@@ -10529,12 +10529,12 @@ section#contact form#contactForm :-ms-input-placeholder {
 }
 
 .st0-occupied{
-  fill: #740712;
-  cursor: not-allowed;
+  fill: #740712 !important;
+  cursor: not-allowed !important;
 }
 
 .st0-selected{
-  fill: #b37904;
+  fill: #b37904 !important;
 }
 
 .st1:hover{

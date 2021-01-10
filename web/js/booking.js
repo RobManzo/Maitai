@@ -1,12 +1,10 @@
 //Script per il caricamento e la gestione della mappa interattiva
 
-var posSelected = [];
-var posOccupied = [];
-
-
 $(document).ready(function () {
-    var s = Snap('#postazioni');
+    loadDate();
 
+    var s = Snap('#postazioni');
+    var selected = [];
 
     Snap.load("/Maitai/assets/img/svg/lido.svg", function(f){
 
@@ -26,14 +24,19 @@ $(document).ready(function () {
                 else if( elem.data('status')=='S' )
                 {
                     // The seat is already selected, the user wants to deselect it
-                    $(id+' path.st0-selected').removeClass("st0-selected").addClass("st0");
+                    $(id+' path.st0-selected').removeClass("st0-selected");
                     elem.data('status', 'D');
+                    var index = selected.indexOf(id);
+                    selected.splice(index);
+                    $('#riga' + id).remove();
                 }
                 else
                 {
                     // the seat is free, the user wants to select it
-                    $(id+' path.st0').removeClass("st0").addClass("st0-selected");
+                    $(id+' path.st0').addClass("st0-selected");
                     elem.data('status', 'S');
+                    selected.push(id);
+                    $('#selezionati').append('<tbody> <tr id=' + '\'riga' + id + '\'> <th scope="row">' + id + '</th> <td>' + $('#timeslot').val() + '</td> <td>' + /*PREZZO POSTAZIONE*/ + '</td> <td> </td>  </tr> </tbody>');
                 }
 
             });
@@ -42,18 +45,25 @@ $(document).ready(function () {
         s.append(f);
     });
 
-    selectdate();
-
 });
 
-function selection() {
 
-}
-
-function seatState(){
+function seatState(){                                   //Prima volta che si carica la pagina oppure ogni volta che si cambia giorno o fascia oraria
     var thisday = $('#selectday').val();
-    var timeslot = $('#selectday').val();
+    var timeslot = selectTimeslot();
+    selected = [];
+    $('#selezionati').html('<tbody></tbody>');
 
+    console.log(thisday);
+    console.log(timeslot);
+
+    Snap.selectAll('[id^="r-"]').forEach(function(el){
+        var elem = el.parent();
+        var id = '#'+ elem.node.id;
+        elem.data('status', 'D');
+        $(id+' path.st0-selected').removeClass("st0-selected");
+        $(id+' path.st0-occupied').removeClass("st0-occupied");
+    });
 
         $.ajax({
             url: './booking',
@@ -61,15 +71,14 @@ function seatState(){
             type: 'post',
             data: {
                 'DataPrenotazione': thisday,
-                'FasciaOraria': 2
+                'FasciaOraria': timeslot
             },
             success: function (data) {
                 $.each(data.Id, function(key, val){
                     var group = '#r-0'+val;
-                    var pos = '#p-0'+val;
-                    console.log(group);
+                    //var pos = '#p-0'+val;
                     $('#r-0'+val).data('status', 'O');
-                    $('#p-0'+val).removeClass("st0").addClass("st0-occupied");                                                                //Selezionare i vari svg
+                    $('#p-0'+val).removeClass("st0").addClass("st0-occupied");
                 });
                 console.log(data);
             },
@@ -80,9 +89,15 @@ function seatState(){
 
 }
 
-/* Funzione per inserire i giorni nel select box*/
-function selectdate() {
+function selectTimeslot() {
+    if($('#fullday').hasClass("active")){
+        return 1;
+    } else if($('#mattina').hasClass("active")) return 2;
+    else if($('#pomeriggio').hasClass("active")) return 3;
+}
 
+/* Funzione per inserire i giorni nel select box*/
+function loadDate() {
     var timestamp = new Date();
     var dd = timestamp.getDate();
     var mm = timestamp.getMonth()+1;

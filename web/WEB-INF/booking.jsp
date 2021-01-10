@@ -30,55 +30,65 @@
                     <div class="input-group-prepend" style="fill: #844c04">
                         <label class="input-group-text" for="selectday">Giorno</label>
                     </div>
-                    <select class="custom-select" id="selectday">
+                    <select class="custom-select" id="selectday" onchange="seatState()">
                     </select>
                 </div>
                 <div class="btn-group btn-group-toggle col-md-6 align-self-start pb-3" id="timeslot" data-toggle="buttons">
-                    <label class="btn btn-secondary active"> Full Day
-                        <input type="radio" name="options" id="fullday" checked> H 8/18
+                    <label class="btn btn-secondary active" id="fullday"> Full Day
+                        <input type="radio" name="options" checked onchange="seatState()"> H 8/18
                     </label>
-                    <label class="btn btn-secondary"> Mattina
-                        <input type="radio" name="options" id="morning"> H 8/13
+                    <label class="btn btn-secondary" id="mattina"> Mattina
+                        <input type="radio" name="options" onchange="seatState()"> H 8/13
                     </label>
-                    <label class="btn btn-secondary"> Pomeriggio
-                        <input type="radio" name="options" id="afternoon"> H 13/18
+                    <label class="btn btn-secondary" id="pomeriggio"> Pomeriggio
+                        <input type="radio" name="options" onchange="seatState()"> H 13/18
                     </label>
                 </div>
             </div>
             <div class="container-bg rounded shadow p-2" id="postazioni"></div>
         </div>
 
-        <div class="container col-md-4 align-items-end pt-4" id="details">
-            <table class="table">
+        <div class="container col-md-4 align-items-end pt-4 align-self-baseline" id="details" style="margin-top: 5rem;">
+            <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th scope="col">POS #</th>
-                        <th scope="col">Tipologia</th>
-                        <th scope="col">Prezzo</th>
-                        <th scope="col">Handle</th>
+                    <tr style="background-color: #844c04; color: wheat;">
+                        <th scope="col">ID#</th>
+                        <th scope="col">Fascia oraria</th>
+                        <th scope="col">Prezzo (+IVA)</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
 
-                <tbody>
+                <div id="selezionati">
+                    <tbody>
                     <tr>
                         <th scope="row">1</th>
                         <td>Mark</td>
                         <td>Otto</td>
-                        <td>@mdo</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <th scope="row">2</th>
                         <td>Jacob</td>
                         <td>Thornton</td>
-                        <td>@fat</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <th scope="row">3</th>
                         <td>Larry</td>
                         <td>the Bird</td>
-                        <td>@twitter</td>
+                        <td></td>
                     </tr>
-                </tbody>
+                    <tr>
+                        <th scope="row"></th>
+                        <td></td>
+                        <td></td>
+                        <td><b style="margin-left: 0">TOT</b></td>
+
+                    </tr>
+                    </tbody>
+                </div>
+
             </table>
         </div>
 
