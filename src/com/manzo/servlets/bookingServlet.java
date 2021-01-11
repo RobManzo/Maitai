@@ -29,7 +29,6 @@ public class bookingServlet extends HttpServlet {
             response.setContentType("application/json");
             List<Integer> list = Database.getPrenotazione(data, fascia);
             ObjectMapper mapper = new ObjectMapper();
-            System.out.println(list);
             pr.write("{\"Id\" :"+ mapper.writeValueAsString(list) +"}");
 
         }
