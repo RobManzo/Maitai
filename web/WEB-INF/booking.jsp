@@ -49,7 +49,7 @@
         </div>
 
         <div class="container col-md-4 align-items-end pt-4 align-self-baseline" id="details" style="margin-top: 5rem;">
-            <table class="table table-striped" id="tab">
+            <!--<table class="table table-striped" id="tab">
                 <thead>
                     <tr style="background-color: #844c04; color: wheat;">
                         <th scope="col">ID#</th>
@@ -63,12 +63,11 @@
                     <tbody id="selezionati">
                     </tbody>
                 </div>
-
             </table>
-            <div class="" id="totale" style="text-align: right; margin-right: 4rem;"><b>TOT 0,00€</b></div>
-        </div>
-
+            <div id="totale" style="text-align: right; margin-right: 4rem;"><b>TOT 0,00€</b></div>
+        </div-->
     </div>
+
 
 
     <!-- Footer-->

@@ -1,6 +1,9 @@
 //Script per il caricamento e la gestione della mappa interattiva
 
 var selected = [];
+var tot = 0.00;
+var thisday;
+var timeslot;
 
 $(document).ready(function () {
     loadDate();
@@ -69,18 +72,22 @@ function insertRow(sel) {
         '</table>';
 
     $('#details').html(intestazione);
+    tot = 0.00;
 
     sel.forEach(function (id) {
-        $('#tabella').append('<tr id=' + '\'#riga\#' + id + '\'> <th scope="row">' + id + '</th> <td>' + $('#timeslot').val() + '</td> <td>' + /*PREZZO POSTAZIONE*/ + '</td> <td> </td>  </tr>');
+        $('#tabella').append('<tr id=' + '\'#riga\#' + id + '\'> <th scope="row">' + id + '</th> <td>' + getTimeslot(timeslot).toString() + '</td> <td>' + setPrice(id).toFixed(2) + '€</td> <td> </td>  </tr>');
+        tot += setPrice(id);
     });
-    $('#details').append('<div style="text-align: right; margin-right: 4rem;" id="totale"><b>TOT 0,00€</b></div>');
+    $('#details').append('<div style="text-align: right; margin-right: 4rem;" id="totale"><b> TOTALE ' + tot.toFixed(2) + '€</b></div>');
+    $('#details').append('<div class="align-items-end"> <button type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">' + 'Conferma e paga' + '</button> </div>');
 };
 
 
 function seatState(){                                   //Prima volta che si carica la pagina oppure ogni volta che si cambia giorno o fascia oraria
-    var thisday = $('#selectday').val();
-    var timeslot = selectTimeslot();
+    thisday = $('#selectday').val();
+    timeslot = selectTimeslot();
     selected = [];
+    tot = 0.00;
 
     var intestazione = '<table id="tabella" class=\" table table-striped\">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
@@ -93,8 +100,8 @@ function seatState(){                                   //Prima volta che si car
         '</table>';
 
     $('#details').html(intestazione);
-    $('#details').append('<div style="text-align: right; margin-right: 4rem;" id="totale"><b>TOT 0,00€</b></div>');
-
+    $('#details').append('<div style="text-align: right; margin-right: 4rem;" id="totale"><b> TOTALE ' + tot.toFixed(2) + '€</b></div>');
+    $('#details').append('<div class="align-items-end"> <button type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">' + 'Conferma e paga' + '</button> </div>');
     console.log(thisday);
     console.log(timeslot);
 
@@ -131,14 +138,25 @@ function seatState(){                                   //Prima volta che si car
             }
         });
 
-}
+};
 
 function selectTimeslot() {
     if($('#fullday').hasClass("active")){
         return 1;
     } else if($('#mattina').hasClass("active")) return 2;
     else if($('#pomeriggio').hasClass("active")) return 3;
-}
+};
+
+function getTimeslot(ts){
+    if(ts == 1){
+        return 'Fullday';
+    } else if(ts == 2){
+        return 'Mattina';
+    } else if(ts == 3){
+        return 'Pomeriggio';
+    }
+};
+
 
 /* Funzione per inserire i giorni nel select box*/
 function loadDate() {
@@ -172,4 +190,19 @@ function loadDate() {
         var succ = '<option>'+curr+'</option>';
         $('#selectday').append(succ);
     }
+}
+
+function setPrice(id) {
+    var subid = parseInt(id.substring(2,4));
+    if(subid >= 1 && subid <=8){
+        return 8.00;
+    }else if (subid >= 9 && subid <=12){
+        return 10.00;
+    } else return 12.00;
+};
+
+function pagamento() {
+
+
+
 }
