@@ -34,13 +34,13 @@
                     </select>
                 </div>
                 <div class="btn-group btn-group-toggle col-md-6 align-self-start pb-3" id="timeslot" data-toggle="buttons">
-                    <label class="btn btn-secondary active" id="fullday"> Full Day
+                    <label class="btn btn-secondary active ts" id="fullday"> Full Day
                         <input type="radio" name="options" checked onchange="seatState()"> H 8/18
                     </label>
-                    <label class="btn btn-secondary" id="mattina"> Mattina
+                    <label class="btn btn-secondary ts" id="mattina"> Mattina
                         <input type="radio" name="options" onchange="seatState()"> H 8/13
                     </label>
-                    <label class="btn btn-secondary" id="pomeriggio"> Pomeriggio
+                    <label class="btn btn-secondary ts" id="pomeriggio"> Pomeriggio
                         <input type="radio" name="options" onchange="seatState()"> H 13/18
                     </label>
                 </div>
@@ -48,24 +48,30 @@
             <div class="container-bg rounded shadow p-2" id="postazioni"></div>
         </div>
 
-        <div class="container col-md-4 align-items-end pt-4 align-self-baseline" id="details" style="margin-top: 5rem;">
-            <!--<table class="table table-striped" id="tab">
-                <thead>
-                    <tr style="background-color: #844c04; color: wheat;">
-                        <th scope="col">ID#</th>
-                        <th scope="col">Fascia oraria</th>
-                        <th scope="col">Prezzo (+IVA)</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
+        <div class="container col-md-4 align-items-end pt-4 align-self-baseline" id="details" style="margin-top: 5rem;"></div>
+    </div>
+    <div class="modal fade" id="payment">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content"  style="background-color: antiquewhite;">
 
-                <div>
-                    <tbody id="selezionati">
-                    </tbody>
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Pagamento</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-            </table>
-            <div id="totale" style="text-align: right; margin-right: 4rem;"><b>TOT 0,00€</b></div>
-        </div-->
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Modal body..
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="pagamento()">Conferma Pagamento</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 

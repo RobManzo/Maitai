@@ -244,9 +244,7 @@ function submitform(){
             'Telefono' : phone
         },
         success: function (data) {
-            var text ='<div class="row" style="justify-content: center">' +
-                '<div class="alert ' + ' alert-dismissible" role="alert">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>'+ data.Message +'</div> </div>';
+            var text ='<div class="row" style="justify-content: center">' + data.Message +'</div> </div>';
 
             if(data.RESPONSE == 'Correct'){
                 $('#progressBar').css("width", "100%").removeClass('bg-danger').addClass('bg-success').html("COMPLETE");
