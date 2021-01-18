@@ -1,4 +1,7 @@
-<%@ page import="com.manzo.entities.Utente" %><%--
+<%@ page import="com.manzo.entities.Utente" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="com.manzo.misc.Database" %>
+<%--
   Created by IntelliJ IDEA.
   User: powar
   Date: 26/11/2020
@@ -61,7 +64,19 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <% if(request.getUserPrincipal() != null && request.getSession().getAttribute("user") == null){
+            try {
+                Utente user = Database.takeUser(request.getUserPrincipal().getName());
+                if (user == null) {
+                    response.sendError(400);
+                }
+                request.getSession().setAttribute("user", user);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        } %>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
                 <a class="navbar-brand js-scroll-trigger" href="${pageContext.request.contextPath}"><img src="/Maitai/assets/img/navbar-logo.png" alt="" /></a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +85,7 @@
                 </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav text-uppercase ml-auto">
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Servizi</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="${pageContext.request.contextPath}/#services">Servizi</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="${pageContext.request.contextPath}/#findus">Dove siamo</a></li>
                             <li class="nav-item dropdown">
                                     <% if(request.getSession().getAttribute("user") == null){ %>

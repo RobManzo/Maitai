@@ -22,7 +22,7 @@
 
 <body id="page-top">
     <main role="main">
-        <div class="container marketing">
+        <div class="container marketing fill-window">
 
             <h1>Error ${errorCode}</h1>
 

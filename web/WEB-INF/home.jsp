@@ -22,14 +22,64 @@
         <!-- Navigation -->
         <%@ include file="/WEB-INF/navbar.jsp"%>
 
-        <!-- Masthead -->
-        <header class="masthead">
-            <div class="container">
-                <div class="masthead-subheading">Utente Loggato</div>
-                <div class="masthead-heading text-uppercase">Premi il tasto sotto per effettuare il logout</div>
-                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="${pageContext.request.contextPath}/logout">LogOut</a>
+        <div class="page-section row fill-window" style="background-color: antiquewhite; align-content: center;">
+
+            <div class="container col-md-3 align-items-center py-2 text-center">
+                <a href="${pageContext.request.contextPath}/cliente/booking">
+                    <div class="limit">
+                        <img class="img-responsive" src="\Maitai\assets\img\book.png" >
+                    </div>
+                    <h4 class="my-3" style="color: black;">Portale Prenotazione</h4>
+                </a>
+                <p class="text-muted">Prenota la tua postazione.</p>
             </div>
-        </header>
+
+            <div class="container col-md-3 align-items-center py-2 text-center">
+                <a href="${pageContext.request.contextPath}/food">
+                    <div class="limit">
+                        <img class="img-responsive" src="\Maitai\assets\img\burger.png">
+                    </div>
+                    <h4 class="my-3" style="color: black;">Bar e Ristorazione</h4>
+                </a>
+                <p class="text-muted">Ordina cibi e bevande.</p>
+            </div>
+
+            <div class="container col-md-3 align-items-center py-2 text-center">
+                <a href="" data-toggle="modal" data-target="#access">
+                    <div class="limit">
+                        <img class="img-responsive" src="\Maitai\assets\img\on.png">
+                    </div>
+                    <h4 class="my-3" style="color: black;">Accesso</h4>
+                </a>
+                <p class="text-muted">Accedi alla struttura.</p>
+            </div>
+
+        </div>
+
+        <div class="modal fade" id="access">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content"  style="background-color: antiquewhite;">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Accesso alla struttura</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body text-center">
+                        <p class="text-center">Scannerizza per accedere alla struttura.</p>
+                        <img class="img-responsive" src="\Maitai\assets\img\qrcode.png">
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="">Accedi</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
         <!-- Footer-->
         <div class="footer"><%@ include file="/WEB-INF/footer.jsp"%></div>

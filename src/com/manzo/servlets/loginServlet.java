@@ -27,6 +27,7 @@ public class loginServlet extends HttpServlet {
                     response.sendError(400);
                 }
                 request.getSession().setAttribute("user", utente);
+                //Se l'utente è entrato nella struttura per una prenotazione, setAttribute("prenotazione", pren); CONTROLLO
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

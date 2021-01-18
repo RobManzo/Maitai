@@ -42,16 +42,20 @@
       <div class="container">
         <div class="masthead-subheading">Lido MaiTai</div>
         <div class="masthead-heading text-uppercase">Benvenuto presso la nostra struttura</div>
-        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Riserva il tuo posto</a>
+          <% if(request.getSession().getAttribute("user") == null){ %>
+          <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="${pageContext.request.contextPath}/login">Riserva il tuo posto</a>
+          <% } else {%>
+          <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="${pageContext.request.contextPath}/cliente/booking">Riserva il tuo posto</a>
+          <% }%>
+
       </div>
     </header>
 
     <!-- Services -->
-    <section class="page-section" id="services" style="background-color: antiquewhite">
+    <section class="page-section" id="services" style="background-color: antiquewhite;">
       <div class="container">
         <div class="text-center">
           <h2 class="section-heading text-uppercase">I Nostri Servizi</h2>
-          <!--<h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
         </div>
 
         <div class="row text-center">

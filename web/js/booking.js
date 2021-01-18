@@ -174,7 +174,7 @@ function loadDate() {
     }
 
     var today = dd+'/'+mm+'/'+yyyy;
-    $('#selectday').append('<option selected>'+today+'</option>');      //Eren trova il gay
+    $('#selectday').append('<option selected>'+today+'</option>');
 
     for(i=1; i<=6; i++){
         timestamp.setDate(new Date().getDate()+i);

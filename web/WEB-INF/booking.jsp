@@ -23,7 +23,7 @@
     <!-- Navigation -->
     <div><%@ include file="/WEB-INF/navbar.jsp"%></div>
 
-    <div class="page-section row" id="book">
+    <div class="page-section row fill-window" id="book">
         <div class="container col-md-4 align-items-center py-2">
             <div class="d-flex">
                 <div class="input-group mb-3 col-md-6 align-self-center">
@@ -50,6 +50,7 @@
 
         <div class="container col-md-4 align-items-end pt-4 align-self-baseline" id="details" style="margin-top: 5rem;"></div>
     </div>
+
     <div class="modal fade" id="payment">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content"  style="background-color: antiquewhite;">

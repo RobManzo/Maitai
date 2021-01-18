@@ -10597,7 +10597,6 @@ small{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: -webkit-fill-available;
 }
 
 #details{
@@ -10638,4 +10637,8 @@ small{
 .ts{
   background-color: #844c04 !important;
   border-color: #c48a00 !important;
+}
+
+.fill-window{
+  height: -webkit-fill-available;
 }

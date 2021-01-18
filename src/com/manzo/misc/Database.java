@@ -169,4 +169,17 @@ public class Database {
             return pren;
         }
     }
+
+    public static boolean entry(LocalDate thisday, int userId) throws SQLException {                                    //Trovo una prenotazione per questo giorno e questa ora, entrata ed uscita
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=?";
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDate(1, Date.valueOf(thisday));
+            statement.setInt(2, userId);
+            ResultSet result = statement.executeQuery();
+            if(result.next()){
+                result.updateDate("oraIngresso", Date.valueOf(thisday));
+                return true;
+            } else return false;
+        }
+    }
 }

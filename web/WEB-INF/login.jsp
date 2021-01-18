@@ -30,7 +30,7 @@
         <!-- Navigation-->
         <%@ include file="/WEB-INF/navbar.jsp"%>
 
-        <section class="page-section">
+        <section class="page-section row fill-window" style="background-color: antiquewhite;">
             <div class="pt-4 col-md-4 container">
                 <form method="POST" id="formlogin" action="j_security_check">
                     <div class="form-group">
@@ -46,7 +46,12 @@
                             <input class="form-check-input" type="checkbox"> Ricordami
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <a href="${pageContext.request.contextPath}/signin">
+                            <button type="button" class="btn btn-primary" >Registrati</button>
+                        </a>
+                    </div>
                 </form>
             </div>
         </section>

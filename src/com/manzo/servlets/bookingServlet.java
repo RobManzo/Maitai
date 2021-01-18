@@ -15,8 +15,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@WebServlet(name="homeServlet", urlPatterns={"/booking"})
+@WebServlet(name="bookingServlet", urlPatterns={"/cliente/booking"})
 public class bookingServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
