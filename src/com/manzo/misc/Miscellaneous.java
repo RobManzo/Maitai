@@ -1,5 +1,7 @@
 package com.manzo.misc;
 
+import java.time.LocalTime;
+
 public class Miscellaneous {
 
     public static String checkForm(String nome, String cognome, String email, String password, String confpass, String telefono, String birthdate, String codfisc) {
@@ -35,5 +37,18 @@ public class Miscellaneous {
             return "Il telefono non rispetta il formato richiesto.";
 
         return null;
+    }
+
+    public static int getTimeslot(LocalTime timenow){
+        LocalTime morning = LocalTime.parse("08:00:00");
+        LocalTime lunch = LocalTime.parse("13:00:00");
+        LocalTime afternoon = LocalTime.parse("13:00:01");
+        LocalTime night = LocalTime.parse("18:00:00");
+
+        if(timenow.compareTo(morning) >= 0 && timenow.compareTo(lunch) <= 0){
+            return 1;
+        } else if(timenow.compareTo(afternoon) >= 0 && timenow.compareTo(night) <= 0){
+            return 2;
+        } else return -1;
     }
 }

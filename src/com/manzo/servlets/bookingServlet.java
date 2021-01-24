@@ -21,8 +21,7 @@ public class bookingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String fascia;
-            fascia = request.getParameter("FasciaOraria");
+            int fascia = Integer.parseInt(request.getParameter("FasciaOraria"));
 
             LocalDate data = LocalDate.parse(request.getParameter("DataPrenotazione"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 

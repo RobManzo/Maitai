@@ -44,15 +44,7 @@
                 <p class="text-muted">Ordina cibi e bevande.</p>
             </div>
 
-            <div class="container col-md-3 align-items-center py-2 text-center">
-                <a href="" data-toggle="modal" data-target="#access">
-                    <div class="limit">
-                        <img class="img-responsive" src="\Maitai\assets\img\on.png">
-                    </div>
-                    <h4 class="my-3" style="color: black;">Accesso</h4>
-                </a>
-                <p class="text-muted">Accedi alla struttura.</p>
-            </div>
+            <div class="container col-md-3 align-items-center py-2 text-center" id="entry"></div>
 
         </div>
 

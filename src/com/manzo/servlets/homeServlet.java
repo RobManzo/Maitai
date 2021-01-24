@@ -2,6 +2,7 @@ package com.manzo.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.misc.Database;
+import com.manzo.misc.Miscellaneous;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -21,16 +24,34 @@ public class homeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            LocalDate data = LocalDate.parse(request.getParameter("DataOdierna"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            int user = Integer.parseInt(request.getParameter("user"));
-
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
-            if(Database.entry(data, user)){                                         //Se c'è una prenotazione per questa ora allora l'utente può entrare
-                pr.write();
-            }
-            pr.write();
+            LocalDate data = LocalDate.now(ZoneId.of("GMT+1"));
+            LocalTime time = LocalTime.now(ZoneId.of("GMT+1"));
+            int ts = Miscellaneous.getTimeslot(time);
+            int user = Integer.parseInt(request.getParameter("user"));
 
+            if(request.getParameter("rtype").equals("setEntry")){
+
+                if(ts == -1){
+                    pr.write("{\"status\" : \"Error\"}");
+                    return;
+                }
+                if(Database.setEntry(data, user, ts)){
+                    pr.write("{\"status\" : \"Ok\"}");
+                }
+                 else{
+                    pr.write("{\"status\" : \"Error\"}");
+                }
+            }
+
+            else if(request.getParameter("rtype").equals("getEntry")){
+                if(Database.getEntry(data, user)){
+                    pr.write("{\"status\" : \"Ok\"}");
+                } else{
+                    pr.write("{\"status\" : \"Error\"}");
+                }
+            }
         }
         catch (Exception e) {
             e.printStackTrace();

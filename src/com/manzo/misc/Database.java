@@ -156,30 +156,45 @@ public class Database {
 
     }
 
-    public static List<Integer> getPrenotazione(LocalDate thisday, String timeslot) throws SQLException {
+    public static List<Integer> getPrenotazione(LocalDate thisday, int timeslot) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.fasciaOraria=?";
         List<Integer> pren = new ArrayList<Integer>();
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDate(1, Date.valueOf(thisday));
-            statement.setString(2, timeslot);
+            statement.setInt(2, timeslot);
             ResultSet result = statement.executeQuery();
             while(result.next()){
-                pren.add(result.getInt("idPostazione"));
+               for(String postazione : result.getString("idPostazione").split(",")){
+                   pren.add(Integer.parseInt(postazione));
+               }
             }
             return pren;
         }
     }
 
-    public static boolean entry(LocalDate thisday, int userId) throws SQLException {                                    //Trovo una prenotazione per questo giorno e questa ora, entrata ed uscita
-        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=?";
+    public static boolean setEntry(LocalDate thisday, int userId, int ts) throws SQLException {                                    //Trovo una prenotazione per questo giorno e questa ora, entrata ed uscita
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=? AND (P.fasciaOraria=? OR P.fasciaOraria=0)";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDate(1, Date.valueOf(thisday));
             statement.setInt(2, userId);
+            statement.setInt(3, ts);
             ResultSet result = statement.executeQuery();
-            if(result.next()){
+            if(result.next() && result.getTime("oraIngresso")!= null){
                 result.updateDate("oraIngresso", Date.valueOf(thisday));
                 return true;
             } else return false;
         }
     }
+
+    public static boolean getEntry(LocalDate thisday, int userId) throws SQLException {
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=?";
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDate(1, Date.valueOf(thisday));
+            statement.setInt(2, userId);
+            ResultSet result = statement.executeQuery();
+
+        }
+        return true;
+    }
+
 }
