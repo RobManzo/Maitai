@@ -7,12 +7,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
+import java.sql.*;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -135,7 +133,7 @@ public class Database {
     }
 
     /**
-     * Ritorna la stringa contenente la nuova password o ritorna null se non trova corrispondenza
+     * Metodo per la reimpostazione della password
      * @param email
      * @return
      * @throws SQLException
@@ -172,29 +170,73 @@ public class Database {
         }
     }
 
-    public static boolean setEntry(LocalDate thisday, int userId, int ts) throws SQLException {                                    //Trovo una prenotazione per questo giorno e questa ora, entrata ed uscita
+    /**
+     * Metodo per il settaggio dell'orario di accesso alla struttura
+     * @param thisday
+     * @param userId
+     * @param ts
+     * @return
+     * @throws SQLException
+     */
+    public static boolean setEntry(LocalDate thisday, int userId, int ts, LocalTime thistime) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=? AND (P.fasciaOraria=? OR P.fasciaOraria=0)";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDate(1, Date.valueOf(thisday));
             statement.setInt(2, userId);
             statement.setInt(3, ts);
             ResultSet result = statement.executeQuery();
-            if(result.next() && result.getTime("oraIngresso")!= null){
-                result.updateDate("oraIngresso", Date.valueOf(thisday));
-                return true;
+            if(result.next()){
+                result.getTime("oraIngresso");
+                if(result.wasNull()){
+                    result.updateTime("oraIngresso", Time.valueOf(thistime));
+                    return true;
+                }else return false;
             } else return false;
         }
     }
 
+    /**
+     * Metodo per verificare se l'utente è all'interno della struttura
+     * @param thisday
+     * @param userId
+     * @return
+     * @throws SQLException
+     */
     public static boolean getEntry(LocalDate thisday, int userId) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=?";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDate(1, Date.valueOf(thisday));
             statement.setInt(2, userId);
             ResultSet result = statement.executeQuery();
-
+            if(result.next()){
+                result.getTime("oraIngresso");
+                if(!result.wasNull()){
+                    result.getTime("oraUscita");
+                    if(result.wasNull()){
+                        return true;
+                    } else return false;
+                } else return false;
+            } else return false;
         }
-        return true;
+    }
+
+    public static boolean setExit(LocalDate thisday, int userId, LocalTime thistime) throws SQLException {
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=?";
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDate(1, Date.valueOf(thisday));
+            statement.setInt(2, userId);
+            ResultSet result = statement.executeQuery();
+            if(result.next()){
+                result.getTime("oraIngresso");
+                if(!result.wasNull()){
+                    result.getTime("oraUscita");
+                    if(result.wasNull()){
+                        result.updateTime("oraUscita", Time.valueOf(thistime));
+                        return true;
+                    } else return false;
+                }else return false;
+            } else return false;
+        }
     }
 
 }

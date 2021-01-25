@@ -10,12 +10,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(name="homeServlet", urlPatterns={"/cliente/home"})
@@ -29,28 +31,29 @@ public class homeServlet extends HttpServlet {
             LocalDate data = LocalDate.now(ZoneId.of("GMT+1"));
             LocalTime time = LocalTime.now(ZoneId.of("GMT+1"));
             int ts = Miscellaneous.getTimeslot(time);
-            int user = Integer.parseInt(request.getParameter("user"));
+            HttpSession session = request.getSession();
+            int userid = (int) session.getAttribute("userId");                    //Migliorare
+            System.out.println("ID DELL'UTENTE " +userid);
 
             if(request.getParameter("rtype").equals("setEntry")){
 
                 if(ts == -1){
-                    pr.write("{\"status\" : \"Error\"}");
+                    pr.write("{\"status\" : \"out\", \"message\" : \"La struttura al momento è chiusa.\"}");
                     return;
                 }
-                if(Database.setEntry(data, user, ts)){
-                    pr.write("{\"status\" : \"Ok\"}");
-                }
-                 else{
-                    pr.write("{\"status\" : \"Error\"}");
-                }
+
+                if(Database.setEntry(data, userid, ts, time)) pr.write("{\"status\" : \"in\"}");
+                 else pr.write("{\"status\" : \"out\", \"message\" : \"Non sei autorizzato ad entrare. Controlla le tue prenotazioni.\"}");
             }
 
             else if(request.getParameter("rtype").equals("getEntry")){
-                if(Database.getEntry(data, user)){
-                    pr.write("{\"status\" : \"Ok\"}");
-                } else{
-                    pr.write("{\"status\" : \"Error\"}");
-                }
+                if(Database.getEntry(data, userid)) pr.write("{\"status\" : \"in\"}");
+                    else pr.write("{\"status\" : \"out\"}");
+            }
+
+            else if(request.getParameter("rtype").equals("setEntry")){
+                if(Database.setExit(data,userid, time)) pr.write("{\"status\" : \"out\"}");
+                else pr.write("{\"status\" : \"in\", \"message\" : \"Non sei autorizzato ad uscire.\"}");
             }
         }
         catch (Exception e) {

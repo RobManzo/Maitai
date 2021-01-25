@@ -45,30 +45,20 @@
             </div>
 
             <div class="container col-md-3 align-items-center py-2 text-center" id="entry"></div>
-
         </div>
 
-        <div class="modal fade" id="access">
+        <div class="modal fade" id="access"></div>
+
+        <div class="modal fade" id="accessinfo">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content"  style="background-color: antiquewhite;">
-
-                    <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Accesso alla struttura</h4>
+                        <h4 class="modal-title">INFORMAZIONE</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body text-center">
-                        <p class="text-center">Scannerizza per accedere alla struttura.</p>
-                        <img class="img-responsive" src="\Maitai\assets\img\qrcode.png">
+                    <div class="modal-body text-center" id="message"> </div>
+                    <div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
                     </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="">Accedi</button>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -86,6 +76,7 @@
         <script src="/Maitai/assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
         <script src="/Maitai/js/scripts.js"></script>
+        <script src="/Maitai/js/home.js"></script>
 
     </body>
 </html>
