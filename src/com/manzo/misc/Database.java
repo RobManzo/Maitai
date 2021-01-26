@@ -154,10 +154,10 @@ public class Database {
 
     }
 
-    public static List<Integer> getPrenotazione(LocalDate thisday, int timeslot) throws SQLException {
+    public static List<Integer> getPosti(LocalDate thisday, int timeslot) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.fasciaOraria=?";
-        List<Integer> pren = new ArrayList<Integer>();
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            List<Integer> pren = new ArrayList<Integer>();
             statement.setDate(1, Date.valueOf(thisday));
             statement.setInt(2, timeslot);
             ResultSet result = statement.executeQuery();
@@ -167,6 +167,18 @@ public class Database {
                }
             }
             return pren;
+        }
+    }
+
+    public static List<Prenotazione> getPrenotazione(Utente u) throws SQLException {
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.Utenti_idUtente=? ORDER BY P.dataPrenotazione DESC";
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            List<Prenotazione> pren = new ArrayList<>();
+            statement.setInt(1, u.getIdUtente());
+            ResultSet result = statement.executeQuery();
+            while(result.next()){
+                    pren.add(new Prenotazione(result.getInt("idPrenotazione"), result.getDate("dataEsecuzione"), result.getDate("dataPrenotazione"), result.getInt("idPostazione"), result.getTime("oraIngresso"), result.getTime("oraUscita"), result.getInt("fasciaOraria")));
+            }return pren;
         }
     }
 

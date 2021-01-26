@@ -1,16 +1,19 @@
 package com.manzo.entities;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Prenotazione {
 
     private int idPrenotazione;
-    private String dataEsecuzione;
-    private String dataPrenotazione;
+    private LocalDate dataEsecuzione;
+    private LocalDate dataPrenotazione;
     private String idPostazione;
-    private String oraIngresso;
-    private String oraUscita;
-    private String fasciaOraria;
+    private LocalTime oraIngresso;
+    private LocalTime oraUscita;
+    private int fasciaOraria;
 
-    public Prenotazione(int idPrenotazione, String dataEsecuzione, String dataPrenotazione, String idPostazione, String oraIngresso, String oraUscita, String fasciaOraria) {
+    public Prenotazione(int idPrenotazione, LocalDate dataEsecuzione, LocalDate dataPrenotazione, String idPostazione, String oraIngresso, String oraUscita, String fasciaOraria) {
         this.idPrenotazione = idPrenotazione;
         this.dataEsecuzione = dataEsecuzione;
         this.dataPrenotazione = dataPrenotazione;

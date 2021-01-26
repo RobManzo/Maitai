@@ -22,7 +22,10 @@
         <!-- Navigation -->
         <%@ include file="/WEB-INF/navbar.jsp"%>
 
+        <div class="page-section row fill-window" id="booktab" style="background-color: antiquewhite; align-content: center;">
 
+
+        </div>
 
         <!-- Footer-->
         <div class="footer"><%@ include file="/WEB-INF/footer.jsp"%></div>
