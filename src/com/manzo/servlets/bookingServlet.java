@@ -21,15 +21,17 @@ public class bookingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            int fascia = Integer.parseInt(request.getParameter("FasciaOraria"));
+            if(request.getParameter("rtype").equals("getSeats")){
+                int fascia = Integer.parseInt(request.getParameter("FasciaOraria"));
 
-            LocalDate data = LocalDate.parse(request.getParameter("DataPrenotazione"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate data = LocalDate.parse(request.getParameter("DataPrenotazione"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-            PrintWriter pr = response.getWriter();
-            response.setContentType("application/json");
-            List<Integer> list = Database.getPrenotazione(data, fascia);
-            ObjectMapper mapper = new ObjectMapper();
-            pr.write("{\"Id\" :"+ mapper.writeValueAsString(list) +"}");
+                PrintWriter pr = response.getWriter();
+                response.setContentType("application/json");
+                List<Integer> list = Database.getPrenotazione(data, fascia);
+                ObjectMapper mapper = new ObjectMapper();
+                pr.write("{\"Id\" :"+ mapper.writeValueAsString(list) +"}");
+            }
 
         }
         catch (Exception e) {

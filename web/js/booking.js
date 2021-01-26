@@ -120,7 +120,8 @@ function seatState(){
             type: 'post',
             data: {
                 'DataPrenotazione': thisday,
-                'FasciaOraria': timeslot
+                'FasciaOraria': timeslot,
+                'rtype': 'getSeats'
             },
             success: function (data) {
                 $.each(data.Id, function(key, val){

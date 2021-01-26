@@ -180,7 +180,7 @@ public class Database {
      */
     public static boolean setEntry(LocalDate thisday, int userId, int ts, LocalTime thistime) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=? AND (P.fasciaOraria=? OR P.fasciaOraria=0)";
-        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setDate(1, Date.valueOf(thisday));
             statement.setInt(2, userId);
             statement.setInt(3, ts);
@@ -189,6 +189,8 @@ public class Database {
                 result.getTime("oraIngresso");
                 if(result.wasNull()){
                     result.updateTime("oraIngresso", Time.valueOf(thistime));
+                    result.updateRow();
+                    System.out.println(result.getTime("oraIngresso"));
                     return true;
                 }else return false;
             } else return false;
@@ -222,7 +224,7 @@ public class Database {
 
     public static boolean setExit(LocalDate thisday, int userId, LocalTime thistime) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=?";
-        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setDate(1, Date.valueOf(thisday));
             statement.setInt(2, userId);
             ResultSet result = statement.executeQuery();
@@ -232,6 +234,7 @@ public class Database {
                     result.getTime("oraUscita");
                     if(result.wasNull()){
                         result.updateTime("oraUscita", Time.valueOf(thistime));
+                        result.updateRow();
                         return true;
                     } else return false;
                 }else return false;
