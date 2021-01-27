@@ -27,9 +27,10 @@ function booksum(){
             'rtype': 'getBooks'
         },
         success: function (data) {
-            $.each(data.Id, function(key, val){
-                $('#g-0'+val).data('status', 'O');
-                $('#p-0'+val).removeClass().addClass('st0-occupied');
+            $.each(data.Prenotazioni, function(key, val){
+                var d1 = val.dataPrenotazione;
+                console.log(d1.toLocaleString());
+                //VAL.NOMECAMPO
             });
         },
         error: function (errorThrown) {

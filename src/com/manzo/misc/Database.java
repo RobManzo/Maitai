@@ -11,6 +11,7 @@ import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -170,6 +171,12 @@ public class Database {
         }
     }
 
+    /**
+     * Metodo per ottenere la lista delle prenotazioni riguardo un utente
+     * @param u
+     * @return
+     * @throws SQLException
+     */
     public static List<Prenotazione> getPrenotazione(Utente u) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.Utenti_idUtente=? ORDER BY P.dataPrenotazione DESC";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
@@ -177,8 +184,18 @@ public class Database {
             statement.setInt(1, u.getIdUtente());
             ResultSet result = statement.executeQuery();
             while(result.next()){
-                    pren.add(new Prenotazione(result.getInt("idPrenotazione"), result.getDate("dataEsecuzione"), result.getDate("dataPrenotazione"), result.getInt("idPostazione"), result.getTime("oraIngresso"), result.getTime("oraUscita"), result.getInt("fasciaOraria")));
-            }return pren;
+                LocalTime enter;
+                LocalTime exit;
+                result.getTime("oraIngresso");
+                if(result.wasNull()){
+                    enter = null;
+                }else enter = result.getTime("oraIngresso").toLocalTime();
+                result.getTime("oraUscita");
+                if (result.wasNull()){
+                    exit = null;
+                } else exit = result.getTime("oraUscita").toLocalTime();
+                    pren.add(new Prenotazione(result.getInt("idPrenotazione"), LocalDate.parse(result.getDate("dataEsecuzione").toString()), LocalDate.parse(result.getDate("dataPrenotazione").toString()), result.getString("idPostazione"), enter, exit, result.getInt("fasciaOraria")));
+            } return pren;
         }
     }
 

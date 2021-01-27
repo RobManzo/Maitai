@@ -1,5 +1,7 @@
 package com.manzo.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.manzo.entities.Prenotazione;
 import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
 import com.manzo.misc.Miscellaneous;
@@ -12,20 +14,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(name="ownbooksServlet", urlPatterns={"/cliente/ownbooks"})
-public class ownbooks extends HttpServlet {
+public class ownbooksServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
-            Utente u = (Utente) request.getSession().getAttribute("user");
+            Utente user = (Utente) request.getSession().getAttribute("user");
 
             if(request.getParameter("rtype").equals("getBooks")){
-
-                pr.write("");
+                List<Prenotazione> prenotazioni = Database.getPrenotazione(user);
+                ObjectMapper mapper = new ObjectMapper();
+                pr.write("{\"Prenotazioni\" :"+ mapper.writeValueAsString(prenotazioni) +"}");
             }
         }
         catch (Exception e) {

@@ -40,7 +40,7 @@
         <script src="/Maitai/assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
         <script src="/Maitai/js/scripts.js"></script>
-        <script src="/Maitai/js/base.js"></script>
+        <script src="/Maitai/js/ownbooks.js"></script>
 
     </body>
 </html>
