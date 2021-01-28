@@ -172,12 +172,42 @@ public class Database {
     }
 
     /**
+     * Metodo per ottenere la prenotazione specificata
+     * @param u
+     * @return
+     * @throws SQLException
+     */
+    public static Prenotazione getPrenotazione(Utente u, int id) throws SQLException {
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.Utenti_idUtente=? AND P.idPrenotazione=?";
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            Prenotazione pren;
+            statement.setInt(1, u.getIdUtente());
+            statement.setInt(2, id);
+            ResultSet result = statement.executeQuery();
+            if(result.next()){
+                LocalTime enter;
+                LocalTime exit;
+                result.getTime("oraIngresso");
+                if(result.wasNull()){
+                    enter = null;
+                }else enter = result.getTime("oraIngresso").toLocalTime();
+                result.getTime("oraUscita");
+                if (result.wasNull()){
+                    exit = null;
+                } else exit = result.getTime("oraUscita").toLocalTime();
+                pren = new Prenotazione(result.getInt("idPrenotazione"), LocalDate.parse(result.getDate("dataEsecuzione").toString()), LocalDate.parse(result.getDate("dataPrenotazione").toString()), result.getString("idPostazione"), enter, exit, result.getInt("fasciaOraria"), result.getDouble("price"));
+                return pren;
+            } else return null;
+        }
+    }
+
+    /**
      * Metodo per ottenere la lista delle prenotazioni riguardo un utente
      * @param u
      * @return
      * @throws SQLException
      */
-    public static List<Prenotazione> getPrenotazione(Utente u) throws SQLException {
+    public static List<Prenotazione> getPrenotazioni(Utente u) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.Utenti_idUtente=? ORDER BY P.dataPrenotazione DESC";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             List<Prenotazione> pren = new ArrayList<>();
@@ -194,10 +224,29 @@ public class Database {
                 if (result.wasNull()){
                     exit = null;
                 } else exit = result.getTime("oraUscita").toLocalTime();
-                    pren.add(new Prenotazione(result.getInt("idPrenotazione"), LocalDate.parse(result.getDate("dataEsecuzione").toString()), LocalDate.parse(result.getDate("dataPrenotazione").toString()), result.getString("idPostazione"), enter, exit, result.getInt("fasciaOraria")));
+                    pren.add(new Prenotazione(result.getInt("idPrenotazione"), LocalDate.parse(result.getDate("dataEsecuzione").toString()), LocalDate.parse(result.getDate("dataPrenotazione").toString()), result.getString("idPostazione"), enter, exit, result.getInt("fasciaOraria"), result.getDouble("price")));
             } return pren;
         }
     }
+
+    /**
+     * Metodo per eliminare la prenotazione specificata
+     * @param u
+     * @return
+     * @throws SQLException
+     */
+    public static boolean deletePrenotazione(Utente u, int id) throws SQLException {
+        String query = "DELETE FROM manzo.prenotazioni AS P WHERE P.Utenti_idUtente=? AND P.idPrenotazione=?";
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            statement.setInt(1, u.getIdUtente());
+            statement.setInt(2, id);
+            int rowdeleted = statement.executeUpdate();
+            if(rowdeleted > 0) return true;
+            else return false;
+        }
+    }
+
+
 
     /**
      * Metodo per il settaggio dell'orario di accesso alla struttura

@@ -10097,7 +10097,7 @@ img::-moz-selection {
 
 #mainNav .navbar-brand-two img {
     height: 2rem;
-    padding-bottom: 1 rem;
+    padding-bottom: 1rem;
 }
 
 #mainNav .navbar-nav .nav-item .nav-link {
@@ -10641,4 +10641,12 @@ small{
 
 .fill-window{
   height: -webkit-fill-available;
+}
+
+#booktab{
+  align-content: start !important;
+}
+
+a{
+  cursor: pointer;
 }

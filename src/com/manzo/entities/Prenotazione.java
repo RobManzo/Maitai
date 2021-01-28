@@ -12,8 +12,9 @@ public class Prenotazione {
     private LocalTime oraIngresso;
     private LocalTime oraUscita;
     private int fasciaOraria;
+    private double price;
 
-    public Prenotazione(int idPrenotazione, LocalDate dataEsecuzione, LocalDate dataPrenotazione, String idPostazione, LocalTime oraIngresso, LocalTime oraUscita, int fasciaOraria) {
+    public Prenotazione(int idPrenotazione, LocalDate dataEsecuzione, LocalDate dataPrenotazione, String idPostazione, LocalTime oraIngresso, LocalTime oraUscita, int fasciaOraria, double price) {
         this.idPrenotazione = idPrenotazione;
         this.dataEsecuzione = dataEsecuzione;
         this.dataPrenotazione = dataPrenotazione;
@@ -21,6 +22,7 @@ public class Prenotazione {
         this.oraIngresso = oraIngresso;
         this.oraUscita = oraUscita;
         this.fasciaOraria = fasciaOraria;
+        this.price = price;
     }
 
     public Prenotazione(LocalDate dataPrenotazione, String idPostazione, int fasciaOraria) {
@@ -60,5 +62,9 @@ public class Prenotazione {
     public int getFasciaOraria() { return fasciaOraria; }
 
     public void setFasciaOraria(int fasciaOraria) { this.fasciaOraria = fasciaOraria; }
+
+    public double getPrice() { return price; }
+
+    public void setPrice(double price) { this.price = price; }
 
 }

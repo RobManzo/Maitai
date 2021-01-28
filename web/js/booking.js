@@ -13,7 +13,6 @@ $(document).ready(function () {
     Snap.load("/Maitai/assets/img/svg/lido.svg", function(f){           //Caricamento SVG postazioni
 
         seatState();
-        console.log(selected);
 
         f.selectAll('[id^="r-"]').forEach(function(el){
 
@@ -76,6 +75,7 @@ function insertRow(sel) {
         $('#tabella').append('<tr id=' + '\'#riga\#' + id + '\'> <th scope="row">' + id + '</th> <td>' + getTimeslot(timeslot).toString() + '</td> <td>' + setPrice(id).toFixed(2) + '€</td> <td> </td>  </tr>');
         tot += setPrice(id);
     });
+
     $('#details').append('<div style="text-align: right; margin-right: 4rem;" id="totale"><b> TOTALE ' + tot.toFixed(2) + '€</b></div>');
     $('#details').append('<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#payment"> Conferma e paga </button>');
 };

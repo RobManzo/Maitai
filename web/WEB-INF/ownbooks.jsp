@@ -22,10 +22,10 @@
         <!-- Navigation -->
         <%@ include file="/WEB-INF/navbar.jsp"%>
 
-        <div class="page-section row fill-window" id="booktab" style="background-color: antiquewhite; align-content: center;">
+        <div class="page-section row fill-window" id="booktab" style="background-color: antiquewhite; align-content: center;"> </div>
 
-
-        </div>
+        <div class="modal fade" id="infobox"> </div>
+        <div class="modal fade" id="delconf"> </div>
 
         <!-- Footer-->
         <div class="footer"><%@ include file="/WEB-INF/footer.jsp"%></div>

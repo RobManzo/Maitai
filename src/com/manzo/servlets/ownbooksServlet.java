@@ -27,9 +27,21 @@ public class ownbooksServlet extends HttpServlet {
             Utente user = (Utente) request.getSession().getAttribute("user");
 
             if(request.getParameter("rtype").equals("getBooks")){
-                List<Prenotazione> prenotazioni = Database.getPrenotazione(user);
+                List<Prenotazione> prenotazioni = Database.getPrenotazioni(user);
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Prenotazioni\" :"+ mapper.writeValueAsString(prenotazioni) +"}");
+            }
+
+            else if(request.getParameter("rtype").equals("getPren")){
+                Prenotazione prenotazione = Database.getPrenotazione(user,Integer.parseInt(request.getParameter("idPren")));
+                ObjectMapper mapper = new ObjectMapper();
+                pr.write("{\"Prenotazione\" :"+ mapper.writeValueAsString(prenotazione) +"}");
+            }
+
+            else if(request.getParameter("rtype").equals("delPren")){
+                if(Database.deletePrenotazione(user,Integer.parseInt(request.getParameter("idPren")))){
+                    pr.write("{\"Message\" : Prenotazione cancellata con successo.}");
+                } else pr.write("{\"Message\" : Errore durante l'annullamento.}");
             }
         }
         catch (Exception e) {
