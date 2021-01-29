@@ -54,7 +54,7 @@ function booksum(){
                     timeslot = "Pomeriggio";
                 } else timeslot = "Fullday";
 
-                $('#tabella').append('<tr class="text-center"> <th scope="row">' + val.idPrenotazione + '</th> <td>' + date + '</td> <td>' + timeslot + '</td> <td>' + state + '</td> <td>' + pos + '</td> <td> <a onclick="infopren(IDPRENOTAZIONERIGA)"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png"></a> </td> <td></td>  </tr>');
+                $('#tabella').append('<tr class="text-center"> <th scope="row">' + val.idPrenotazione + '</th> <td>' + date + '</td> <td>' + timeslot + '</td> <td>' + state + '</td> <td>' + pos + '</td> <td> <a href="#" class="prenotazione" id="' + val.idPrenotazione + '" onclick="infopren('+ val.idPrenotazione +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png"></a> </td> <td></td>  </tr>');
             });
         },
         error: function (errorThrown) {
@@ -103,7 +103,8 @@ function infopren(id) {
                 '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
                 '</div> ' +
                 '<div class="modal-body text-center" id="modalinfo"> </div> ' +
-                '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="delpren(IDPRESTAZIONE)">OK</button> '+
+                '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="delpren('+ pren.idPrenotazione +')">Elimina Prenotazione</button> '+
+                '<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>' +
                 '</div> </div> </div>';
 
             $('#infobox').html(mhead);
@@ -128,19 +129,25 @@ function delpren(id) {
             'idPren': id
         },
         success: function (data) {
+            $('#infobox').modal('dispose');
+            var message = data.message;
+
             var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
                 ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
                 '<div class="modal-header">  <h4 class="modal-title">Esito Annullamento</h4> ' +
                 '<button type="button" class="close" data-dismiss="modal text-center">&times;</button> ' +
                 '</div> ' +
-                '<div class="modal-body text-center"> Prenotazione cancellata con successo. </div> ' +
+                '<div class="modal-body text-center">'+ message+'. Ora verrai reinderizzato.</div> ' +
                 '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button> '+
                 '</div> </div> </div>';
 
             $('#delconf').html(mhead);
 
-            $('#infobox').modal('toggle');
             $('#delconf').modal('toggle');
+
+            setTimeout(function() {
+                location.reload();
+            }, 5000);
 
         },
         error: function (errorThrown) {

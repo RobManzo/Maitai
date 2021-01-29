@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.entities.Prenotazione;
 import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
-import com.manzo.misc.Miscellaneous;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,8 +39,8 @@ public class ownbooksServlet extends HttpServlet {
 
             else if(request.getParameter("rtype").equals("delPren")){
                 if(Database.deletePrenotazione(user,Integer.parseInt(request.getParameter("idPren")))){
-                    pr.write("{\"Message\" : Prenotazione cancellata con successo.}");
-                } else pr.write("{\"Message\" : Errore durante l'annullamento.}");
+                    pr.write("{\"status\" : \"error\", \"message\" : \"Eliminazione effettuata con successo\"}");
+                } else pr.write("{\"status\" : \"error\", \"message\" : \"Errore durante l'eliminazione.\"}");
             }
         }
         catch (Exception e) {
