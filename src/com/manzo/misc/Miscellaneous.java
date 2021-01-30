@@ -1,5 +1,6 @@
 package com.manzo.misc;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Miscellaneous {
@@ -51,4 +52,10 @@ public class Miscellaneous {
             return 2;
         } else return -1;
     }
+
+    public static boolean checkDate(LocalDate datapren){
+        LocalDate now = LocalDate.now();
+        return now.compareTo(datapren)>=0;
+    }
+
 }

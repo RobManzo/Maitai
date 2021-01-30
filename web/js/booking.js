@@ -122,9 +122,16 @@ function seatState(){
                 'rtype': 'getSeats'
             },
             success: function (data) {
-                $.each(data.Id, function(key, val){
-                    $('#g-0'+val).data('status', 'O');
-                    $('#p-0'+val).removeClass().addClass('st0-occupied');
+                var id = data.Id;
+                id.forEach(function (x) {
+                    if(x<10){
+                        $('#g-0'+x).data('status', 'O');
+                        $('#p-0'+x).removeClass().addClass('st0-occupied');
+
+                    } else {
+                        $('#g-'+x).data('status', 'O');
+                        $('#p-'+x).removeClass().addClass('st0-occupied');
+                    }
                 });
             },
             error: function (errorThrown) {
@@ -161,6 +168,7 @@ function getTimeslot(ts){
  */
 function loadDate() {
     var timestamp = new Date();
+    timestamp.setDate(timestamp.getDate() + 1);
     var dd = timestamp.getDate();
     var mm = timestamp.getMonth()+1;
     var yyyy = timestamp.getFullYear();
@@ -175,11 +183,13 @@ function loadDate() {
     var today = dd+'/'+mm+'/'+yyyy;
     $('#selectday').append('<option selected>'+today+'</option>');
 
-    for(i=1; i<=6; i++){
-        timestamp.setDate(new Date().getDate()+i);
-        var dd = timestamp.getDate();
-        var mm = timestamp.getMonth()+1;
-        var yyyy = timestamp.getFullYear();
+    var ts = new Date();
+    ts.setDate(ts.getDate() + 2);
+
+    for(i=0; i<=5; i++){
+        var dd = ts.getDate()+i;
+        var mm = ts.getMonth()+1;
+        var yyyy = ts.getFullYear();
         if(dd<10){
             dd='0'+dd
         }
@@ -208,8 +218,21 @@ function setPrice(id) {
 };
 
 function pagamento() {
+    if(selected.length === 0){
+        $('#payment').modal('toggle');
+        alert('Nessuna postazione selezionata!');
+        return;
+    }
+    var sel=[];
+    selected.forEach(function (x) {
+        x = x.substring(2);
+        if(x.charAt(0) === '0'){
+            x = x.substring(1);
+        }
+        sel.push(x);
+        });
 
-    var postazioni = selected.join(",");
+    var postazioni = sel.join(",");
 
     $.ajax({
         url: './booking',

@@ -236,7 +236,7 @@ public class Database {
      * @throws SQLException
      */
     public static boolean insertPrenotazione(Utente u, int ts, LocalDate datapren, String pos, Double prezzo) throws SQLException {
-        String query = "INSERT INTO manzo.prenotazioni (dataPrenotazione, idPostazione, fasciaOraria, Utenti_idUtente, price, dataEsecuzione) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO manzo.prenotazioni (dataPrenotazione, idPostazione, fasciaOraria, Utenti_idUtente, price, dataEsecuzione) VALUES (?,?,?,?,?,?)";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setDate(1, Date.valueOf(datapren));
             statement.setString(2, pos);
@@ -336,5 +336,7 @@ public class Database {
             } else return false;
         }
     }
+
+
 
 }
