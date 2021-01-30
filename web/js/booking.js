@@ -103,8 +103,6 @@ function seatState(){
     $('#details').html(intestazione);
     $('#details').append('<div style="text-align: right; margin-right: 4rem;" id="totale"><b> TOTALE ' + tot.toFixed(2) + '€</b></div>');
     $('#details').append('<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#payment"> Conferma e paga </button>');
-    console.log(thisday);
-    console.log(timeslot);
 
     Snap.selectAll('[id^="r-"]').forEach(function(el){
         var elem = el.parent();
@@ -211,6 +209,41 @@ function setPrice(id) {
 
 function pagamento() {
 
-//PARSING E AJAX POST
+    var postazioni = selected.join(",");
+
+    $.ajax({
+        url: './booking',
+        dataType: 'json',
+        type: 'post',
+        data: {
+            'Postazioni': postazioni,
+            'DataPrenotazione': thisday,
+            'FasciaOraria': timeslot,
+            'Prezzo': tot,
+            'rtype': 'setBook'
+        },
+        success: function (data) {
+            var message = data.message;
+
+            var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
+                ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
+                '<div class="modal-header">  <h4 class="modal-title">Esito Prenotazione</h4> ' +
+                '<button type="button" class="close" data-dismiss="modal text-center">&times;</button> ' +
+                '</div> ' +
+                '<div class="modal-body text-center">'+ message+'. Ora verrai reinderizzato.</div> ' +
+                '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button> '+
+                '</div> </div> </div>';
+
+            $('#payment').modal('dispose');
+            $('#confirmpayment').modal('toggle');
+            setTimeout(function() {
+                location.reload();
+            }, 5000);
+
+        },
+        error: function (errorThrown) {
+            console.log(errorThrown);
+        }
+    });
 
 };

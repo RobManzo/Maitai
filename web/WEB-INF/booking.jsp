@@ -63,7 +63,7 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    Modal body..
+                    Confermi la tua prenotazione?
                 </div>
 
                 <!-- Modal footer -->
@@ -75,6 +75,7 @@
         </div>
     </div>
 
+    <div class="modal fade" id="confirmpayment"></div>
 
 
     <!-- Footer-->

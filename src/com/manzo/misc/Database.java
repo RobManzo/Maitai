@@ -230,6 +230,25 @@ public class Database {
     }
 
     /**
+     * Metodo per l'inserimento di una nuova prenotazione nel DB
+     * @param u
+     * @return
+     * @throws SQLException
+     */
+    public static boolean insertPrenotazione(Utente u, int ts, LocalDate datapren, String pos, Double prezzo) throws SQLException {
+        String query = "INSERT INTO manzo.prenotazioni (dataPrenotazione, idPostazione, fasciaOraria, Utenti_idUtente, price, dataEsecuzione) VALUES (?,?,?,?,?)";
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            statement.setDate(1, Date.valueOf(datapren));
+            statement.setString(2, pos);
+            statement.setInt(3, ts);
+            statement.setInt(4, u.getIdUtente());
+            statement.setDouble(5, prezzo);
+            statement.setDate(6, Date.valueOf(LocalDate.now()));
+            return statement.executeUpdate() > 0;
+        }
+    }
+
+    /**
      * Metodo per eliminare la prenotazione specificata
      * @param u
      * @return
@@ -240,9 +259,7 @@ public class Database {
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setInt(1, u.getIdUtente());
             statement.setInt(2, id);
-            int rowdeleted = statement.executeUpdate();
-            if(rowdeleted > 0) return true;
-            else return false;
+            return statement.executeUpdate() > 0;
         }
     }
 
