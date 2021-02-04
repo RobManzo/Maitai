@@ -35,7 +35,7 @@
             </div>
 
             <div class="container col-md-3 align-items-center py-2 text-center">
-                <a href="${pageContext.request.contextPath}/food">
+                <a href="${pageContext.request.contextPath}/cliente/food">
                     <div class="limit">
                         <img class="img-responsive" src="\Maitai\assets\img\burger.png">
                     </div>

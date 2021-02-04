@@ -1,6 +1,7 @@
 package com.manzo.misc;
 
 import com.manzo.entities.Prenotazione;
+import com.manzo.entities.Prodotto;
 import com.manzo.entities.Utente;
 
 import javax.naming.Context;
@@ -334,6 +335,23 @@ public class Database {
                     } else return false;
                 }else return false;
             } else return false;
+        }
+    }
+
+    /**
+     * Metodo per ottenere i prodotti dal DB
+     * @return
+     * @throws SQLException
+     */
+    public static List<Prodotto> getProd() throws SQLException {
+        String query = "SELECT * FROM manzo.prodotti";
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet result = statement.executeQuery();
+            List<Prodotto> products = new ArrayList<>();
+            while (result.next()){
+                Prodotto p = new Prodotto(result.getInt("idProdotto"), result.getString("nome"), result.getString("ingredienti"), result.getString("descrizione"), result.getBigDecimal("importo"), result.getString("categoria"));
+                products.add(p);
+            } return products;
         }
     }
 

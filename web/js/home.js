@@ -10,7 +10,7 @@ function accesso(){
         dataType: 'json',
         type: 'post',
         data: {
-            'rtype' : 'setEntry',
+            'rtype' : 'setEntry'
         },
         success: function (data) {
             if(data.status == 'ok'){

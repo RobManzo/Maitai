@@ -22,10 +22,203 @@
         <!-- Navigation -->
         <%@ include file="/WEB-INF/navbar.jsp"%>
 
-
+        <div class="page-section w-100" style="background-color: antiquewhite;">
+            <div class="row">
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="eCommerce Product List" src="\Maitai\assets\img\book.png" />
+                            <h3 class="pt-2">Cartoccio</h3>
+                            <h3 class="float-xs-right">2.00€</h3>
+                            <small>acqua, anidride carbonica, zucchero, colorante caramello(E150D), aromi naturali, caffeina, acido fosforico(E338)</small>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="Bootstrap template" src="\Maitai\assets\img\book.png" />
+                            <h3 class="pt-2">Lasagne</h3>
+                            <h3 class="float-xs-right">5.00€</h3>
+                            <small>acqua,anidride carbonica</small>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="Bootstrap template" src="\Maitai\assets\img\book.png" />
+                            <br />
+                            <h3 class="pt-2">Acqua</h3>
+                            <h3 class="float-xs-right">4.00€</h3>
+                            <div class="container flex-fill">
+                                <small>acqua</small>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="Bootstrap template" src="\Maitai\assets\img\book.png" />
+                            <br />
+                            <h3 class="pt-2">Acqua</h3>
+                            <h3 class="float-xs-right">4.00€</h3>
+                            <div class="container flex-fill">
+                                <small>acqua</small>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="eCommerce Product List" src="\Maitai\assets\img\book.png" />
+                            <h3 class="pt-2">Cartoccio</h3>
+                            <h3 class="float-xs-right">2.00€</h3>
+                            <small>acqua, anidride carbonica, zucchero, colorante caramello(E150D), aromi naturali, caffeina, acido fosforico(E338)</small>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="Bootstrap template" src="\Maitai\assets\img\book.png" />
+                            <h3 class="pt-2">Lasagne</h3>
+                            <h3 class="float-xs-right">5.00€</h3>
+                            <small>acqua,anidride carbonica</small>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="Bootstrap template" src="\Maitai\assets\img\book.png" />
+                            <br />
+                            <h3 class="pt-2">Acqua</h3>
+                            <h3 class="float-xs-right">4.00€</h3>
+                            <div class="container flex-fill">
+                                <small>acqua</small>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="Bootstrap template" src="\Maitai\assets\img\book.png" />
+                            <br />
+                            <h3 class="pt-2">Acqua</h3>
+                            <h3 class="float-xs-right">4.00€</h3>
+                            <div class="container flex-fill">
+                                <small>acqua</small>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="eCommerce Product List" src="\Maitai\assets\img\book.png" />
+                            <h3 class="pt-2">Cartoccio</h3>
+                            <h3 class="float-xs-right">2.00€</h3>
+                            <small>acqua, anidride carbonica, zucchero, colorante caramello(E150D), aromi naturali, caffeina, acido fosforico(E338)</small>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="Bootstrap template" src="\Maitai\assets\img\book.png" />
+                            <h3 class="pt-2">Lasagne</h3>
+                            <h3 class="float-xs-right">5.00€</h3>
+                            <small>acqua,anidride carbonica</small>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="Bootstrap template" src="\Maitai\assets\img\book.png" />
+                            <br />
+                            <h3 class="pt-2">Acqua</h3>
+                            <h3 class="float-xs-right">4.00€</h3>
+                            <div class="container flex-fill">
+                                <small>acqua</small>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:15px;">
+                    <div style="display:inline-block; padding:15px">
+                        <div>
+                            <img class="img card-img" alt="Bootstrap template" src="\Maitai\assets\img\book.png" />
+                            <br />
+                            <h3 class="pt-2">Acqua</h3>
+                            <h3 class="float-xs-right">4.00€</h3>
+                            <div class="container flex-fill">
+                                <small>acqua</small>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="btn-ground text-xs-center" style="padding-bottom: 30px">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Footer-->
-        <div class="footer"><%@ include file="/WEB-INF/footer.jsp"%></div>
+        <%@ include file="/WEB-INF/footer.jsp"%>
 
         <!-- Bootstrap core JS-->
         <script src="/Maitai/jquery/jquery.min.js"></script>
