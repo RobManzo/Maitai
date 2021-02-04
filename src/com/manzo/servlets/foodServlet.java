@@ -1,9 +1,8 @@
 package com.manzo.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.entities.Prodotto;
-import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
-import com.manzo.misc.Miscellaneous;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,8 +24,9 @@ public class foodServlet extends HttpServlet {
 
             if(request.getParameter("rtype").equals("getProd")){
                 List<Prodotto> products = Database.getProd();
-
-
+                ObjectMapper mapper = new ObjectMapper();
+                System.out.println(mapper.writeValueAsString(products));
+                pr.write("{\"Prodotto\" :"+ mapper.writeValueAsString(products) +"}");
             }
         }
         catch (Exception e) {
