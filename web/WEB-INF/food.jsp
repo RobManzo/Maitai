@@ -22,7 +22,7 @@
         <!-- Navigation -->
         <%@ include file="/WEB-INF/navbar.jsp"%>
 
-        <div class="page-section w-100 fill-window" style="background-color: antiquewhite;">
+        <div class="page-section w-100" style="background-color: antiquewhite;">
             <div class="row" id="prodotti"> </div>
         </div>
 

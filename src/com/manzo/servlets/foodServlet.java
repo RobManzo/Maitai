@@ -25,7 +25,6 @@ public class foodServlet extends HttpServlet {
             if(request.getParameter("rtype").equals("getProd")){
                 List<Prodotto> products = Database.getProd();
                 ObjectMapper mapper = new ObjectMapper();
-                System.out.println(mapper.writeValueAsString(products));
                 pr.write("{\"Prodotto\" :"+ mapper.writeValueAsString(products) +"}");
             }
         }

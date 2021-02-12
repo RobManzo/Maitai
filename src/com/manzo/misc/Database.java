@@ -175,6 +175,7 @@ public class Database {
     /**
      * Metodo per ottenere la prenotazione specificata
      * @param u
+     * @param id
      * @return
      * @throws SQLException
      */
@@ -233,6 +234,10 @@ public class Database {
     /**
      * Metodo per l'inserimento di una nuova prenotazione nel DB
      * @param u
+     * @param ts
+     * @param datapren
+     * @param pos
+     * @param prezzo
      * @return
      * @throws SQLException
      */
@@ -349,7 +354,7 @@ public class Database {
             ResultSet result = statement.executeQuery();
             List<Prodotto> products = new ArrayList<>();
             while (result.next()){
-                Prodotto p = new Prodotto(result.getInt("idProdotto"), result.getString("nome"), result.getString("ingredienti"), result.getString("descrizione"), result.getBigDecimal("importo"), result.getString("categoria"));
+                Prodotto p = new Prodotto(result.getInt("idProdotto"), result.getString("nome"), result.getString("ingredienti"), result.getString("descrizione"), result.getBigDecimal("importo"), result.getString("categoria"), result.getString("imgurl"));
                 products.add(p);
             } return products;
         }

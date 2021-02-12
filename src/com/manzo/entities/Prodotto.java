@@ -10,14 +10,16 @@ public class Prodotto {
     private String descrizione;
     private BigDecimal importo;
     private String categoria;
+    private String imgurl;
 
-    public Prodotto(int id, String nome, String ingredienti, String descrizione, BigDecimal importo, String categoria){
+    public Prodotto(int id, String nome, String ingredienti, String descrizione, BigDecimal importo, String categoria, String imgurl){
         this.idProdotto = id;
         this.nome = nome;
         this.ingredienti = ingredienti;
         this.descrizione = descrizione;
         this.importo = importo;
         this.categoria = categoria;
+        this.imgurl = imgurl;
     }
 
     public int getIdProdotto() {
@@ -66,5 +68,13 @@ public class Prodotto {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
     }
 }
