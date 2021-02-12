@@ -1,5 +1,5 @@
 var prodotti=[];
-var cart=[];
+var cart= new Map();
 
 $(document).ready(function () {
     loadprod();
@@ -45,7 +45,18 @@ function loadprod() {
 };
 
 function addToCart(id){
-    cart.push(id);
-    console.log(cart);
+    if(cart.has(id)){
+        let n = cart.get(id) + 1;
+        cart.set(id, n)
+    } else cart.set(id, 1);
+};
 
+function cartshow() {
+    cart.forEach(function (x,y) {
+        prodotti[0].forEach(function (p) {
+            if(p.idProdotto === y){
+                console.log(p);
+            }
+        })
+    });
 };
