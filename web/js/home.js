@@ -35,6 +35,8 @@ function accesso(){
                 $('#message').html('<p class="text-center">' + message + '</p>\n' +
                     '<img class="img-responsive" src="\\Maitai\\assets\\img\\allowed.png">');
                 $('#accessinfo').modal('toggle');
+                location.reload();
+
             } else if(data.status == 'error'){
                 var message = data.message;
 
@@ -84,6 +86,7 @@ function uscita() {
                 $('#message').html('<p class="text-center">' + message + '</p>\n' +
                     '<img class="img-responsive" src="\\Maitai\\assets\\img\\allowed.png">');
                 $('#accessinfo').modal('toggle');
+                location.reload();
 
             } else if(data.status == 'error'){
                 var message = data.message;
@@ -113,7 +116,7 @@ function checkEntry() {
             'rtype' : 'getEntry',
         },
         success: function (data) {
-            if(data.status == 'out'){
+            if(data.status === 'out'){
                 $('#entry').html('<a href="" data-toggle="modal" data-target="#access">\n' + '<div class="limit">\n' +
                     '<img class="img-responsive" src="\\Maitai\\assets\\img\\on.png">\n' +
                     '</div>\n' +
@@ -130,7 +133,11 @@ function checkEntry() {
                     '<img class="img-responsive" src="\\Maitai\\assets\\img\\qrcode.png"> ' +
                     '</div> <div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="accesso()">Accedi</button> ' +
                     '</div> </div> </div>');
-            } else if(data.status == 'in'){
+                $('#foodlink').addClass("noclickable");
+                $('#foodlink').attr("href", "#");
+                $('#food').attr('title', 'Devi entrare nella struttura per ordinare!');
+
+            } else if(data.status === 'in'){
                 $('#entry').html('<a href="" data-toggle="modal" data-target="#access">\n' + '<div class="limit">\n' +
                     '<img class="img-responsive" src="\\Maitai\\assets\\img\\off.png">\n' +
                     '</div>\n' +

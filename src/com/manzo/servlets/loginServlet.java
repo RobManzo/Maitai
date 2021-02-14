@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
@@ -26,8 +29,14 @@ public class loginServlet extends HttpServlet {
                 if (utente == null) {
                     response.sendError(400);
                 }
+                String getentry;
+                if(Database.getEntry(LocalDate.now(), utente.getIdUtente())) getentry="true";
+                else getentry="false";
+
                 request.getSession().setAttribute("user", utente);
-                request.getSession().setAttribute("userId", utente.getIdUtente());                                      //Salvo l'id in un parametro della sessione
+                request.getSession().setAttribute("entry", getentry);
+                request.getSession().setAttribute("cart", new HashMap<String,Integer>());                              //Inizializzo il carrello vuoto nella sessione
+                request.getSession().setAttribute("userId", utente.getIdUtente());                                     //Salvo l'id in un parametro della sessione
 
                 //Se l'utente è entrato nella struttura per una prenotazione, setAttribute("prenotazione", pren); CONTROLLO
             } catch (SQLException throwables) {
@@ -48,7 +57,6 @@ public class loginServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login.jsp");
             dispatcher.forward(request, response);
         }
-
 
     }
 }

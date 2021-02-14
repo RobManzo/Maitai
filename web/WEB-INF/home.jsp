@@ -34,8 +34,8 @@
                 <p class="text-muted">Prenota o consulta le tue prenotazioni.</p>
             </div>
 
-            <div class="container col-md-3 align-items-center py-2 text-center">
-                <a href="${pageContext.request.contextPath}/cliente/food">
+            <div class="container col-md-3 align-items-center py-2 text-center" id="food">
+                <a href="${pageContext.request.contextPath}/cliente/food" id="foodlink">
                     <div class="limit">
                         <img class="img-responsive" src="\Maitai\assets\img\burger.png">
                     </div>

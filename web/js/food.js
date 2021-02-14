@@ -1,7 +1,9 @@
 var prodotti=[];
-var cart= new Map();
+var cart = new Map();
 
 $(document).ready(function () {
+    cart= new Map();
+    $("#addtocart").hide();
     loadprod();
 });
 
@@ -15,7 +17,7 @@ function loadprod() {
         },
         success: function (data) {
             prodotti.push(data.Prodotto);
-            console.log(prodotti);
+            console.log(prodotti[0]);
             $.each(data.Prodotto, function(key, val){
                 var nome = val.nome;
                 var ingredienti = val.ingredienti;
@@ -42,21 +44,99 @@ function loadprod() {
             }
     });
 
+    $.ajax({
+        url: './food',
+        dataType: 'json',
+        type: 'post',
+        data: {
+            'rtype' : 'getCart'
+        },
+        success: function (data) {
+            var tempcart = data.Carrello;
+            for (const [key, value] of Object.entries(tempcart)) {
+                cart.set(key, value);
+            }
+            console.log(cart);
+        },
+        error: function (errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+
 };
 
 function addToCart(id){
-    if(cart.has(id)){
-        let n = cart.get(id) + 1;
-        cart.set(id, n)
-    } else cart.set(id, 1);
+    let idstring = String(id);
+    if(cart.has(idstring)){
+        let n = cart.get(idstring) + 1;
+        cart.set(idstring, n)
+    } else cart.set(idstring, 1);
+
+    var parsedcart=JSON.stringify(mapToObj(cart));
+
+    console.log(cart);
+
+    $.ajax({
+        url: './food',
+        dataType: 'json',
+        type: 'post',
+        data: {
+            'rtype' : 'upCart',
+            'localcart' : parsedcart
+        },
+        success: function (data) {
+            let mess = data.Message;
+            $("#addtocart").html(mess);
+            $("#addtocart").fadeTo(2000, 500).slideUp(500, function(){
+                $("#addtocart").slideUp(500);
+            });
+
+        },
+        error: function (errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+
 };
 
+function removeFromCart(id) {
+
+
+};
+
+
 function cartshow() {
+    var intestazione = '<table class=\" table table-striped text-center\">' +
+        ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
+        '<th scope="col">ID Prodotto</th> ' +
+        '<th scope="col">Nome Prodotto</th>' +
+        '<th scope="col">Quantità</th> ' +
+        '<th scope="col">Costo</th> ' +
+        '<th scope="col"></th> ' +
+        '</tr> ' +
+        '</thead>' +
+        '<tbody id="tabella">' +
+        '</tbody>'
+    '</table>';
+
+    $('#modalinfo').html(intestazione);
+
     cart.forEach(function (x,y) {
         prodotti[0].forEach(function (p) {
-            if(p.idProdotto === y){
-                console.log(p);
+            if(String(p.idProdotto) === y){
+                $('#tabella').append('<tr class="text-center"> <th scope="row"> '+ p.idProdotto +' </th> <td>'+ p.nome +'</td> <td>'+ x +'</td> <td>'+ parseFloat(p.importo).toFixed(2) +'€</td> <td></td> </tr>');
             }
         })
     });
+
+    $('#cartmodal').modal('toggle');
+
 };
+
+function mapToObj(mp){
+    let obj = Object.create(null);
+    mp.forEach(function (x,y) {
+        obj[y] = x;
+    })
+    return obj;
+}

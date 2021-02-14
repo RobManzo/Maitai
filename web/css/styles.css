@@ -10651,3 +10651,8 @@ small{
 .active{
   background-color: #c48a00 !important;
 }
+
+.noclickable{
+  pointer-events: none;
+  cursor: not-allowed;
+}

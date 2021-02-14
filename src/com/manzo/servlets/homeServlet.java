@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.HashMap;
 
 @WebServlet(name="homeServlet", urlPatterns={"/cliente/home"})
 public class homeServlet extends HttpServlet {
@@ -28,7 +29,7 @@ public class homeServlet extends HttpServlet {
             LocalTime time = LocalTime.now(ZoneId.of("GMT+1"));
             int ts = Miscellaneous.getTimeslot(time);
             int userid =((Utente) request.getSession().getAttribute("user")).getIdUtente();
-            System.out.println("ID DELL'UTENTE " +userid);
+            System.out.println("ID DELL'UTENTE " +userid+ " Dentro? : " +request.getSession().getAttribute("entry"));
 
             if(request.getParameter("rtype").equals("setEntry")){
 
@@ -37,18 +38,29 @@ public class homeServlet extends HttpServlet {
                     return;
                 }
 
-                if(Database.setEntry(data, userid, ts, time)) pr.write("{\"status\" : \"ok\", \"message\" : \"Entrata autorizzata.\"}");
-                 else pr.write("{\"status\" : \"error\", \"message\" : \"Non sei autorizzato ad entrare. Controlla le tue prenotazioni.\"}");
+                if(Database.setEntry(data, userid, ts, time)){
+                    request.getSession().setAttribute("entry", "true");
+                    pr.write("{\"status\" : \"ok\", \"message\" : \"Entrata autorizzata.\"}");
+                }
+                else pr.write("{\"status\" : \"error\", \"message\" : \"Non sei autorizzato ad entrare. Controlla le tue prenotazioni.\"}");
             }
 
             else if(request.getParameter("rtype").equals("getEntry")){
-                if(Database.getEntry(data, userid)) pr.write("{\"status\" : \"in\"}");
-                    else pr.write("{\"status\" : \"out\"}");
+                if(Database.getEntry(data, userid)){
+                    request.getSession().setAttribute("entry", "true");
+                    pr.write("{\"status\" : \"in\"}");
+                } else{
+                    request.getSession().setAttribute("entry", "false");
+                    pr.write("{\"status\" : \"out\"}");
+                }
             }
 
             else if(request.getParameter("rtype").equals("setExit")){
-                if(Database.setExit(data,userid, time)) pr.write("{\"status\" : \"ok\", \"message\" : \"Uscita autorizzata.\" }");
-                else pr.write("{\"status\" : \"error\", \"message\" : \"Non sei autorizzato ad uscire.\"}");
+                if(Database.setExit(data,userid, time)){
+                    request.getSession().setAttribute("cart", new HashMap<String, Integer>());
+                    request.getSession().setAttribute("entry", "false");
+                    pr.write("{\"status\" : \"ok\", \"message\" : \"Uscita autorizzata.\" }");
+                } else pr.write("{\"status\" : \"error\", \"message\" : \"Non sei autorizzato ad uscire.\"}");
             }
         }
         catch (Exception e) {
