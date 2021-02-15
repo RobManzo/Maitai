@@ -49,6 +49,7 @@ public class Database {
      * @return
      * @throws SQLException
      */
+
     public static Utente takeUser(String email) throws SQLException{
         String query1 = "SELECT * FROM manzo.utenti AS U WHERE U.email=?";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query1)) {
@@ -74,6 +75,7 @@ public class Database {
      * @param password
      * @throws SQLException
      */
+
     public static void userSignIn(String nome, String cognome, String email, String codFisc, String telefono, LocalDate dataNasc, String password, String indirizzo, String provincia) throws SQLException{
         String query1 = "INSERT INTO manzo.utenti (email, pass, nome, cognome, codFisc, telefono, dataNasc, ruolo, indirizzo, provincia) " +
                 "VALUES (?, SHA2(?, 256), ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -119,6 +121,7 @@ public class Database {
      * @param length
      * @return
      */
+
     public static String generateRandomPassword(int length) {
         String character = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         String password="";
@@ -344,7 +347,7 @@ public class Database {
     }
 
     /**
-     * Metodo per ottenere i prodotti dal DB
+     * Metodo per ottenere tutti i prodotti presenti nel DB
      * @return
      * @throws SQLException
      */
@@ -357,6 +360,25 @@ public class Database {
                 Prodotto p = new Prodotto(result.getInt("idProdotto"), result.getString("nome"), result.getString("ingredienti"), result.getString("descrizione"), result.getBigDecimal("importo"), result.getString("categoria"), result.getString("imgurl"));
                 products.add(p);
             } return products;
+        }
+    }
+
+    /**
+     * Metodo per ottenere il prodotto specificato
+     * @param idProd
+     * @return
+     * @throws SQLException
+     */
+
+    public static Prodotto getProd(int idProd) throws SQLException {
+        String query = "SELECT * FROM manzo.prodotti WHERE ";
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet result = statement.executeQuery();
+            Prodotto p;
+            if(result.next()){
+                p = new Prodotto(result.getInt("idProdotto"), result.getString("nome"), result.getString("ingredienti"), result.getString("descrizione"), result.getBigDecimal("importo"), result.getString("categoria"), result.getString("imgurl"));
+            } else p=null;
+            return p;
         }
     }
 

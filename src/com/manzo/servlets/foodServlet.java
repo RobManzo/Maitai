@@ -43,6 +43,7 @@ public class foodServlet extends HttpServlet {
             }
             else if(request.getParameter("rtype").equals("sendOrder")){
 
+
             }
         }
         catch (Exception e) {
