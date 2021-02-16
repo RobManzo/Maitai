@@ -1,5 +1,6 @@
 package com.manzo.misc;
 
+import com.manzo.entities.Ordine;
 import com.manzo.entities.Prenotazione;
 import com.manzo.entities.Prodotto;
 import com.manzo.entities.Utente;
@@ -11,6 +12,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
@@ -380,6 +382,22 @@ public class Database {
             } else p=null;
             return p;
         }
+    }
+
+    public static Ordine setOrder(int idOrdine) throws SQLException{
+
+        }
+
+    public static Ordine getOrder(int idOrdine) throws SQLException{
+        String query = "SELECT * FROM manzo.ordini AS O WHERE O.idOrdine=?";
+        try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, idOrdine);
+            ResultSet result = statement.executeQuery();
+            Ordine order;
+            if(result.next()){
+                order = new Ordine(result.getInt("idOrdine"), result.getTimestamp("dataOrdine"), result.getDouble("importo", result.getString("statoOrdine"), result.getString("prodotti")) );
+            }
+
     }
 
 

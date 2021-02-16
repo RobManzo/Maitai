@@ -1,18 +1,18 @@
 package com.manzo.entities;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class Ordine {
 
     private int id;
-    private LocalDate data;
+    private LocalDateTime data;
     private HashMap<String, Integer> prodotti;
     private double importo;
     private String stato;
     private String idPrenotazione;
 
-    public Ordine(int id, LocalDate data, HashMap<String, Integer> prodotti, double importo, String stato, String idPrenotazione){
+    public Ordine(int id, LocalDateTime data, HashMap<String, Integer> prodotti, double importo, String stato, String idPrenotazione){
         this.id = id;
         this.data = data;
         this.prodotti = prodotti;
@@ -30,11 +30,11 @@ public class Ordine {
         this.id = id;
     }
 
-    public LocalDate getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 
