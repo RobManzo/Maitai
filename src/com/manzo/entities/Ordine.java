@@ -1,18 +1,25 @@
 package com.manzo.entities;
 
+import javafx.util.Pair;
+
+import java.math.BigDecimal;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.StringJoiner;
 
 public class Ordine {
 
     private int id;
-    private LocalDateTime data;
-    private HashMap<String, Integer> prodotti;
-    private double importo;
+    private Timestamp data;
+    private HashMap<Integer, Pair<Integer, BigDecimal>> prodotti;
+    private BigDecimal importo;
     private String stato;
     private String idPrenotazione;
 
-    public Ordine(int id, LocalDateTime data, HashMap<String, Integer> prodotti, double importo, String stato, String idPrenotazione){
+    public Ordine(int id, Timestamp data, HashMap<Integer, Pair<Integer, BigDecimal>> prodotti, BigDecimal importo, String stato, String idPrenotazione){
         this.id = id;
         this.data = data;
         this.prodotti = prodotti;
@@ -30,20 +37,19 @@ public class Ordine {
         this.id = id;
     }
 
-    public LocalDateTime getData() {
+    public Timestamp getData() {
         return data;
     }
 
-    public void setData(LocalDateTime data) {
+    public void setData(Timestamp data) {
         this.data = data;
     }
 
-
-    public double getImporto() {
+    public BigDecimal getImporto() {
         return importo;
     }
 
-    public void setImporto(double importo) {
+    public void setImporto(BigDecimal importo) {
         this.importo = importo;
     }
 
@@ -63,11 +69,12 @@ public class Ordine {
         this.idPrenotazione = idPrenotazione;
     }
 
-    public HashMap<String, Integer> getProdotti() {
+    public HashMap<Integer, Pair<Integer, BigDecimal>> getProdotti() {
         return prodotti;
     }
 
-    public void setProdotti(HashMap<String, Integer> prodotti) {
+    public void setProdotti(HashMap<Integer, Pair<Integer, BigDecimal>> prodotti) {
         this.prodotti = prodotti;
     }
+
 }
