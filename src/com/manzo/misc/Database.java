@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.sql.Date;
+import java.text.Bidi;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -404,13 +405,14 @@ public class Database {
      * @throws SQLException
      */
     public static int setOrder(Ordine order, int idPren) throws SQLException {
-        String query = "INSERT INTO manzo.ordini (idOrdine, dataOrdine, importo, statoOrdine, prenotazioni_idPrenotazione) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO manzo.ordini (idOrdine, data, orario, importo, statoOrdine, prenotazioni_idPrenotazione) VALUES (?,?,?,?,?,?)";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, order.getId());
-            statement.setTimestamp(2, order.getData());
-            statement.setBigDecimal(3, order.getImporto());
-            statement.setString(4, order.getStato());
-            statement.setInt(5, idPren);
+            statement.setDate(2, Date.valueOf(order.getData()));
+            statement.setTime(3, Time.valueOf(order.getOra()));
+            statement.setBigDecimal(4, order.getImporto());
+            statement.setString(5, order.getStato());
+            statement.setInt(6, idPren);
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             int idordine = -1;
@@ -432,13 +434,44 @@ public class Database {
         }
     }
 
-
-    /*public static Ordine getOrder(int idOrdine) throws SQLException {
-        String query = "SELECT * FROM manzo.ordini AS O WHERE O.idOrdine=?";
+    /**
+     * Metodo per ottenere l'ordine specificato
+     * @param idOrdine
+     * @return
+     * @throws SQLException
+     */
+    public static Ordine getOrder(int idOrdine) throws SQLException {
+        String query = "SELECT * FROM manzo.ordini JOIN manzo.ordini_has_prodotti ON manzo.ordini.idOrdine=manzo.ordini_has_prodotti.ordini_idOrdine WHERE manzo.ordini.idOrdine=? ASC";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, idOrdine);
             ResultSet result = statement.executeQuery();
+            if(result.next()){
+                HashMap<Integer, Pair<Integer, BigDecimal>> prodotti = new HashMap<>();
+                LocalDate orderdate = LocalDate.parse(result.getDate("dataOrdine").toString());
+                LocalTime ordertime = result.getTime("orario").toLocalTime();
+                BigDecimal importo = result.getBigDecimal("importo");
+                String orderstatus = result.getString("statoOrdine");
+                int idPrenotazione = result.getInt("prenotazioni_idPrenotazione");
+                while(result.next()) {
+                    prodotti.put(result.getInt("prodotti_idProdotto"), new Pair<>(result.getInt("quantita"), result.getBigDecimal("importo")));
+                } return new Ordine(idOrdine, orderdate, ordertime, prodotti, importo, orderstatus, idPrenotazione);
+            } else return null;
         }
-    }*/
+    }
+
+    public List<Ordine> getOrders() throws SQLException{
+        String query = "SELECT * FROM manzo.ordini as O WHERE O.data=? ASC";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            LocalDate now = LocalDate.now();
+            statement.setDate(1, Date.valueOf(now));
+            ResultSet result = statement.executeQuery();
+            List<Ordine> orders = new ArrayList<>();
+            while (result.next()){
+                orders.add(Database.getOrder(result.getInt("idOrdine")));
+            } return orders;
+        }
+
+    }
+
 
 }

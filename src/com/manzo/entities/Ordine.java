@@ -3,25 +3,24 @@ package com.manzo.entities;
 import javafx.util.Pair;
 
 import java.math.BigDecimal;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.StringJoiner;
 
 public class Ordine {
 
     private int id;
-    private Timestamp data;
+    private LocalDate data;
+    private LocalTime ora;
     private HashMap<Integer, Pair<Integer, BigDecimal>> prodotti;
     private BigDecimal importo;
     private String stato;
-    private String idPrenotazione;
+    private int idPrenotazione;
 
-    public Ordine(int id, Timestamp data, HashMap<Integer, Pair<Integer, BigDecimal>> prodotti, BigDecimal importo, String stato, String idPrenotazione){
+    public Ordine(int id, LocalDate data, LocalTime ora, HashMap<Integer, Pair<Integer, BigDecimal>> prodotti, BigDecimal importo, String stato, int idPrenotazione){
         this.id = id;
         this.data = data;
+        this.ora = ora;
         this.prodotti = prodotti;
         this.importo = importo;
         this.stato = stato;
@@ -37,11 +36,11 @@ public class Ordine {
         this.id = id;
     }
 
-    public Timestamp getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Timestamp data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
@@ -61,11 +60,11 @@ public class Ordine {
         this.stato = stato;
     }
 
-    public String getIdPrenotazione() {
+    public int getIdPrenotazione() {
         return idPrenotazione;
     }
 
-    public void setIdPrenotazione(String idPrenotazione) {
+    public void setIdPrenotazione(int idPrenotazione) {
         this.idPrenotazione = idPrenotazione;
     }
 
@@ -77,4 +76,7 @@ public class Ordine {
         this.prodotti = prodotti;
     }
 
+    public LocalTime getOra() {return ora; }
+
+    public void setOra(LocalTime ora) {this.ora = ora; }
 }
