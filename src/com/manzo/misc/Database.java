@@ -321,7 +321,7 @@ public class Database {
      * @return
      * @throws SQLException
      */
-    public static boolean getEntry(LocalDate thisday, int userId) throws SQLException {
+    public static int getEntry(LocalDate thisday, int userId) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDate(1, Date.valueOf(thisday));
@@ -332,10 +332,10 @@ public class Database {
                 if (!result.wasNull()) {
                     result.getTime("oraUscita");
                     if (result.wasNull()) {
-                        return true;
-                    } else return false;
-                } else return false;
-            } else return false;
+                        return result.getInt("idPrenotazione");
+                    } else return 0;
+                } else return 0;
+            } else return 0;
         }
     }
 
@@ -405,14 +405,13 @@ public class Database {
      * @throws SQLException
      */
     public static int setOrder(Ordine order, int idPren) throws SQLException {
-        String query = "INSERT INTO manzo.ordini (idOrdine, data, orario, importo, statoOrdine, prenotazioni_idPrenotazione) VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO manzo.ordini (data, orario, importo, statoOrdine, prenotazioni_idPrenotazione) VALUES (?,?,?,?,?)";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, order.getId());
-            statement.setDate(2, Date.valueOf(order.getData()));
-            statement.setTime(3, Time.valueOf(order.getOra()));
-            statement.setBigDecimal(4, order.getImporto());
-            statement.setString(5, order.getStato());
-            statement.setInt(6, idPren);
+            statement.setDate(1, Date.valueOf(order.getData()));
+            statement.setTime(2, Time.valueOf(order.getOra()));
+            statement.setBigDecimal(3, order.getImporto());
+            statement.setString(4, order.getStato());
+            statement.setInt(5, idPren);
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             int idordine = -1;

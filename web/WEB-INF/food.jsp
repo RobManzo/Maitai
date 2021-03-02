@@ -31,8 +31,10 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body text-center" id="modalinfo"> </div>
-                        <div class="modal-footer"> <button type="button" class="btn btn-success" data-dismiss="modal" onclick="pagaordine()">Pagamento</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal" onclick="pagamento()">Pagamento</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="emptycart()">Svuota Carrello</button>
                         </div>
                     </div>
                 </div>

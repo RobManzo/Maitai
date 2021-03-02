@@ -29,16 +29,14 @@ public class loginServlet extends HttpServlet {
                 if (utente == null) {
                     response.sendError(400);
                 }
-                String getentry;
-                if(Database.getEntry(LocalDate.now(), utente.getIdUtente())) getentry="true";
-                else getentry="false";
 
                 request.getSession().setAttribute("user", utente);
-                request.getSession().setAttribute("entry", getentry);
                 request.getSession().setAttribute("cart", new HashMap<String,Integer>());                              //Inizializzo il carrello vuoto nella sessione
                 request.getSession().setAttribute("userId", utente.getIdUtente());                                     //Salvo l'id in un parametro della sessione
+                int getentry = Database.getEntry(LocalDate.now(), utente.getIdUtente());
+                if(getentry != 0) request.getSession().setAttribute("entry", getentry);
+                else request.getSession().setAttribute("entry", null);
 
-                //Se l'utente è entrato nella struttura per una prenotazione, setAttribute("prenotazione", pren); CONTROLLO
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

@@ -27,6 +27,15 @@ public class Ordine {
         this.idPrenotazione = idPrenotazione;
     }
 
+    public Ordine(LocalDate data, LocalTime ora, HashMap<Integer, Pair<Integer, BigDecimal>> prodotti, BigDecimal importo, String stato, int idPrenotazione){
+        this.data = data;
+        this.ora = ora;
+        this.prodotti = prodotti;
+        this.importo = importo;
+        this.stato = stato;
+        this.idPrenotazione = idPrenotazione;
+    }
+
 
     public int getId() {
         return id;

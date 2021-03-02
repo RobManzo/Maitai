@@ -102,7 +102,7 @@
                                     <% }%>
                             </li>
                             <% if(request.getRequestURI().endsWith("/food.jsp")){ %>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger"><div style="font-size: 0.5rem;"><i class="fas fa-shopping-cart fa-3x" href="#cartmodal"></i></div> </a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" onclick="cartshow()" style="cursor: pointer"><div style="font-size: 0.5rem;"><i class="fas fa-shopping-cart fa-3x" href="#cartmodal"></i></div> </a></li>
                             <% }%>
                         </ul>
                     </div>

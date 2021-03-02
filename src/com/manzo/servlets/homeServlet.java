@@ -39,18 +39,18 @@ public class homeServlet extends HttpServlet {
                 }
 
                 if(Database.setEntry(data, userid, ts, time)){
-                    request.getSession().setAttribute("entry", "true");
+                    request.getSession().setAttribute("entry", Database.getEntry(LocalDate.now(), userid));
                     pr.write("{\"status\" : \"ok\", \"message\" : \"Entrata autorizzata.\"}");
                 }
                 else pr.write("{\"status\" : \"error\", \"message\" : \"Non sei autorizzato ad entrare. Controlla le tue prenotazioni.\"}");
             }
 
             else if(request.getParameter("rtype").equals("getEntry")){
-                if(Database.getEntry(data, userid)){
-                    request.getSession().setAttribute("entry", "true");
+                if(Database.getEntry(data, userid) != 0){
+                    request.getSession().setAttribute("entry", Database.getEntry(data, userid));
                     pr.write("{\"status\" : \"in\"}");
                 } else{
-                    request.getSession().setAttribute("entry", "false");
+                    request.getSession().setAttribute("entry", null);
                     pr.write("{\"status\" : \"out\"}");
                 }
             }
@@ -58,7 +58,7 @@ public class homeServlet extends HttpServlet {
             else if(request.getParameter("rtype").equals("setExit")){
                 if(Database.setExit(data,userid, time)){
                     request.getSession().setAttribute("cart", new HashMap<String, Integer>());
-                    request.getSession().setAttribute("entry", "false");
+                    request.getSession().setAttribute("entry", null);
                     pr.write("{\"status\" : \"ok\", \"message\" : \"Uscita autorizzata.\" }");
                 } else pr.write("{\"status\" : \"error\", \"message\" : \"Non sei autorizzato ad uscire.\"}");
             }

@@ -1,5 +1,6 @@
 var prodotti=[];
 var cart = new Map();
+var tot = 0;
 
 $(document).ready(function () {
     cart= new Map();
@@ -99,13 +100,34 @@ function addToCart(id){
 
 };
 
-function removeFromCart(id) {
+function emptycart() {
+    cart = new Map();
+    tot = 0;
 
-
+    $.ajax({
+        url: './food',
+        dataType: 'json',
+        type: 'post',
+        data: {
+            'rtype' : 'emptyCart'
+        },
+        success: function (data) {
+            console.log(data.Message);
+            $('#cartmodal').modal('hide');
+            alert(data.Message);
+        },
+        error: function (errorThrown) {
+            console.log(errorThrown);
+        }
+    });
 };
 
 
 function cartshow() {
+    if(cart.size === 0 ){
+        alert("Il carrello è vuoto!");
+        return;
+    }
     var intestazione = '<table class=\" table table-striped text-center\">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
         '<th scope="col">ID Prodotto</th> ' +
@@ -125,13 +147,43 @@ function cartshow() {
         prodotti[0].forEach(function (p) {
             if(String(p.idProdotto) === y){
                 $('#tabella').append('<tr class="text-center"> <th scope="row"> '+ p.idProdotto +' </th> <td>'+ p.nome +'</td> <td>'+ x +'</td> <td>'+ parseFloat(p.importo).toFixed(2) +'€</td> <td></td> </tr>');
+                tot += (x*p.importo);
             }
         })
     });
-
+    $('#tabella').append('<tr class="text-center"> <th scope="row"> </th> <td> </td> <td> </td> <td>TOT '+ parseFloat(tot).toFixed(2) +'€</td> <td></td> </tr>\'')
     $('#cartmodal').modal('toggle');
 
 };
+
+function pagamento() {
+    if(cart.size === 0 ){
+        alert("Il carrello è vuoto!");
+        return;
+    }
+
+    $.ajax({
+        url: './food',
+        dataType: 'json',
+        type: 'post',
+        data: {
+            'rtype' : 'sendOrder'
+        },
+        success: function (data) {
+            cart = new Map();
+            tot = 0;
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+            alert(data.Message + '\nClicca Ok per essere reinderizzato.');
+        },
+        error: function (errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+
+
+}
 
 function mapToObj(mp){
     let obj = Object.create(null);
