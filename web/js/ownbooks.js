@@ -95,20 +95,36 @@ function infopren(id) {
                 month = "0" + dp.monthValue;
             } else month = dp.monthValue;
 
-            var date = dp.dayOfMonth + "/" + month + "/" + dp.year;
+            var datepren = dp.dayOfMonth + "/" + month + "/" + dp.year;
 
-            var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
+            var today = data.Today
+            if(today.monthValue < 10){
+                nowmonth= "0" + today.monthValue;
+            } else nowmoth = today.monthValue;
+
+            console.log(dp.year,today.year, month, nowmonth, dp.dayOfMonth,today.dayOfMonth );
+
+            if(dp.year >= today.year && month >= nowmonth && dp.dayOfMonth > today.dayOfMonth){
+                var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
+                    ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
+                    '<div class="modal-header">  <h4 class="modal-title">Prenotazione #' + pren.idPrenotazione + '</h4> ' +
+                    '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
+                    '</div> ' +
+                    '<div class="modal-body text-center" id="modalinfo"> </div> ' +
+                    '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="delpren('+ pren.idPrenotazione +')">Cancella Prenotazione</button> '+
+                    '<button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>' +
+                    '</div> </div> </div>';
+            } else var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
                 ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
                 '<div class="modal-header">  <h4 class="modal-title">Prenotazione #' + pren.idPrenotazione + '</h4> ' +
                 '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
                 '</div> ' +
                 '<div class="modal-body text-center" id="modalinfo"> </div> ' +
-                '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="delpren('+ pren.idPrenotazione +')">Elimina Prenotazione</button> '+
-                '<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>' +
+                '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>' +
                 '</div> </div> </div>';
 
             $('#infobox').html(mhead);
-            $('#modalinfo').html(intestazione + '<tr class="text-center"> <th scope="row"> '+ pren.idPrenotazione +' </th> <td>'+ date +'</td> <td>'+ pos +'</td> <td>'+ pren.price +'€</td> <td></td> </tr>');
+            $('#modalinfo').html(intestazione + '<tr class="text-center"> <th scope="row"> '+ pren.idPrenotazione +' </th> <td>'+ datepren +'</td> <td>'+ pos +'</td> <td>'+ pren.price +'€</td> <td></td> </tr>');
 
             $('#infobox').modal('toggle');
         },
@@ -147,7 +163,7 @@ function delpren(id) {
 
             setTimeout(function() {
                 location.reload();
-            }, 5000);
+            }, 3000);
 
         },
         error: function (errorThrown) {

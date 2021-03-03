@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.List;
 
 @WebServlet(name="ownbooksServlet", urlPatterns={"/cliente/ownbooks"})
@@ -27,6 +28,7 @@ public class ownbooksServlet extends HttpServlet {
 
             if(request.getParameter("rtype").equals("getBooks")){
                 List<Prenotazione> prenotazioni = Database.getPrenotazioni(user);
+
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Prenotazioni\" :"+ mapper.writeValueAsString(prenotazioni) +"}");
             }
@@ -34,7 +36,7 @@ public class ownbooksServlet extends HttpServlet {
             else if(request.getParameter("rtype").equals("getPren")){
                 Prenotazione prenotazione = Database.getPrenotazione(user,Integer.parseInt(request.getParameter("idPren")));
                 ObjectMapper mapper = new ObjectMapper();
-                pr.write("{\"Prenotazione\" :"+ mapper.writeValueAsString(prenotazione) +"}");
+                pr.write("{\"Prenotazione\" :"+mapper.writeValueAsString(prenotazione)+", \"Today\" :"+mapper.writeValueAsString(LocalDate.now())+"}");
             }
 
             else if(request.getParameter("rtype").equals("delPren")){

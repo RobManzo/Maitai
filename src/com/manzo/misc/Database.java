@@ -294,7 +294,7 @@ public class Database {
      * @return
      * @throws SQLException
      */
-    public static boolean setEntry(LocalDate thisday, int userId, int ts, LocalTime thistime) throws SQLException {
+    public static int setEntry(LocalDate thisday, int userId, int ts, LocalTime thistime) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=? AND (P.fasciaOraria=? OR P.fasciaOraria=0)";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setDate(1, Date.valueOf(thisday));
@@ -307,9 +307,9 @@ public class Database {
                     result.updateTime("oraIngresso", Time.valueOf(thistime));
                     result.updateRow();
                     System.out.println(result.getTime("oraIngresso"));
-                    return true;
-                } else return false;
-            } else return false;
+                    return result.getInt("idPrenotazione");
+                } else return 0;
+            } else return 0;
         }
     }
 

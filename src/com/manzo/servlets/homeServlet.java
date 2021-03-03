@@ -29,16 +29,16 @@ public class homeServlet extends HttpServlet {
             LocalTime time = LocalTime.now(ZoneId.of("GMT+1"));
             int ts = Miscellaneous.getTimeslot(time);
             int userid =((Utente) request.getSession().getAttribute("user")).getIdUtente();
-            System.out.println("ID DELL'UTENTE " +userid+ " Dentro? : " +request.getSession().getAttribute("entry"));
+            System.out.println("ID: " +userid+ " \nPrenotazione: " +request.getSession().getAttribute("entry"));
 
             if(request.getParameter("rtype").equals("setEntry")){
 
                 if(ts == -1){
-                    pr.write("{\"status\" : \"out\", \"message\" : \"La struttura al momento è chiusa.\"}");
+                    pr.write("{\"status\" : \"error\", \"message\" : \"La struttura al momento è chiusa.\"}");
                     return;
                 }
 
-                if(Database.setEntry(data, userid, ts, time)){
+                if(Database.setEntry(data, userid, ts, time) != 0){
                     request.getSession().setAttribute("entry", Database.getEntry(LocalDate.now(), userid));
                     pr.write("{\"status\" : \"ok\", \"message\" : \"Entrata autorizzata.\"}");
                 }
