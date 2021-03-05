@@ -98,6 +98,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right animate slideIn" aria-labelledby="navbarDropdown">
                                     <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/"+((Utente)request.getSession().getAttribute("user")).getRuolo()+"/home\">Dashboard  <span class=\"fas fa-user\"/></a>");
                                     %>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/account">Account  <span class="fas fa-user-cog"></span></a>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logout  <span class="fas fa-sign-out-alt"/></a></div>
                                     <% }%>
                             </li>

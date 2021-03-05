@@ -5,7 +5,6 @@ import com.manzo.entities.Prenotazione;
 import com.manzo.entities.Prodotto;
 import com.manzo.entities.Utente;
 import javafx.util.Pair;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -13,11 +12,9 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.sql.Date;
-import java.text.Bidi;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -48,6 +45,8 @@ public class Database {
     }
 
     /**
+     * Metodo che data l'email, ottiene l'utente dal DataBase
+     * 
      * @param email
      * @return
      * @throws SQLException
