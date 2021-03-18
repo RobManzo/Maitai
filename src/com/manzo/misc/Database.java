@@ -151,7 +151,7 @@ public class Database {
      */
     public static String resetPassword(String email) throws SQLException {
         String newpwd = generateRandomPassword(8);
-        String query = "UPDATE manzo.utenti SET password=SHA2(?, 256) WHERE email=? ";
+        String query = "UPDATE manzo.utenti SET pass=SHA2(?, 256) WHERE email=? ";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, newpwd);
             statement.setString(2, email);
@@ -163,6 +163,22 @@ public class Database {
             }
         }
 
+    }
+
+    /**
+     * Metodo per il cambio della password
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    public static boolean changePassword(int id, String newpsw) throws SQLException {
+        String query = "UPDATE manzo.utenti SET pass=SHA2(?, 256) WHERE idUtente=? ";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, newpsw);
+            statement.setInt(1, id);
+            return statement.executeUpdate() > 0;
+        }
     }
 
     public static List<Integer> getPosti(LocalDate thisday, int timeslot) throws SQLException {

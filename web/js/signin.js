@@ -227,7 +227,7 @@ function submitform(){
     var phone = $('#phone').val();
     var birthdate = ($('#birthdate').val());
 
-    $.ajax({                            //Da fare
+    $.ajax({
         url: './signin',
         dataType: 'json',
         type: 'post',

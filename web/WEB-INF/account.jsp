@@ -65,10 +65,39 @@
                     </div>
                     <div class="modal-body text-center" id="passform">
 
+                        <form action="" method="post" id="changepass">
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="oldpsw">Password Attuale</label>
+                                        <input type="password" id="oldpsw" class="form-control" placeholder="Inserisci la tua password attuale">
+                                        <small></small>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="newpsw">Nuova Password</label>
+                                        <input type="password" id="newpsw" class="form-control" placeholder="Inserisci nuova password">
+                                        <small></small>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="reppsw">Ripeti nuova Password</label>
+                                        <input type="password" id="reppsw" class="form-control" placeholder="Ripeti la nuova password">
+                                        <small></small>
+                                    </div>
+                                </div>
+
+                        </form>
+
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+                        <button type="button" class="btn btn-danger" onclick="cambiapsw()">Cambia Password</button>
                     </div>
 
                 </div>
@@ -108,7 +137,7 @@
         <script src="/Maitai/assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
         <script src="/Maitai/js/scripts.js"></script>
-        <script src="/Maitai/js/home.js"></script>
+        <script src="/Maitai/js/account.js"></script>
 
     </body>
 </html>
