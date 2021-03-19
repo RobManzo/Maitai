@@ -176,7 +176,7 @@ public class Database {
         String query = "UPDATE manzo.utenti SET pass=SHA2(?, 256) WHERE idUtente=? ";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, newpsw);
-            statement.setInt(1, id);
+            statement.setInt(2, id);
             return statement.executeUpdate() > 0;
         }
     }

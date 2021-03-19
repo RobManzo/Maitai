@@ -1,6 +1,4 @@
 $(document).ready(function () {
-
-
 });
 
 function cambiapsw() {
@@ -12,8 +10,8 @@ function cambiapsw() {
             dataType: 'json',
             type: 'post',
             data: {
-                'rtype' : changepsw,
-                'newpass' : newpass,
+                'rtype' : 'changepsw',
+                'newpass' : newpass
             },
             success: function (data) {
                 alert(data.message);
