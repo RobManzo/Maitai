@@ -21,7 +21,6 @@
             <role-name>cliente</role-name>
             <role-name>admin</role-name>
             <role-name>staff</role-name>
-            <role-name>bagnino</role-name>
             <role-name>cucina</role-name>
         </auth-constraint>
     </security-constraint>
@@ -55,7 +54,6 @@
             <role-name>cliente</role-name>
             <role-name>admin</role-name>
             <role-name>staff</role-name>
-            <role-name>bagnino</role-name>
             <role-name>cucina</role-name>
         </auth-constraint>
     </security-constraint>
@@ -70,9 +68,6 @@
 
     <security-role>
         <role-name>staff</role-name>
-    </security-role>
-    <security-role>
-        <role-name>bagnino</role-name>
     </security-role>
 
     <security-role>

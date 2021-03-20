@@ -33,6 +33,28 @@ public class accountServlet extends HttpServlet {
 
             }
 
+            if(request.getParameter("rtype").equals("changetel")){
+                String newtel = request.getParameter("newtel");
+                Utente u = (Utente) request.getSession().getAttribute("user");
+                if(Database.changeTel(u.getIdUtente(), newtel)){
+                    u.setTelefono(newtel);
+                    request.getSession().setAttribute("user", u);
+                    pr.write("{\"message\" : \"Telefono cambiato con successo. \"}");
+                } else pr.write("{\"message\" : \"Qualcosa è andato storto. \"}");
+
+            }
+
+            if(request.getParameter("rtype").equals("changeaddr")){
+                String newaddr = request.getParameter("newaddr");
+                Utente u = (Utente) request.getSession().getAttribute("user");
+                if(Database.changeAddr(u.getIdUtente(), newaddr)){
+                    u.setIndirizzo(newaddr);
+                    request.getSession().setAttribute("user", u);
+                    pr.write("{\"message\" : \"Indirizzo cambiato con successo. \"}");
+                } else pr.write("{\"message\" : \"Qualcosa è andato storto. \"}");
+
+            }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

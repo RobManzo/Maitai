@@ -1,5 +1,58 @@
 $(document).ready(function () {
+
 });
+
+function cambiadet() {
+   var newtel = $('#cell').val();
+   var newaddr = $('#address').val();
+
+   if(newtel!=''){
+       var phoneno = /^\d{10}$/;
+       if(newtel.match(phoneno)){
+           $.ajax({
+               url: './account',
+               dataType: 'json',
+               type: 'post',
+               data: {
+                   'rtype' : 'changetel',
+                   'newtel' : newtel
+               },
+               success: function (data) {
+                   alert(data.message);
+
+               },
+               error: function (errorThrown) {
+                   console.log(errorThrown);
+               }
+           });
+
+       }
+   }
+
+    if(newaddr!=''){
+            $.ajax({
+                url: './account',
+                dataType: 'json',
+                type: 'post',
+                data: {
+                    'rtype' : 'changeaddr',
+                    'newtel' : newaddr
+                },
+                success: function (data) {
+                    alert(data.message);
+
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+    alert("Modifiche Salvate. Verrai reinderizzato.");
+    setTimeout(function() {
+        location.reload();
+    }, 3000);
+
+}
 
 function cambiapsw() {
     if (checkPass()){
@@ -45,4 +98,3 @@ function checkPass(){
     }
 
 };
-

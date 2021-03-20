@@ -9,8 +9,22 @@ public class Utente {
     private String CodFisc;
     private String telefono;
     private String dataNasc;
+    private String indirizzo;
     private int attivo;
     private String ruolo;
+
+    public Utente(int idUtente, String email, String pass, String nome, String cognome, String codFisc, String telefono, String dataNasc, String indirizzo, String ruolo) {
+        this.idUtente = idUtente;
+        this.email = email;
+        this.pass = pass;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.CodFisc = codFisc;
+        this.telefono = telefono;
+        this.dataNasc = dataNasc;
+        this.ruolo = ruolo;
+        this.indirizzo = indirizzo;
+    }
 
     public int getIdUtente() {
         return idUtente;
@@ -89,17 +103,7 @@ public class Utente {
     public void setRuolo(String ruolo) { this.ruolo = ruolo; }
 
 
-    public Utente(int idUtente, String email, String pass, String nome, String cognome, String codFisc, String telefono, String dataNasc, String ruolo) {
-        this.idUtente = idUtente;
-        this.email = email;
-        this.pass = pass;
-        this.nome = nome;
-        this.cognome = cognome;
-        CodFisc = codFisc;
-        this.telefono = telefono;
-        this.dataNasc = dataNasc;
-        this.ruolo = ruolo;
-    }
+    public String getIndirizzo() { return indirizzo; }
 
-
+    public void setIndirizzo(String indirizzo) { this.indirizzo = indirizzo; }
 }

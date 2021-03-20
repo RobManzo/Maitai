@@ -65,15 +65,7 @@
                     </div>
                     <div class="modal-body text-center" id="passform">
 
-                        <form action="" method="post" id="changepass">
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="oldpsw">Password Attuale</label>
-                                        <input type="password" id="oldpsw" class="form-control" placeholder="Inserisci la tua password attuale">
-                                        <small></small>
-                                    </div>
-                                </div>
+                        <form action="" method="post" id="changepass">+
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
@@ -108,15 +100,36 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content"  style="background-color: antiquewhite;">
                     <div class="modal-header">
-                        <h4 class="modal-title">Cambia Password</h4>
+                        <h4 class="modal-title">Cambia Dettagli Account</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body text-center" id="detform">
 
+                        <form action="" method="post" id="detaccount">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="cell">Nuovo Telefono</label>
+                                    <input type="tel" id="cell" class="form-control" placeholder="Inserisci nuovo numero di telefono"  pattern="[0-9]{10}">
+                                    <small></small>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="address">Nuovo Indirizzo</label>
+                                    <input type="text" id="address" class="form-control" placeholder="Inserisci nuovo indirizzo">
+                                    <small></small>
+                                </div>
+                            </div>
+
+                        </form>
+
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+                        <button type="button" class="btn btn-danger" onclick="cambiadet()">Cambia Dettagli</button>
                     </div>
 
                 </div>

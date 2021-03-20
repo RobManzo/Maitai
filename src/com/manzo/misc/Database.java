@@ -59,7 +59,7 @@ public class Database {
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                return new Utente(result.getInt("idUtente"), result.getString("email"), result.getString("pass"), result.getString("nome"), result.getString("cognome"), result.getString("telefono"), result.getString("codFisc"), result.getString("dataNasc"), result.getString("ruolo"));    //Attenzione a sta roba AO
+                return new Utente(result.getInt("idUtente"), result.getString("email"), result.getString("pass"), result.getString("nome"), result.getString("cognome"), result.getString("telefono"), result.getString("codFisc"), result.getString("dataNasc"), result.getString("indirizzo"), result.getString("ruolo"));    //Attenzione a sta roba AO
             } else {
                 return null;
             }
@@ -176,6 +176,38 @@ public class Database {
         String query = "UPDATE manzo.utenti SET pass=SHA2(?, 256) WHERE idUtente=? ";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, newpsw);
+            statement.setInt(2, id);
+            return statement.executeUpdate() > 0;
+        }
+    }
+
+    /**
+     * Metodo per il cambio del numero di telefono
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    public static boolean changeTel(int id, String newtel) throws SQLException {
+        String query = "UPDATE manzo.utenti SET telefono=? WHERE idUtente=? ";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, newtel);
+            statement.setInt(2, id);
+            return statement.executeUpdate() > 0;
+        }
+    }
+
+    /**
+     * Metodo per il cambio del domicilio
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    public static boolean changeAddr(int id, String newaddr) throws SQLException {
+        String query = "UPDATE manzo.utenti SET indirizzo=? WHERE idUtente=? ";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, newaddr);
             statement.setInt(2, id);
             return statement.executeUpdate() > 0;
         }
