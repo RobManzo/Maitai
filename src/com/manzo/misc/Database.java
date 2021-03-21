@@ -505,7 +505,7 @@ public class Database {
         }
     }
 
-    public List<Ordine> getOrders() throws SQLException{
+    public static List<Ordine> getOrders() throws SQLException{
         String query = "SELECT * FROM manzo.ordini as O WHERE O.data=? ASC";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             LocalDate now = LocalDate.now();
@@ -517,6 +517,17 @@ public class Database {
             } return orders;
         }
 
+    }
+
+    public static int getSeat(int id) throws SQLException{
+        String query = "SELECT * FROM manzo.prenotazioni as P WHERE P.idPrenotazione=?";
+        try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            if(result.next()){
+                return result.getInt("idPostazione");
+            } else return 0;
+        }
     }
 
 

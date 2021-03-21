@@ -58,6 +58,18 @@
         </auth-constraint>
     </security-constraint>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Kitchen</web-resource-name>
+            <url-pattern>/kitchen</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+            <role-name>staff</role-name>
+            <role-name>cucina</role-name>
+        </auth-constraint>
+    </security-constraint>
+
     <security-role>
         <role-name>cliente</role-name>
     </security-role>
