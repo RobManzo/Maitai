@@ -452,7 +452,7 @@ public class Database {
      * @throws SQLException
      */
     public static int setOrder(Ordine order, int idPren) throws SQLException {
-        String query = "INSERT INTO manzo.ordini (data, orario, importo, statoOrdine, prenotazioni_idPrenotazione) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO manzo.ordini (data, orario, totale, statoOrdine, prenotazioni_idPrenotazione) VALUES (?,?,?,?,?)";
         try(Connection connection=dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setDate(1, Date.valueOf(order.getData()));
             statement.setTime(2, Time.valueOf(order.getOra()));
@@ -487,15 +487,15 @@ public class Database {
      * @throws SQLException
      */
     public static Ordine getOrder(int idOrdine) throws SQLException {
-        String query = "SELECT * FROM manzo.ordini JOIN manzo.ordini_has_prodotti ON manzo.ordini.idOrdine=manzo.ordini_has_prodotti.ordini_idOrdine WHERE manzo.ordini.idOrdine=? ASC";
+        String query = "SELECT * FROM manzo.ordini AS O JOIN manzo.ordini_has_prodotti AS P ON O.idOrdine=P.ordini_idOrdine WHERE O.idOrdine=?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, idOrdine);
             ResultSet result = statement.executeQuery();
             if(result.next()){
                 HashMap<Integer, Pair<Integer, BigDecimal>> prodotti = new HashMap<>();
-                LocalDate orderdate = LocalDate.parse(result.getDate("dataOrdine").toString());
+                LocalDate orderdate = LocalDate.parse(result.getDate("data").toString());
                 LocalTime ordertime = result.getTime("orario").toLocalTime();
-                BigDecimal importo = result.getBigDecimal("importo");
+                BigDecimal importo = result.getBigDecimal("totale");
                 String orderstatus = result.getString("statoOrdine");
                 int idPrenotazione = result.getInt("prenotazioni_idPrenotazione");
                 while(result.next()) {
@@ -506,7 +506,7 @@ public class Database {
     }
 
     public static List<Ordine> getOrders() throws SQLException{
-        String query = "SELECT * FROM manzo.ordini as O WHERE O.data=? ASC";
+        String query = "SELECT * FROM manzo.ordini as O WHERE O.data=? ORDER BY O.orario ASC";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             LocalDate now = LocalDate.now();
             statement.setDate(1, Date.valueOf(now));
@@ -519,14 +519,14 @@ public class Database {
 
     }
 
-    public static int getSeat(int id) throws SQLException{
+    public static String getSeat(int id) throws SQLException{
         String query = "SELECT * FROM manzo.prenotazioni as P WHERE P.idPrenotazione=?";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             if(result.next()){
-                return result.getInt("idPostazione");
-            } else return 0;
+                return result.getString("idPostazione");
+            } else return null;
         }
     }
 

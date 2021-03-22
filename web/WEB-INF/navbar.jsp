@@ -96,8 +96,15 @@
                                     <% } else {%>
                                                 <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profilo</a></a>
                                                 <div class="dropdown-menu dropdown-menu-right animate slideIn" aria-labelledby="navbarDropdown">
-                                    <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/"+((Utente)request.getSession().getAttribute("user")).getRuolo()+"/home\">Dashboard  <span class=\"fas fa-user\"/></a>");
-                                    %>
+                                                    <% if(((Utente) request.getSession().getAttribute("user")).getRuolo().equals("cliente")){%>
+                                                    <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/"+((Utente)request.getSession().getAttribute("user")).getRuolo()+"/home\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
+                                                    <%} else if(((Utente)request.getSession().getAttribute("user")).getRuolo().equals("cucina")){%>
+                                                    <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/kitchen\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
+                                                    <%} else if(((Utente) request.getSession().getAttribute("user")).getRuolo().equals("admin")){%>
+                                                    <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/aboard\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
+                                                    <%} else if(((Utente) request.getSession().getAttribute("user")).getRuolo().equals("staff")){%>
+                                                    <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/sboard\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
+                                                    <%}%>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/account">Account  <span class="fas fa-user-cog"></span></a>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logout  <span class="fas fa-sign-out-alt"/></a></div>
                                     <% }%>

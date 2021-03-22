@@ -2,7 +2,6 @@ package com.manzo.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.entities.Ordine;
-import com.manzo.entities.Prenotazione;
 import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
 
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.util.List;
 
 @WebServlet(name="kitchenServlet", urlPatterns={"/kitchen"})
@@ -25,21 +23,23 @@ public class kitchenServlet extends HttpServlet {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
-            Utente user = (Utente) request.getSession().getAttribute("user");
 
             if(request.getParameter("rtype").equals("getOrders")){
                 List<Ordine> ordini = Database.getOrders();
-
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Ordini\" :"+ mapper.writeValueAsString(ordini) +"}");
             }
 
             else if(request.getParameter("rtype").equals("getOrderDet")){
-                int orderId =  Integer.parseInt(request.getParameter("orderId"));
+                int orderId =  Integer.parseInt(request.getParameter("ID"));
                 Ordine order = Database.getOrder(orderId);
-                int idPos = Database.getSeat(order.getIdPrenotazione());
-                ObjectMapper mapper = new ObjectMapper();
-                pr.write("{\"Ordine\" :"+mapper.writeValueAsString(order)+", \"Postazione\" :"+idPos+"}");
+                if(order!=null){
+                    String idPos = Database.getSeat(order.getIdPrenotazione());
+                    ObjectMapper mapper = new ObjectMapper();
+                    pr.write("{\"Ordine\" :"+mapper.writeValueAsString(order)+", \"Postazione\" :"+idPos+"}");
+                }else {
+                    pr.write("{\"Ordine\" :\"NESSUN ORDINE TROVATO\"}");
+                }
             }
 
         }
