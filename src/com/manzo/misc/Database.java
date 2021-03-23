@@ -519,6 +519,24 @@ public class Database {
 
     }
 
+    public static boolean setOrderStatus(int id) throws SQLException{
+        String query = "SELECT statoOrdine FROM manzo.ordini WHERE idOrdine=? ";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            if(result.next()){
+                if(result.getString("statoOrdine").equals("emesso")){
+                    String query2 = "UPDATE manzo.ordini SET statoOrdine=? WHERE idOrdine=? ";
+                    try (Connection connection2 = dataSource.getConnection(); PreparedStatement statement2 = connection2.prepareStatement(query2)) {
+                        statement2.setString(1, "pronto");
+                        statement2.setInt(2, id);
+                        return statement2.executeUpdate() > 0;
+                    }
+                } else return false;
+            }else return false;
+        }
+    }
+
     public static String getSeat(int id) throws SQLException{
         String query = "SELECT * FROM manzo.prenotazioni as P WHERE P.idPrenotazione=?";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){

@@ -68,15 +68,25 @@ function infoOrder(id) {
             let time = hour+':'+minute+':'+second;
             console.log(order);
 
-            var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
-                ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
-                '<div class="modal-header">  <h4 class="modal-title">Ordine #' + order.id + ' Ore ' + time +'</h4> ' +
-                '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
-                '</div> ' +
-                '<div class="modal-body text-center" id="modalinfo"> </div> ' +
-                '<button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>' +
-                '<div class="modal-footer"> <button type="button" class="btn btn-success" data-dismiss="modal" onclick="orderReady('+ order.id +')">Ordine Pronto</button> '+
-                '</div> </div> </div>';
+            if(order.stato === "emesso"){
+                var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
+                    ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
+                    '<div class="modal-header">  <h4 class="modal-title">Ordine #' + order.id + ' Ore ' + time +'</h4> ' +
+                    '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
+                    '</div> ' +
+                    '<div class="modal-body text-center" id="modalinfo"> </div> ' +
+                    '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button> <button type="button" class="btn btn-success" data-dismiss="modal" onclick="orderReady('+ order.id +')">Ordine Pronto</button> '+
+                    '</div> </div> </div>';
+            } else {
+                var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
+                    ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
+                    '<div class="modal-header">  <h4 class="modal-title">Ordine #' + order.id + ' Ore ' + time +'</h4> ' +
+                    '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
+                    '</div> ' +
+                    '<div class="modal-body text-center" id="modalinfo"> </div> ' +
+                    '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>'+
+                    '</div> </div> </div>';
+            }
 
             var intestazione = '<table class=\" table table-striped text-center\">' +
                 ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
@@ -96,10 +106,11 @@ function infoOrder(id) {
             var prodotti = order.prodotti;
             console.log(prodotti);
 
-            for(let prod in prodotti){
-                console.log(prod);
-                //$('#tabinfo').append('<tr class="text-center"> <th scope="row"> '+ key  +' </th>'+ qnt + '<td>'+ imp +'€</td> <td></td> </tr>');
-            }
+
+            $.each(prodotti, function (key,value) {
+                let det = Array.from(new Map(Object.entries(value)).values());
+                $('#tabinfo').append('<tr class="text-center"> <th scope="row"> '+ key  +'</th><td>'+ det[0] +'</td><td>'+ det[1] +'€</td><td></td> </tr>');
+            });
 
             $('#infobox').modal('toggle');
         },
@@ -111,7 +122,25 @@ function infoOrder(id) {
 };
 
 function orderReady(id) {
+    $.ajax({
+        url: './kitchen',
+        dataType: 'json',
+        type: 'post',
+        data: {
+            'rtype': 'orderReady',
+            'ID': id
+        },
+        success: function (data) {
+            if(data.status === 'error') alert(data.Message);
+            setTimeout(function() {
+                location.reload();
+            }, 500);
 
+        },
+        error: function (errorThrown) {
+            console.log(errorThrown);
+        }
+    });
 
 
 }

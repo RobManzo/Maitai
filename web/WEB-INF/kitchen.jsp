@@ -22,7 +22,7 @@
         <!-- Navigation -->
         <%@ include file="/WEB-INF/navbar.jsp"%>
 
-        <div class="page-section row fill-window" id="ordertab" style="background-color: antiquewhite; align-content: center;"> </div>
+        <div class="page-section row fill-window" id="ordertab" style="background-color: antiquewhite; align-content: flex-start;"> </div>
 
         <div class="modal fade" id="infobox"> </div>
         <div class="modal fade" id="delconf"> </div>

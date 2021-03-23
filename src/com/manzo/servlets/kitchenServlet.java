@@ -42,6 +42,13 @@ public class kitchenServlet extends HttpServlet {
                 }
             }
 
+            else if(request.getParameter("rtype").equals("orderReady")){
+                int id = Integer.parseInt(request.getParameter("ID"));
+                if(Database.setOrderStatus(id)){
+                    pr.write("{\"Status\" :\"ok\", \"Message\" :\"\"}");
+                } else pr.write("{\"Status\" :\"error\", \"Message\" :\"Errore generico.\"}");
+            }
+
         }
         catch (Exception e) {
             e.printStackTrace();
