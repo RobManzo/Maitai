@@ -27,6 +27,17 @@
 
     <security-constraint>
         <web-resource-collection>
+            <web-resource-name>Staff</web-resource-name>
+            <url-pattern>/staff/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+            <role-name>staff</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
             <web-resource-name>clienteHome</web-resource-name>
             <url-pattern>/cliente/*</url-pattern>
         </web-resource-collection>

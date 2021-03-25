@@ -103,7 +103,7 @@
                                                     <%} else if(((Utente) request.getSession().getAttribute("user")).getRuolo().equals("admin")){%>
                                                     <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/aboard\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
                                                     <%} else if(((Utente) request.getSession().getAttribute("user")).getRuolo().equals("staff")){%>
-                                                    <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/sboard\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
+                                                    <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/staff\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
                                                     <%}%>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/account">Account  <span class="fas fa-user-cog"></span></a>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logout  <span class="fas fa-sign-out-alt"/></a></div>

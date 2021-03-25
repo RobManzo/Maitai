@@ -55,7 +55,6 @@ public class Database {
     public static Utente takeUser(String email) throws SQLException {
         String query1 = "SELECT * FROM manzo.utenti AS U WHERE U.email=?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query1)) {
-
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
@@ -273,6 +272,35 @@ public class Database {
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             List<Prenotazione> pren = new ArrayList<>();
             statement.setInt(1, u.getIdUtente());
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                LocalTime enter;
+                LocalTime exit;
+                result.getTime("oraIngresso");
+                if (result.wasNull()) {
+                    enter = null;
+                } else enter = result.getTime("oraIngresso").toLocalTime();
+                result.getTime("oraUscita");
+                if (result.wasNull()) {
+                    exit = null;
+                } else exit = result.getTime("oraUscita").toLocalTime();
+                pren.add(new Prenotazione(result.getInt("idPrenotazione"), LocalDate.parse(result.getDate("dataEsecuzione").toString()), LocalDate.parse(result.getDate("dataPrenotazione").toString()), result.getString("idPostazione"), enter, exit, result.getInt("fasciaOraria"), result.getDouble("price")));
+            }
+            return pren;
+        }
+    }
+
+    /**
+     * Metodo per ottenere la lista delle prenotazioni riguardo un utente
+     *
+     * @return
+     * @throws SQLException
+     */
+    public static List<Prenotazione> getPrenotazioni() throws SQLException {
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? ORDER BY P.idPrenotazione DESC";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            List<Prenotazione> pren = new ArrayList<>();
+            statement.setDate(1, Date.valueOf(LocalDate.now()));
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 LocalTime enter;

@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Agency - Start Bootstrap Theme</title>
+        <title>Maitai - ERROR</title>
         <link rel="icon" type="image/x-icon" href="/Maitai/assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version) -->
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
@@ -20,35 +20,34 @@
         <link href="/Maitai/css/styles.css" rel="stylesheet" />
     </head>
 
-<body id="page-top">
-    <main role="main">
-        <div class="container marketing fill-window">
+<body>
+        <div class="page-section row fill-window" style="background-color: antiquewhite; align-content: center;">
+            <div class="container align-self-center">
+                <h1>Error ${errorCode}</h1>
 
-            <h1>Error ${errorCode}</h1>
-
-            The page you requested cannot be shown.<br />
-            <% switch ((int) request.getAttribute("errorCode")){
-                case 400: %>
-            You cannot access this resource this way.
-            <% break;
-                case 404: %>
-            The page you requested does not exist.
-            <% break;
-                case 403: %>
-            You are not authorized to see the page you requested.
-            <% break;
-                case 408: %>
-            Your request timed out.
-            <% break;
-                case 500: %>
-            We are experiencing some technical difficulties, please try again later.
-            <% break;
-                default: %>
-            We have experienced an unexpected error, please try again later.
-            <% break;
-            } %>
+                The page you requested cannot be shown.<br />
+                <% switch ((int) request.getAttribute("errorCode")){
+                    case 400: %>
+                You cannot access this resource this way.
+                <% break;
+                    case 404: %>
+                The page you requested does not exist.
+                <% break;
+                    case 403: %>
+                You are not authorized to see the page you requested.
+                <% break;
+                    case 408: %>
+                Your request timed out.
+                <% break;
+                    case 500: %>
+                We are experiencing some technical difficulties, please try again later.
+                <% break;
+                    default: %>
+                We have experienced an unexpected error, please try again later.
+                <% break;
+                } %>
+            </div>
         </div>
-    </main>
 
     <jsp:include page="/WEB-INF/footer.jsp" />
 
