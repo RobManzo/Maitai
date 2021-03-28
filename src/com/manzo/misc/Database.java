@@ -260,6 +260,46 @@ public class Database {
         }
     }
 
+    public static int userByPrenotazione(int id) throws SQLException{
+        String query = "SELECT * FROM manzo.prenotazioni AS P JOIN utenti AS U ON P.utenti_idUtente = U.idUtente WHERE P.idPrenotazione=?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) return result.getInt("idUtente");
+            else return 0;
+        }
+    }
+
+    /**
+     * Metodo per ottenere la prenotazione specificata (Staff)
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    public static Prenotazione getPrenotazione(int id) throws SQLException {
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.idPrenotazione=?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            Prenotazione pren;
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                LocalTime enter;
+                LocalTime exit;
+                result.getTime("oraIngresso");
+                if (result.wasNull()) {
+                    enter = null;
+                } else enter = result.getTime("oraIngresso").toLocalTime();
+                result.getTime("oraUscita");
+                if (result.wasNull()) {
+                    exit = null;
+                } else exit = result.getTime("oraUscita").toLocalTime();
+                pren = new Prenotazione(result.getInt("idPrenotazione"), LocalDate.parse(result.getDate("dataEsecuzione").toString()), LocalDate.parse(result.getDate("dataPrenotazione").toString()), result.getString("idPostazione"), enter, exit, result.getInt("fasciaOraria"), result.getDouble("price"));
+                return pren;
+            } else return null;
+        }
+    }
+
     /**
      * Metodo per ottenere la lista delle prenotazioni riguardo un utente
      *
@@ -419,6 +459,25 @@ public class Database {
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setDate(1, Date.valueOf(thisday));
             statement.setInt(2, userId);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                result.getTime("oraIngresso");
+                if (!result.wasNull()) {
+                    result.getTime("oraUscita");
+                    if (result.wasNull()) {
+                        result.updateTime("oraUscita", Time.valueOf(thistime));
+                        result.updateRow();
+                        return true;
+                    } else return false;
+                } else return false;
+            } else return false;
+        }
+    }
+
+    public static boolean setExit(int idPren, LocalTime thistime) throws SQLException {
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.idPrenotazione=?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            statement.setInt(1, idPren);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
                 result.getTime("oraIngresso");

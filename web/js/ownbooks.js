@@ -76,7 +76,7 @@ function infopren(id) {
         '</thead>' +
         '<tbody id="tabella">' +
         '</tbody>'
-        '</table>';
+    '</table>';
 
     $.ajax({
         url: './ownbooks',

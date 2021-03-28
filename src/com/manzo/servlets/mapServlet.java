@@ -11,11 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
-@WebServlet(name="mapnServlet", urlPatterns={"/staff/map"})
+@WebServlet(name="mapServlet", urlPatterns={"/staff/map"})
 public class mapServlet extends HttpServlet {
 
     @Override
@@ -30,23 +33,16 @@ public class mapServlet extends HttpServlet {
                 pr.write("{\"Prenotazioni\" :"+ mapper.writeValueAsString(prenotazioni) +"}");
             }
 
-            else if(request.getParameter("rtype").equals("getOrderDet")){
-                int orderId =  Integer.parseInt(request.getParameter("ID"));
-                Ordine order = Database.getOrder(orderId);
-                if(order!=null){
-                    String idPos = Database.getSeat(order.getIdPrenotazione());
-                    ObjectMapper mapper = new ObjectMapper();
-                    pr.write("{\"Ordine\" :"+mapper.writeValueAsString(order)+", \"Postazione\" :"+idPos+"}");
-                }else {
-                    pr.write("{\"Ordine\" :\"NESSUN ORDINE TROVATO\"}");
-                }
+            else if(request.getParameter("rtype").equals("getPren")){
+                Prenotazione prenotazione = Database.getPrenotazione(Integer.parseInt(request.getParameter("idPren")));
+                int idUser = Database.userByPrenotazione(Integer.parseInt(request.getParameter("idPren")));
+                ObjectMapper mapper = new ObjectMapper();
+                pr.write("{\"Prenotazione\" :"+mapper.writeValueAsString(prenotazione)+", \"UserId\" : "+idUser+",  \"Today\" :"+mapper.writeValueAsString(LocalDate.now())+"}");
             }
 
-            else if(request.getParameter("rtype").equals("orderReady")){
-                int id = Integer.parseInt(request.getParameter("ID"));
-                if(Database.setOrderStatus(id)){
-                    pr.write("{\"Status\" :\"ok\", \"Message\" :\"\"}");
-                } else pr.write("{\"Status\" :\"error\", \"Message\" :\"Errore generico.\"}");
+            else if(request.getParameter("rtype").equals("setExit")){
+                if(Database.setExit(Integer.parseInt(request.getParameter("ID")), LocalTime.now())) pr.write("{\"Message\" : \"Utente con prenotazione # "+ request.getParameter("ID") +" è uscito. \"}");
+                else pr.write("{\"Message\" : \"Errore\"}");
             }
 
         }
