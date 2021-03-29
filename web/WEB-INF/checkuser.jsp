@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Maitai - Staff Panel</title>
+        <title>Maitai - Riepilogo Utenti</title>
         <link rel="icon" type="image/x-icon" href="/Maitai/assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version) -->
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
@@ -22,28 +22,9 @@
         <!-- Navigation -->
         <%@ include file="/WEB-INF/navbar.jsp"%>
 
-        <div class="page-section row fill-window" style="background-color: antiquewhite; align-content: center;">
+        <div class="page-section row fill-window" id="users" style="background-color: antiquewhite; align-content: flex-start;"> </div>
 
-            <div class="container col-md-4 align-items-center py-2 text-center" id="food">
-                <a href="${pageContext.request.contextPath}/staff/map" id="map">
-                    <div class="limit">
-                        <img class="img-responsive" src="\Maitai\assets\img\beach.png">
-                    </div>
-                    <h4 class="my-3" style="color: black;">Prenotazioni</h4>
-                </a>
-                <p class="text-muted">Stato delle prenotazioni</p>
-            </div>
-
-            <div class="container col-md-4 align-items-center py-2 text-center" id="check">
-                <a href="${pageContext.request.contextPath}/staff/checkuser" id="checkuser">
-                    <div class="limit">
-                        <img class="img-responsive" src="\Maitai\assets\img\user-check.png">
-                    </div>
-                    <h4 class="my-3" style="color: black;">Check Utenti</h4>
-                </a>
-                <p class="text-muted">Pannello controllo per i clienti</p>
-            </div>
-        </div>
+        <div class="modal fade" id="infouser"> </div>
 
         <!-- Footer-->
         <div class="footer"><%@ include file="/WEB-INF/footer.jsp"%></div>
@@ -58,6 +39,7 @@
         <script src="/Maitai/assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
         <script src="/Maitai/js/scripts.js"></script>
+        <script src="/Maitai/js/checkuser.js"></script>
 
     </body>
 </html>

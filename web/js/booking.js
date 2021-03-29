@@ -259,6 +259,7 @@ function pagamento() {
 
             $('#payment').modal('dispose');
             $('#confirmpayment').modal('toggle');
+
             setTimeout(function() {
                 location.reload();
             }, 5000);

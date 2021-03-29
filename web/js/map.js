@@ -90,6 +90,7 @@ function infopren(id) {
             let entry;
             if(pren.oraIngresso!== null && pren.oraUscita === null) entry = 'ENTRATO';
             else if (pren.oraIngresso === null) entry = 'PRENOTATO';
+            else entry = 'USCITO';
 
             if(entry === 'ENTRATO'){
                 var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +

@@ -58,12 +58,82 @@ public class Database {
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                return new Utente(result.getInt("idUtente"), result.getString("email"), result.getString("pass"), result.getString("nome"), result.getString("cognome"), result.getString("telefono"), result.getString("codFisc"), result.getString("dataNasc"), result.getString("indirizzo"), result.getString("ruolo"));    //Attenzione a sta roba AO
+                return new Utente(result.getInt("idUtente"), result.getString("email"), result.getString("pass"), result.getString("nome"), result.getString("cognome"), result.getString("codFisc"), result.getString("telefono"), result.getString("dataNasc"), result.getString("indirizzo"), result.getString("ruolo"));    //Attenzione a sta roba AO
             } else {
                 return null;
             }
         }
 
+    }
+
+    /**
+     * Metodo che dato l'id, ottiene l'utente dal DataBase
+     *
+     * @param ID
+     * @return
+     * @throws SQLException
+     */
+    public static Utente takeUser(int ID) throws SQLException {
+        String query1 = "SELECT * FROM manzo.utenti AS U WHERE U.idUtente=?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query1)) {
+            statement.setInt(1, ID);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return new Utente(result.getInt("idUtente"), result.getString("email"), result.getString("pass"), result.getString("nome"), result.getString("cognome"), result.getString("codFisc"), result.getString("telefono"), result.getString("dataNasc"), result.getString("indirizzo"), result.getString("ruolo"));    //Attenzione a sta roba AO
+            } else {
+                return null;
+            }
+        }
+
+    }
+
+    /**
+     * Metodo che dato il ruolo del richiedente, ottiene la lista degli utenti
+     *
+     * @param role
+     * @return
+     * @throws SQLException
+     */
+    public static List<Utente> getUsers(String role) throws SQLException{
+        String query1;
+        if (role.equals("admin")){
+            query1 = "SELECT * FROM manzo.utenti";
+            try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query1)) {
+                ResultSet result = statement.executeQuery();
+                ArrayList<Utente> users = new ArrayList<>();
+                while (result.next()) {
+                    users.add(new Utente(result.getInt("idUtente"), result.getString("email"), result.getString("pass"), result.getString("nome"), result.getString("cognome"), result.getString("codFisc"), result.getString("telefono"), result.getString("dataNasc"), result.getString("indirizzo"), result.getString("ruolo")));
+                } return users;
+            }
+        }
+        else{
+            query1 = "SELECT * FROM manzo.utenti AS U WHERE U.ruolo=?";
+            try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query1)) {
+                statement.setString(1, "cliente");
+                ResultSet result = statement.executeQuery();
+                ArrayList<Utente> users = new ArrayList<>();
+                while (result.next()) {
+                    users.add(new Utente(result.getInt("idUtente"), result.getString("email"), result.getString("pass"), result.getString("nome"), result.getString("cognome"), result.getString("codFisc"), result.getString("telefono"), result.getString("dataNasc"), result.getString("indirizzo"), result.getString("ruolo")));
+                } return users;
+            }
+        }
+
+
+    }
+
+    /**
+     * Metodo che dato l'id, elimina l'utente
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    public static boolean deleteUser(int id) throws SQLException {
+        String query = "DELETE FROM manzo.utenti AS U WHERE U.idUtente=?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            statement.setInt(1, id);
+            return statement.executeUpdate() > 0;
+        }
     }
 
     /**
@@ -77,7 +147,6 @@ public class Database {
      * @param password
      * @throws SQLException
      */
-
     public static void userSignIn(String nome, String cognome, String email, String codFisc, String telefono, LocalDate dataNasc, String password, String indirizzo, String provincia) throws SQLException {
         String query1 = "INSERT INTO manzo.utenti (email, pass, nome, cognome, codFisc, telefono, dataNasc, ruolo, indirizzo, provincia) " +
                 "VALUES (?, SHA2(?, 256), ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -103,7 +172,6 @@ public class Database {
      * @return
      * @throws SQLException
      */
-
     public static boolean checkExist(String email, String codfisc) throws SQLException {
         String query = "SELECT U.email FROM manzo.utenti AS U WHERE u.email=? OR U.codFisc=?";
         boolean ris = false;
@@ -125,7 +193,6 @@ public class Database {
      * @param length
      * @return
      */
-
     public static String generateRandomPassword(int length) {
         String character = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         String password = "";
@@ -140,6 +207,7 @@ public class Database {
         }
         return password;
     }
+
 
     /**
      * Metodo per la reimpostazione della password

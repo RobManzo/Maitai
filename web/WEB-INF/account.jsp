@@ -65,7 +65,7 @@
                     </div>
                     <div class="modal-body text-center" id="passform">
 
-                        <form action="" method="post" id="changepass">+
+                        <form action="" method="post" id="changepass">
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
