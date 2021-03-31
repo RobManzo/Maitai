@@ -404,26 +404,48 @@ public class Database {
      * @return
      * @throws SQLException
      */
-    public static List<Prenotazione> getPrenotazioni() throws SQLException {
-        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? ORDER BY P.idPrenotazione DESC";
-        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            List<Prenotazione> pren = new ArrayList<>();
-            statement.setDate(1, Date.valueOf(LocalDate.now()));
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                LocalTime enter;
-                LocalTime exit;
-                result.getTime("oraIngresso");
-                if (result.wasNull()) {
-                    enter = null;
-                } else enter = result.getTime("oraIngresso").toLocalTime();
-                result.getTime("oraUscita");
-                if (result.wasNull()) {
-                    exit = null;
-                } else exit = result.getTime("oraUscita").toLocalTime();
-                pren.add(new Prenotazione(result.getInt("idPrenotazione"), LocalDate.parse(result.getDate("dataEsecuzione").toString()), LocalDate.parse(result.getDate("dataPrenotazione").toString()), result.getString("idPostazione"), enter, exit, result.getInt("fasciaOraria"), result.getDouble("price")));
+    public static List<Prenotazione> getPrenotazioni(boolean type) throws SQLException {
+        if(type){
+            String query = "SELECT * FROM manzo.prenotazioni AS P ORDER BY P.idPrenotazione DESC";
+            try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+                List<Prenotazione> pren = new ArrayList<>();
+                ResultSet result = statement.executeQuery();
+                while (result.next()) {
+                    LocalTime enter;
+                    LocalTime exit;
+                    result.getTime("oraIngresso");
+                    if (result.wasNull()) {
+                        enter = null;
+                    } else enter = result.getTime("oraIngresso").toLocalTime();
+                    result.getTime("oraUscita");
+                    if (result.wasNull()) {
+                        exit = null;
+                    } else exit = result.getTime("oraUscita").toLocalTime();
+                    pren.add(new Prenotazione(result.getInt("idPrenotazione"), LocalDate.parse(result.getDate("dataEsecuzione").toString()), LocalDate.parse(result.getDate("dataPrenotazione").toString()), result.getString("idPostazione"), enter, exit, result.getInt("fasciaOraria"), result.getDouble("price")));
+                }
+                return pren;
             }
-            return pren;
+        }else {
+            String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? ORDER BY P.idPrenotazione DESC";
+            try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+                List<Prenotazione> pren = new ArrayList<>();
+                statement.setDate(1, Date.valueOf(LocalDate.now()));
+                ResultSet result = statement.executeQuery();
+                while (result.next()) {
+                    LocalTime enter;
+                    LocalTime exit;
+                    result.getTime("oraIngresso");
+                    if (result.wasNull()) {
+                        enter = null;
+                    } else enter = result.getTime("oraIngresso").toLocalTime();
+                    result.getTime("oraUscita");
+                    if (result.wasNull()) {
+                        exit = null;
+                    } else exit = result.getTime("oraUscita").toLocalTime();
+                    pren.add(new Prenotazione(result.getInt("idPrenotazione"), LocalDate.parse(result.getDate("dataEsecuzione").toString()), LocalDate.parse(result.getDate("dataPrenotazione").toString()), result.getString("idPostazione"), enter, exit, result.getInt("fasciaOraria"), result.getDouble("price")));
+                }
+                return pren;
+            }
         }
     }
 

@@ -1,7 +1,6 @@
 package com.manzo.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.manzo.entities.Ordine;
 import com.manzo.entities.Prenotazione;
 import com.manzo.misc.Database;
 
@@ -11,15 +10,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@WebServlet(name="mapServlet", urlPatterns={"/staff/map"})
-public class mapServlet extends HttpServlet {
+@WebServlet(name="histmapServlet", urlPatterns={"/admin/histbook"})
+public class histmapServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,7 +26,7 @@ public class mapServlet extends HttpServlet {
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getBookings")){
-                List<Prenotazione> prenotazioni = Database.getPrenotazioni(false);
+                List<Prenotazione> prenotazioni = Database.getPrenotazioni(true);
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Prenotazioni\" :"+ mapper.writeValueAsString(prenotazioni) +"}");
             }
@@ -54,7 +52,7 @@ public class mapServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/map.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/histmap.jsp");
         dispatcher.forward(request, response);
     }
 }

@@ -101,7 +101,7 @@
                                                     <%} else if(((Utente)request.getSession().getAttribute("user")).getRuolo().equals("cucina")){%>
                                                     <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/kitchen\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
                                                     <%} else if(((Utente) request.getSession().getAttribute("user")).getRuolo().equals("admin")){%>
-                                                    <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/aboard\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
+                                                    <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/admin/ahome\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
                                                     <%} else if(((Utente) request.getSession().getAttribute("user")).getRuolo().equals("staff")){%>
                                                     <% pageContext.getOut().print("<a class=\"dropdown-item\" href=\""+request.getContextPath()+"/staff\">Dashboard  <span class=\"fas fa-user\"/></a>");%>
                                                     <%}%>

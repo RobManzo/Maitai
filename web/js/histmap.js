@@ -3,7 +3,7 @@ $(document).ready(function () {
 });
 
 function bookings(){
-    var intestazione = '<table class=\" table table-striped text-center\">' +
+    var intestazione = '<table class=\" table table-striped text-center\"">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
         '<th scope="col">ID Prenotazione</th> ' +
         '<th scope="col">idPostazione</th> ' +
@@ -19,7 +19,7 @@ function bookings(){
     $('#bookings').html(intestazione);
 
     $.ajax({
-        url: './map',
+        url: './histbook',
         dataType: 'json',
         type: 'post',
         data: {
@@ -43,7 +43,6 @@ function bookings(){
     });
 };
 
-
 function infopren(id) {
     var intestazione = '<table class=\" table table-striped text-center\">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
@@ -61,7 +60,7 @@ function infopren(id) {
         '</table>';
 
     $.ajax({
-        url: './map',
+        url: './histbook',
         dataType: 'json',
         type: 'post',
         data: {
@@ -112,33 +111,10 @@ function infopren(id) {
                 '</div> </div> </div>';
 
             $('#infobook').html(mhead);
-            $('#modalinfo').html(intestazione + '<tr class="text-center"> <th scope="row"> '+ pren.idPrenotazione +' </th> <td>'+ data.UserId+'</td> <td>'+ datepren +'</td> <td>'+ pos +'</td><td>'+ entry +'</td> <td>'+ pren.price +'€</td> <td></td> </tr>');
+            $('#modalinfo').html(intestazione);
+            $('#tabinfo').append('<tr class="text-center"> <th scope="row"> '+ pren.idPrenotazione +' </th> <td>'+ data.UserId+'</td> <td>'+ datepren +'</td> <td>'+ pos +'</td><td>'+ entry +'</td> <td>'+ pren.price +'€</td> <td></td> </tr>');
 
             $('#infobook').modal('toggle');
-        },
-        error: function (errorThrown) {
-            console.log(errorThrown);
-        }
-    });
-
-};
-
-function setExit(id) {
-
-    $.ajax({
-        url: './map',
-        dataType: 'json',
-        type: 'post',
-        data: {
-            'rtype': 'setExit',
-            'ID': id
-        },
-        success: function (data) {
-            alert(data.Message);
-            setTimeout(function() {
-                location.reload();
-            }, 300);
-
         },
         error: function (errorThrown) {
             console.log(errorThrown);
