@@ -38,9 +38,10 @@ public class histmapServlet extends HttpServlet {
                 pr.write("{\"Prenotazione\" :"+mapper.writeValueAsString(prenotazione)+", \"UserId\" : "+idUser+",  \"Today\" :"+mapper.writeValueAsString(LocalDate.now())+"}");
             }
 
-            else if(request.getParameter("rtype").equals("setExit")){
-                if(Database.setExit(Integer.parseInt(request.getParameter("ID")), LocalTime.now())) pr.write("{\"Message\" : \"Utente con prenotazione # "+ request.getParameter("ID") +" è uscito. \"}");
-                else pr.write("{\"Message\" : \"Errore\"}");
+            else if(request.getParameter("rtype").equals("delPren")){
+                if(Database.deletePrenotazione(Integer.parseInt(request.getParameter("idPren")))){
+                    pr.write("{\"status\" : \"error\", \"message\" : \"Eliminazione effettuata con successo\"}");
+                } else pr.write("{\"status\" : \"error\", \"message\" : \"Errore durante l'eliminazione.\"}");
             }
 
         }

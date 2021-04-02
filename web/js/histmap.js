@@ -90,25 +90,27 @@ function infopren(id) {
             if(pren.oraIngresso!== null && pren.oraUscita === null) entry = 'ENTRATO';
             else if (pren.oraIngresso === null) entry = 'PRENOTATO';
             else entry = 'USCITO';
-
-            if(entry === 'ENTRATO'){
+            if(entry === 'PRENOTATO'){
                 var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
                     ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
                     '<div class="modal-header">  <h4 class="modal-title">Prenotazione #' + pren.idPrenotazione + '</h4> ' +
                     '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
                     '</div> ' +
                     '<div class="modal-body text-center" id="modalinfo"> </div> ' +
-                    '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="setExit('+ pren.idPrenotazione +')">Fai Uscire</button> '+
+                    '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="delpren('+ pren.idPrenotazione +')">Elimina Prenotazione</button> '+
                     '<button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>' +
                     '</div> </div> </div>';
-            } else var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
-                ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
-                '<div class="modal-header">  <h4 class="modal-title">Prenotazione #' + pren.idPrenotazione + '</h4> ' +
-                '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
-                '</div> ' +
-                '<div class="modal-body text-center" id="modalinfo"> </div> ' +
-                '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>' +
-                '</div> </div> </div>';
+            } else {
+                var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
+                    ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
+                    '<div class="modal-header">  <h4 class="modal-title">Prenotazione #' + pren.idPrenotazione + '</h4> ' +
+                    '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
+                    '</div> ' +
+                    '<div class="modal-body text-center" id="modalinfo"> </div> ' +
+                    '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>' +
+                    '</div> </div> </div>';
+            }
+
 
             $('#infobook').html(mhead);
             $('#modalinfo').html(intestazione);
@@ -122,3 +124,43 @@ function infopren(id) {
     });
 
 };
+
+
+function delpren(id) {
+
+    $.ajax({
+        url: './histbook',
+        dataType: 'json',
+        type: 'post',
+        data: {
+            'rtype': 'delPren',
+            'idPren': id
+        },
+        success: function (data) {
+            $('#infobook').modal('dispose');
+            var message = data.message;
+
+            var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
+                ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
+                '<div class="modal-header">  <h4 class="modal-title">Esito Eliminazione</h4> ' +
+                '<button type="button" class="close" data-dismiss="modal text-center">&times;</button> ' +
+                '</div> ' +
+                '<div class="modal-body text-center">'+ message+'. Ora verrai reinderizzato.</div> ' +
+                '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button> '+
+                '</div> </div> </div>';
+
+            $('#delbook').html(mhead);
+
+            $('#delbook').modal('toggle');
+
+            setTimeout(function() {
+                location.reload();
+            }, 3000);
+
+        },
+        error: function (errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+
+}

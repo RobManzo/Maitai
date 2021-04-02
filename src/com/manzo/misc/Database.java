@@ -489,6 +489,21 @@ public class Database {
         }
     }
 
+    /**
+     * Metodo per eliminare la prenotazione specificata (ADMIN)
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    public static boolean deletePrenotazione(int id) throws SQLException {
+        String query = "DELETE FROM manzo.prenotazioni AS P WHERE P.idPrenotazione=?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            statement.setInt(1, id);
+            return statement.executeUpdate() > 0;
+        }
+    }
+
 
     /**
      * Metodo per il settaggio dell'orario di accesso alla struttura
@@ -675,25 +690,48 @@ public class Database {
                 BigDecimal importo = result.getBigDecimal("totale");
                 String orderstatus = result.getString("statoOrdine");
                 int idPrenotazione = result.getInt("prenotazioni_idPrenotazione");
-                while(result.next()) {
+                do {
                     prodotti.put(result.getInt("prodotti_idProdotto"), new Pair<>(result.getInt("quantita"), result.getBigDecimal("importo")));
-                } return new Ordine(idOrdine, orderdate, ordertime, prodotti, importo, orderstatus, idPrenotazione);
+                } while(result.next());
+                return new Ordine(idOrdine, orderdate, ordertime, prodotti, importo, orderstatus, idPrenotazione);
             } else return null;
         }
     }
 
-    public static List<Ordine> getOrders() throws SQLException{
-        String query = "SELECT * FROM manzo.ordini as O WHERE O.data=? ORDER BY O.orario ASC";
-        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            LocalDate now = LocalDate.now();
-            statement.setDate(1, Date.valueOf(now));
-            ResultSet result = statement.executeQuery();
-            List<Ordine> orders = new ArrayList<>();
-            while (result.next()){
-                orders.add(Database.getOrder(result.getInt("idOrdine")));
-            } return orders;
-        }
 
+    public static List<Ordine> getOrders(boolean actual) throws SQLException{
+        if(actual){
+            String query = "SELECT * FROM manzo.ordini as O WHERE O.data=? ORDER BY O.orario ASC";
+            try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+                LocalDate now = LocalDate.now();
+                statement.setDate(1, Date.valueOf(now));
+                ResultSet result = statement.executeQuery();
+                List<Ordine> orders = new ArrayList<>();
+                while (result.next()){
+                    orders.add(Database.getOrder(result.getInt("idOrdine")));
+                }
+                return orders;
+            }
+        }else {
+            String query = "SELECT * FROM manzo.ordini as O ORDER BY O.orario ASC";
+            try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+                LocalDate now = LocalDate.now();
+                ResultSet result = statement.executeQuery();
+                List<Ordine> orders = new ArrayList<>();
+                while (result.next()){
+                    orders.add(Database.getOrder(result.getInt("idOrdine")));
+                } return orders;
+            }
+
+        }
+    }
+
+    public static boolean deleteOrder(int idOrdine) throws SQLException {
+        String query = "DELETE FROM manzo.ordini AS O JOIN manzo.ordini_has_prodotti AS OP ON O.idOrdine = OP.ordini_IdOrdine WHERE O.idOrdine=?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            statement.setInt(1, idOrdine);
+            return statement.executeUpdate() > 0;
+        }
     }
 
     public static boolean setOrderStatus(int id) throws SQLException{

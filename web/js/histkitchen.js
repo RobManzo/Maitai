@@ -4,6 +4,7 @@ $(document).ready(function () {
 });
 
 function ordersum(){
+
     var intestazione = '<table class=\" table table-striped text-center\">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
         '<th scope="col">ID Ordine</th> ' +
@@ -21,7 +22,7 @@ function ordersum(){
     $('#ordertab').html(intestazione);
 
     $.ajax({
-        url: './kitchen',
+        url: './histkitchen',
         dataType: 'json',
         type: 'post',
         data: {
@@ -37,7 +38,7 @@ function ordersum(){
                 if(ts.minute<10) minute = '0'+ts.minute; else minute = ts.minute;
                 if(ts.second<10) second = '0'+ts.minute; else second = ts.second;
                 let time = hour+':'+minute+':'+second;
-                $('#tabella').append('<tr class="text-center"> <th scope="row">' + val.id + '</th> <td>' + time + '</td> <td>' + val.stato.toUpperCase() + '</td> <td>' + val.importo + '€</td> <td> <a href="#" class="prenotazione" id="' + val.id + '" onclick="infoOrder('+ val.id +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png"></a> </td> <td></td>  </tr>');
+                $('#tabella').append('<tr class="text-center"> <th scope="row">' + val.id + '</th> <td>' + time + '</td> <td>' + val.stato.toUpperCase() + '</td> <td>' + val.importo + ' €</td> <td> <a href="#" class="prenotazione" id="' + val.id + '" onclick="infoOrder('+ val.id +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png"></a> </td> <td></td>  </tr>');
             });
         },
         error: function (errorThrown) {
@@ -49,7 +50,7 @@ function ordersum(){
 function infoOrder(id) {
 
     $.ajax({
-        url: './kitchen',
+        url: './histkitchen',
         dataType: 'json',
         type: 'post',
         data: {
@@ -75,7 +76,7 @@ function infoOrder(id) {
                     '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
                     '</div> ' +
                     '<div class="modal-body text-center" id="modalinfo"> </div> ' +
-                    '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button> <button type="button" class="btn btn-success" data-dismiss="modal" onclick="orderReady('+ order.id +')">Ordine Pronto</button> '+
+                    '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button> <button type="button" class="btn btn-success" data-dismiss="modal" onclick="delorder('+ order.id +')">Ordine Pronto</button> '+
                     '</div> </div> </div>';
             } else {
                 var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
@@ -121,17 +122,17 @@ function infoOrder(id) {
 
 };
 
-function orderReady(id) {
+function delorder(id) {
     $.ajax({
-        url: './kitchen',
+        url: './histkitchen',
         dataType: 'json',
         type: 'post',
         data: {
-            'rtype': 'orderReady',
+            'rtype': 'delOrder',
             'ID': id
         },
         success: function (data) {
-            if(data.status === 'error') alert(data.Message);
+            alert(data.Message);
             setTimeout(function() {
                 location.reload();
             }, 500);

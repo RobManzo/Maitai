@@ -25,8 +25,8 @@ public class homeServlet extends HttpServlet {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
-            LocalDate data = LocalDate.now(ZoneId.of("GMT+1"));
-            LocalTime time = LocalTime.now(ZoneId.of("GMT+1"));
+            LocalDate data = LocalDate.now(ZoneId.of("GMT+2"));
+            LocalTime time = LocalTime.now(ZoneId.of("GMT+2"));
             int ts = Miscellaneous.getTimeslot(time);
             int userid =((Utente) request.getSession().getAttribute("user")).getIdUtente();
             System.out.println("ID: " +userid+ " \nPrenotazione: " +request.getSession().getAttribute("entry"));

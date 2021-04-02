@@ -86,7 +86,10 @@ function uscita() {
                 $('#message').html('<p class="text-center">' + message + '</p>\n' +
                     '<img class="img-responsive" src="\\Maitai\\assets\\img\\allowed.png">');
                 $('#accessinfo').modal('toggle');
-                location.reload();
+
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
 
             } else if(data.status == 'error'){
                 var message = data.message;

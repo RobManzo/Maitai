@@ -2,7 +2,6 @@ package com.manzo.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.entities.Ordine;
-import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
 
 import javax.servlet.RequestDispatcher;
@@ -15,8 +14,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name="kitchenServlet", urlPatterns={"/kitchen"})
-public class kitchenServlet extends HttpServlet {
+@WebServlet(name="histkitchenServlet", urlPatterns={"/admin/histkitchen"})
+public class histkitchenServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,7 +24,7 @@ public class kitchenServlet extends HttpServlet {
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getOrders")){
-                List<Ordine> ordini = Database.getOrders(true);
+                List<Ordine> ordini = Database.getOrders(false);
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Ordini\" :"+ mapper.writeValueAsString(ordini) +"}");
             }
@@ -41,12 +40,11 @@ public class kitchenServlet extends HttpServlet {
                     pr.write("{\"Ordine\" :\"NESSUN ORDINE TROVATO\"}");
                 }
             }
+            else if(request.getParameter("rtype").equals("delOrder")){
+                if(Database.deleteOrder(Integer.parseInt(request.getParameter("ID")))){
+                    pr.write("{\"Message\" : \"Cancellazione riuscita.\" }");
+                } else pr.write("{\"Message\" : \"Errore nella cancellazione.\" }");
 
-            else if(request.getParameter("rtype").equals("orderReady")){
-                int id = Integer.parseInt(request.getParameter("ID"));
-                if(Database.setOrderStatus(id)){
-                    pr.write("{\"Status\" :\"ok\", \"Message\" :\"\"}");
-                } else pr.write("{\"Status\" :\"error\", \"Message\" :\"Errore generico.\"}");
             }
 
         }
@@ -58,7 +56,7 @@ public class kitchenServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/kitchen.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/histkitchen.jsp");
         dispatcher.forward(request, response);
     }
 }
