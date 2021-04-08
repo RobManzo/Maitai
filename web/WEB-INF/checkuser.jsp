@@ -24,7 +24,7 @@
 
         <div class="page-section row fill-window" id="users" style="background-color: antiquewhite; align-content: flex-start;"> </div>
 
-        <div class="modal fade" id="infouser"> </div>
+        <div class="modal fade flex-fill" id="infouser"> </div>
 
         <!-- Footer-->
         <div class="footer"><%@ include file="/WEB-INF/footer.jsp"%></div>

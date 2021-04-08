@@ -9,7 +9,7 @@ function takeusers(){
         '<th scope="col">Nome</th> ' +
         '<th scope="col">Cognome</th> ' +
         '<th scope="col">Codice Fiscale</th> ' +
-        '<th scope="col">Telefono</th> ' +
+        '<th scope="col">Ruolo</th> ' +
         '<th scope="col"></th> ' +
         '</tr> ' +
         '</thead>' +
@@ -30,7 +30,7 @@ function takeusers(){
             var users = data.Utenti;
             $.each(users, function(key, val){
                 console.log(val);
-               $('#tabella').append('<tr class="text-center"> <th scope="row"> '+ val.idUtente +'</th><td>'+ val.nome +'</td><td>'+ val.cognome +'</td> <td>'+ val.codFisc +'</td> <td>'+ val.telefono +'</td> <td> <a href="#" class="prenotazione" id="' + val.idUtente + '" onclick="infouser('+ val.idUtente +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png"></a> </td> </tr>');
+               $('#tabella').append('<tr class="text-center"> <th scope="row"> '+ val.idUtente +'</th><td>'+ val.nome +'</td><td>'+ val.cognome +'</td> <td>'+ val.codFisc +'</td> <td>'+ val.ruolo +'</td> <td> <a href="#" class="prenotazione" id="' + val.idUtente + '" onclick="infouser('+ val.idUtente +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png"></a> </td> </tr>');
             });
         },
         error: function (errorThrown) {
@@ -50,7 +50,7 @@ function infouser(id) {
         '<th scope="col">Telefono</th> ' +
         '<th scope="col">Data di Nascita</th> ' +
         '<th scope="col">Domicilio</th> ' +
-        '<th scope="col"></th> ' +
+        '<th scope="col"> </th> ' +
         '</tr> ' +
         '</thead>' +
         '<tbody id="tabinfo">' +
@@ -69,7 +69,7 @@ function infouser(id) {
             var user = data.Utente;
             var date = user.dataNasc.split("-").join("/");
             var mhead = '<div class="modal-dialog modal-dialog-centered modal-lg">' +
-                ' <div class="modal-content"  style="background-color: antiquewhite;"> ' +
+                ' <div class="modal-content"  style="background-color: antiquewhite; overflow-x: auto;"> ' +
                 '<div class="modal-header">  <h4 class="modal-title">Utente #' + user.idUtente + '</h4> ' +
                 '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
                 '</div> ' +

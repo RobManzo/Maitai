@@ -70,7 +70,6 @@
                         <h4 class="modal-title">Portale Prenotazioni</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-
                     <div class="modal-body text-center">
                         <div class="row align-items-center">
                             <div class="col-md-6">

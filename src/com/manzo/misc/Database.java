@@ -166,6 +166,35 @@ public class Database {
     }
 
     /**
+     * Inserisce all'interno del database i dati del cliente che effettua la registrazione
+     *
+     * @param nome
+     * @param cognome
+     * @param email
+     * @param telefono
+     * @param dataNasc
+     * @param password
+     * @throws SQLException
+     */
+    public static void userSignIn(String nome, String cognome, String email, String codFisc, String telefono, LocalDate dataNasc, String password, String indirizzo, String provincia, String ruolo) throws SQLException {
+        String query1 = "INSERT INTO manzo.utenti (email, pass, nome, cognome, codFisc, telefono, dataNasc, ruolo, indirizzo, provincia) " +
+                "VALUES (?, SHA2(?, 256), ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query1)) {
+            statement.setString(1, email);
+            statement.setString(2, password);
+            statement.setString(3, nome);
+            statement.setString(4, cognome);
+            statement.setString(5, codFisc);
+            statement.setString(6, telefono);
+            statement.setDate(7, Date.valueOf(dataNasc));
+            statement.setString(8, ruolo);
+            statement.setString(9, indirizzo);
+            statement.setString(10, provincia);
+            statement.executeUpdate();
+        }
+    }
+
+    /**
      * Ritorna TRUE se esiste un account con la stessa email, viceversa FALSE
      *
      * @param email
@@ -188,7 +217,7 @@ public class Database {
     }
 
     /**
-     * Metodo che genera una stringa di 10 caratteri con almeno un carattare minuscolo, uno maiuscolo e un numero
+     * Metodo che genera una stringa di 8 caratteri con almeno un carattare minuscolo, uno maiuscolo e un numero
      *
      * @param length
      * @return

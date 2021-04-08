@@ -24,14 +24,14 @@
 
         <div class="page-section row fill-window" style="background-color: antiquewhite; align-content: center;">
 
-            <div class="container col-md-4 align-items-center py-2 text-center" id="users">
-                <a href="${pageContext.request.contextPath}/staff/checkuser" id="checkusers">
+            <div class="container col-md-4 align-items-center py-2 text-center">
+                <a href="" data-toggle="modal" data-target="#manusers">
                     <div class="limit">
-                        <img class="img-responsive" src="\Maitai\assets\img\user-check.png">
+                        <img class="img-responsive" src="\Maitai\assets\img\user-check.png" >
                     </div>
-                    <h4 class="my-3" style="color: black;">Check Utenti</h4>
+                    <h4 class="my-3" style="color: black;">Gestione Utenti</h4>
                 </a>
-                <p class="text-muted">Amministrazione utenti</p>
+                <p class="text-muted">Aggiungi o Modifica Utenti</p>
             </div>
 
             <div class="container col-md-4 align-items-center py-2 text-center">
@@ -56,6 +56,36 @@
             </div>
         </div>
 
+        <div class="modal fade" id="manusers">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content"  style="background-color: antiquewhite;">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Gestione Utenti</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <a href="${pageContext.request.contextPath}/staff/checkuser">
+                                    <div class="limit">
+                                        <img class="img-responsive" src="\Maitai\assets\img\user-check.png" >
+                                    </div>
+                                    <h4 class="my-3" style="color: black;">Gestisci Utenti</h4>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="${pageContext.request.contextPath}/admin/adduser">
+                                    <div class="limit">
+                                        <img class="img-responsive" src="\Maitai\assets\img\user-add.png" >
+                                    </div>
+                                    <h4 class="my-3" style="color: black;">Aggiungi Utente</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="manorders">
             <div class="modal-dialog modal-dialog-centered modal-lg">
