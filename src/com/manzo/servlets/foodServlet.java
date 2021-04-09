@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.entities.Ordine;
 import com.manzo.entities.Prodotto;
+import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
+import com.manzo.misc.MailService;
 import javafx.util.Pair;
 
 import javax.servlet.RequestDispatcher;
@@ -56,6 +58,16 @@ public class foodServlet extends HttpServlet {
                 }
                 Ordine order = new Ordine(LocalDate.now(), LocalTime.now(), prodsInOrder, tot, "emesso", (Integer) request.getSession().getAttribute("entry"));
                 if(Database.setOrder(order, (Integer) request.getSession().getAttribute("entry")) > 0){
+                    Utente user = (Utente) request.getSession().getAttribute("user");
+                    String messaggio = "<p>Ciao " + user.getNome() + " " + user.getCognome() + ", <br>"
+                            + "Ti avvisiamo che il tuo ordine è stato correttamente inviato e a breve, ti verrà recapitato presso la tua postazione. <br><br>"
+                            + "<br>Buon Appetito! <br><br>"
+                            + "Lido Maitai</p>";
+
+                    MailService mailer = new MailService(user.getEmail(), "Lido Maitai - Conferma ordine ristorazione", messaggio);
+                    Thread thread = new Thread(mailer);
+                    thread.start();
+
                     request.getSession().setAttribute("cart", new HashMap<Integer, Integer>());
                     pr.write("{\"Message\" :\"Ordine confermato!\"}");
                 }

@@ -3,6 +3,7 @@ package com.manzo.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
+import com.manzo.misc.MailService;
 import com.manzo.misc.Miscellaneous;
 
 import javax.servlet.RequestDispatcher;
@@ -59,6 +60,17 @@ public class bookingServlet extends HttpServlet {
 
                 if(pos.isEmpty()){
                     if(Database.insertPrenotazione(user, fascia, data, postazioni, prezzo)){
+                        String messaggio = "<p>Ciao " + user.getNome() + " " + user.getCognome() + ", <br>"
+                                + "Ti avvisiamo che la tua prenotazione per il "+ data.format(DateTimeFormatter.ofPattern("dd MM yyyy")) +" è stata correttamente inviata.<br><br>"
+                                + "Postazioni: " + postazioni + "<br>"
+                                + "Fascia Oraria: " + fascia + "<br>"
+                                + "Costo: " + prezzo + "€<br><br>"
+                                + "<br>A presto! <br>"
+                                + "Lido Maitai</p>";
+                            MailService mailer = new MailService(user.getEmail(), "Lido Maitai - Conferma Prenotazione", messaggio);
+                        Thread thread = new Thread(mailer);
+                        thread.start();
+
                         pr.write("{\"status\" : \"ok\", \"message\" : \"Prenotazione effettuata.\"}");
                     } else pr.write("{\"status\" : \"error\", \"message\" : \"Errore durante la prenotazione.\"}");
                 }else pr.write("{\"status\" : \"error\", \"message\" : \"Una o più postazioni sono già occupate.\"}");

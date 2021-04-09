@@ -1,6 +1,7 @@
 package com.manzo.servlets;
 
 import com.manzo.misc.Database;
+import com.manzo.misc.MailService;
 import com.manzo.misc.Miscellaneous;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @WebServlet(name="signinServlet", urlPatterns={"/signin"})
 public class signinServlet extends HttpServlet {
@@ -33,9 +35,6 @@ public class signinServlet extends HttpServlet {
             response.setContentType("application/json");
             String status;
 
-            System.out.println(name + surname + email + pass + confpass + phone + birthdate.toString() + codfisc );
-
-
             if((error = Miscellaneous.checkForm(name, surname, email, pass, confpass, phone, birthdate.toString(), codfisc)) != null){
                 status = "{\"RESPONSE\" : \"Error\", \"Message\" : \"" + error + " Verrai reinderizzato all'inizio." + "\"}";
 
@@ -43,6 +42,14 @@ public class signinServlet extends HttpServlet {
                 status = "{\"RESPONSE\" : \"Error\", \"Message\" : \"Email o persona già registrata. Verrai reinderizzato all'inizio.\"}";
             } else {
                 Database.userSignIn(name, surname, email, codfisc, phone, birthdate, pass, address, province);
+                String messaggio = "<p>Ciao " + name + " " + surname + ", <br>"
+                        + "La registrazione è andata a buon fine. Ti auguriamo una buona permanenza presso la nostra struttura.<br><br>"
+                        + "Password: " + pass + "<br>"
+                        + "<br>A presto! <br>"
+                        + "Lido Maitai</p>";
+                MailService mailer = new MailService(email, "Lido Maitai - Conferma Prenotazione", messaggio);
+                Thread thread = new Thread(mailer);
+                thread.start();
                 status = "{\"RESPONSE\" : \"Correct\", \"Message\" : \"Registrazione effettuata. Verrai reinderizzato alla home.\"}";
             }
 
