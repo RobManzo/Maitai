@@ -2,11 +2,14 @@ $(document).ready(function () {
 
 });
 
+/**
+ * Funzione per il cambio dati personali
+ */
 function cambiadet() {
    var newtel = $('#cell').val();
    var newaddr = $('#address').val();
 
-   if(newtel!=''){
+   if(newtel!==''){
        var phoneno = /^\d{10}$/;
        if(newtel.match(phoneno)){
            $.ajax({
@@ -29,7 +32,7 @@ function cambiadet() {
        }
    }
 
-    if(newaddr!=''){
+    if(newaddr!==''){
             $.ajax({
                 url: './account',
                 dataType: 'json',
@@ -54,6 +57,9 @@ function cambiadet() {
 
 }
 
+/**
+ * Funzione per il cambio password
+ */
 function cambiapsw() {
     if (checkPass()){
         var newpass = $('#newpsw').val();
@@ -81,12 +87,16 @@ function cambiapsw() {
 
 }
 
+/**
+ * Funzione per il check della password
+ * @returns {boolean}
+ */
 function checkPass(){
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
 
     if(regex.test($('#newpsw').val())) {
 
-        if ($('#newpsw').val() == $('#reppsw').val() && $('#reppsw').val() && $('#newpsw').val())
+        if ($('#newpsw').val() === $('#reppsw').val() && $('#reppsw').val() && $('#newpsw').val())
             return true;
         else
             alert('Le password non coincidono');

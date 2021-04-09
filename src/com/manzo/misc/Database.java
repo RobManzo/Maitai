@@ -18,9 +18,8 @@ import java.time.LocalTime;
 import java.util.*;
 
 /**
- * Questa classe modella la connessione con il database. Gestisce tutti i metodi che
- * interagiscono con il database, consentendo di effettuare interrogazioni per inserire,
- * cancellare, aggiornare o ritornare i dati delle tabelle.
+ * Classe per la connessione con il Database. Gestisce tutti i metodi che
+ * interagiscono con esso, consentendo di effettuare interrogazioni per manipolare i dati al suo interno.
  * @author Manzo Roberto
  */
 public class Database {
@@ -48,7 +47,7 @@ public class Database {
      * Metodo che data l'email, ottiene l'utente dal DataBase
      * 
      * @param email
-     * @return
+     * @return Utente
      * @throws SQLException
      */
 
@@ -88,7 +87,7 @@ public class Database {
     }
 
     /**
-     * Metodo che dato il ruolo del richiedente, ottiene la lista degli utenti
+     * Metodo che in base al ruolo del richiedente, ottiene la lista degli utenti
      *
      * @param role
      * @return
@@ -166,7 +165,7 @@ public class Database {
     }
 
     /**
-     * Inserisce all'interno del database i dati del cliente che effettua la registrazione
+     * Inserisce all'interno del database i dati del cliente che effettua la registrazione (ADMIN)
      *
      * @param nome
      * @param cognome
@@ -174,6 +173,10 @@ public class Database {
      * @param telefono
      * @param dataNasc
      * @param password
+     * @param ruolo
+     * @param codFisc
+     * @param indirizzo
+     * @param provincia
      * @throws SQLException
      */
     public static void userSignIn(String nome, String cognome, String email, String codFisc, String telefono, LocalDate dataNasc, String password, String indirizzo, String provincia, String ruolo) throws SQLException {
@@ -309,6 +312,13 @@ public class Database {
         }
     }
 
+    /**
+     * Metodo per ottenere i posti occupati per ogni prenotazione di un determinato giorno
+     * @param thisday
+     * @param timeslot
+     * @return
+     * @throws SQLException
+     */
     public static List<Integer> getPosti(LocalDate thisday, int timeslot) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.fasciaOraria=?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
@@ -357,16 +367,6 @@ public class Database {
         }
     }
 
-    public static int userByPrenotazione(int id) throws SQLException{
-        String query = "SELECT * FROM manzo.prenotazioni AS P JOIN utenti AS U ON P.utenti_idUtente = U.idUtente WHERE P.idPrenotazione=?";
-        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, id);
-            ResultSet result = statement.executeQuery();
-            if (result.next()) return result.getInt("idUtente");
-            else return 0;
-        }
-    }
-
     /**
      * Metodo per ottenere la prenotazione specificata (Staff)
      *
@@ -396,6 +396,24 @@ public class Database {
             } else return null;
         }
     }
+
+    /**
+     * Metodo per ottenere l'utente che ha effettuato una determinata prenotazione
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    public static int userByPrenotazione(int id) throws SQLException{
+        String query = "SELECT * FROM manzo.prenotazioni AS P JOIN utenti AS U ON P.utenti_idUtente = U.idUtente WHERE P.idPrenotazione=?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) return result.getInt("idUtente");
+            else return 0;
+        }
+    }
+
+
 
     /**
      * Metodo per ottenere la lista delle prenotazioni riguardo un utente
@@ -428,7 +446,7 @@ public class Database {
     }
 
     /**
-     * Metodo per ottenere la lista delle prenotazioni riguardo un utente
+     * Metodo per ottenere la lista delle prenotazioni (Odierne o Complessive)
      *
      * @return
      * @throws SQLException
@@ -563,6 +581,60 @@ public class Database {
     }
 
     /**
+     * Metodo per il settaggio dell'orario di uscita dalla struttura
+     * @param thisday
+     * @param userId
+     * @param thistime
+     * @return
+     * @throws SQLException
+     */
+    public static boolean setExit(LocalDate thisday, int userId, LocalTime thistime) throws SQLException {
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            statement.setDate(1, Date.valueOf(thisday));
+            statement.setInt(2, userId);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                result.getTime("oraIngresso");
+                if (!result.wasNull()) {
+                    result.getTime("oraUscita");
+                    if (result.wasNull()) {
+                        result.updateTime("oraUscita", Time.valueOf(thistime));
+                        result.updateRow();
+                        return true;
+                    } else return false;
+                } else return false;
+            } else return false;
+        }
+    }
+
+    /**
+     * Metodo per il settaggio dell'orario di uscita dalla struttura (Staff)
+     * @param idPren
+     * @param thistime
+     * @return
+     * @throws SQLException
+     */
+    public static boolean setExit(int idPren, LocalTime thistime) throws SQLException {
+        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.idPrenotazione=?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            statement.setInt(1, idPren);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                result.getTime("oraIngresso");
+                if (!result.wasNull()) {
+                    result.getTime("oraUscita");
+                    if (result.wasNull()) {
+                        result.updateTime("oraUscita", Time.valueOf(thistime));
+                        result.updateRow();
+                        return true;
+                    } else return false;
+                } else return false;
+            } else return false;
+        }
+    }
+
+    /**
      * Metodo per verificare se l'utente è all'interno della struttura
      *
      * @param thisday
@@ -588,44 +660,6 @@ public class Database {
         }
     }
 
-    public static boolean setExit(LocalDate thisday, int userId, LocalTime thistime) throws SQLException {
-        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.Utenti_idUtente=?";
-        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-            statement.setDate(1, Date.valueOf(thisday));
-            statement.setInt(2, userId);
-            ResultSet result = statement.executeQuery();
-            if (result.next()) {
-                result.getTime("oraIngresso");
-                if (!result.wasNull()) {
-                    result.getTime("oraUscita");
-                    if (result.wasNull()) {
-                        result.updateTime("oraUscita", Time.valueOf(thistime));
-                        result.updateRow();
-                        return true;
-                    } else return false;
-                } else return false;
-            } else return false;
-        }
-    }
-
-    public static boolean setExit(int idPren, LocalTime thistime) throws SQLException {
-        String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.idPrenotazione=?";
-        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-            statement.setInt(1, idPren);
-            ResultSet result = statement.executeQuery();
-            if (result.next()) {
-                result.getTime("oraIngresso");
-                if (!result.wasNull()) {
-                    result.getTime("oraUscita");
-                    if (result.wasNull()) {
-                        result.updateTime("oraUscita", Time.valueOf(thistime));
-                        result.updateRow();
-                        return true;
-                    } else return false;
-                } else return false;
-            } else return false;
-        }
-    }
 
     /**
      * Metodo per ottenere tutti i prodotti presenti nel DB
@@ -727,7 +761,12 @@ public class Database {
         }
     }
 
-
+    /**
+     * Metodo per ottenere la lista degli ordini (Odierni o Complessivi)
+     * @param actual
+     * @return
+     * @throws SQLException
+     */
     public static List<Ordine> getOrders(boolean actual) throws SQLException{
         if(actual){
             String query = "SELECT * FROM manzo.ordini as O WHERE O.data=? ORDER BY O.orario ASC";
@@ -755,6 +794,12 @@ public class Database {
         }
     }
 
+    /**
+     * Metodo per l'eliminazione dell'ordine specificato
+     * @param idOrdine
+     * @return
+     * @throws SQLException
+     */
     public static boolean deleteOrder(int idOrdine) throws SQLException {
         String query = "DELETE FROM manzo.ordini AS O JOIN manzo.ordini_has_prodotti AS OP ON O.idOrdine = OP.ordini_IdOrdine WHERE O.idOrdine=?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
@@ -763,6 +808,13 @@ public class Database {
         }
     }
 
+
+    /**
+     * Metodo per il modificare lo stato dell'ordine di ristorazione
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public static boolean setOrderStatus(int id) throws SQLException{
         String query = "SELECT statoOrdine FROM manzo.ordini WHERE idOrdine=? ";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
@@ -781,6 +833,12 @@ public class Database {
         }
     }
 
+    /**
+     * Metodo per ottenere le postazione riguardanti una prenotazione
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public static String getSeat(int id) throws SQLException{
         String query = "SELECT * FROM manzo.prenotazioni as P WHERE P.idPrenotazione=?";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){

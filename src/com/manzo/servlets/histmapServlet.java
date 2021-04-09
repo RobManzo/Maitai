@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @WebServlet(name="histmapServlet", urlPatterns={"/admin/histbook"})

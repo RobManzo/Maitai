@@ -2,6 +2,9 @@ $(document).ready(function () {
     bookings();
 });
 
+/**
+ * Funzione per l'elenco dello storico delle prenotazioni
+ */
 function bookings(){
     var intestazione = '<table class=\" table table-striped text-center\"">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
@@ -13,7 +16,7 @@ function bookings(){
         '</tr> ' +
         '</thead>' +
         '<tbody id="tabella">' +
-        '</tbody>'
+        '</tbody>' +
         '</table>';
 
     $('#bookings').html(intestazione);
@@ -33,7 +36,7 @@ function bookings(){
                 if(val.oraIngresso!== null && val.oraUscita === null) entry = 'ENTRATO';
                 else if (val.oraIngresso === null) entry = 'PRENOTATO';
                 else entry = 'USCITO';
-               $('#tabella').append('<tr class="text-center"> <th scope="row"> '+ val.idPrenotazione +'</th><td>'+ val.idPostazione +'</td><td>'+ entry +'</td> <td>'+ val.fasciaOraria +'</td> <td> <a href="#" class="prenotazione" id="' + val.idPrenotazione + '" onclick="infopren('+ val.idPrenotazione +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png"></a> </td> </tr>');
+               $('#tabella').append('<tr class="text-center"> <th scope="row"> '+ val.idPrenotazione +'</th><td>'+ val.idPostazione +'</td><td>'+ entry +'</td> <td>'+ val.fasciaOraria +'</td> <td> <a href="#" class="prenotazione" id="' + val.idPrenotazione + '" onclick="infopren('+ val.idPrenotazione +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png" alt="INFO"></a> </td> </tr>');
 
             });
         },
@@ -43,6 +46,10 @@ function bookings(){
     });
 };
 
+/**
+ * Funzione per la visualizzazione delle informazioni di una prenotazione
+ * @param id
+ */
 function infopren(id) {
     var intestazione = '<table class=\" table table-striped text-center\">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
@@ -81,7 +88,7 @@ function infopren(id) {
 
             var datepren = dp.dayOfMonth + "/" + month + "/" + dp.year;
 
-            var today = data.Today
+            var today = data.Today;
             if(today.monthValue < 10){
                 nowmonth= "0" + today.monthValue;
             } else nowmoth = today.monthValue;
@@ -125,7 +132,10 @@ function infopren(id) {
 
 };
 
-
+/**
+ * Funzione per l'eliminazione di una prenotazione
+ * @param id
+ */
 function delpren(id) {
 
     $.ajax({

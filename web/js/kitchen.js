@@ -3,6 +3,9 @@ $(document).ready(function () {
 
 });
 
+/**
+ * Funzione per la visualizzazione degli ordini odierni
+ */
 function ordersum(){
     var intestazione = '<table class=\" table table-striped text-center\">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
@@ -15,7 +18,7 @@ function ordersum(){
         '</tr> ' +
         '</thead>' +
         '<tbody id="tabella">' +
-        '</tbody>'
+        '</tbody>' +
         '</table>';
 
     $('#ordertab').html(intestazione);
@@ -37,7 +40,7 @@ function ordersum(){
                 if(ts.minute<10) minute = '0'+ts.minute; else minute = ts.minute;
                 if(ts.second<10) second = '0'+ts.minute; else second = ts.second;
                 let time = hour+':'+minute+':'+second;
-                $('#tabella').append('<tr class="text-center"> <th scope="row">' + val.id + '</th> <td>' + time + '</td> <td>' + val.stato.toUpperCase() + '</td> <td>' + val.importo + '€</td> <td> <a href="#" class="prenotazione" id="' + val.id + '" onclick="infoOrder('+ val.id +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png"></a> </td> <td></td>  </tr>');
+                $('#tabella').append('<tr class="text-center"> <th scope="row">' + val.id + '</th> <td>' + time + '</td> <td>' + val.stato.toUpperCase() + '</td> <td>' + val.importo + '€</td> <td> <a href="#" class="prenotazione" id="' + val.id + '" onclick="infoOrder('+ val.id +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png" alt="INFO"></a> </td> <td></td>  </tr>');
             });
         },
         error: function (errorThrown) {
@@ -46,6 +49,10 @@ function ordersum(){
     });
 };
 
+/**
+ * Funzione per visualizzare le informazioni riguardo un ordine
+ * @param id
+ */
 function infoOrder(id) {
 
     $.ajax({
@@ -97,8 +104,8 @@ function infoOrder(id) {
                 '</tr> ' +
                 '</thead>' +
                 '<tbody id="tabinfo">' +
-                '</tbody>'
-            '</table>';
+                '</tbody>' +
+                '</table>';
 
             $('#infobox').html(mhead);
             $('#modalinfo').append(intestazione);
@@ -121,6 +128,10 @@ function infoOrder(id) {
 
 };
 
+/**
+ * Funzione per il settaggio dello status di un ordine
+ * @param id
+ */
 function orderReady(id) {
     $.ajax({
         url: './kitchen',

@@ -3,6 +3,9 @@ $(document).ready(function () {
 
 });
 
+/**
+ * Funzione per l'accesso alla struttura
+ */
 function accesso(){
 
     $.ajax({
@@ -13,10 +16,10 @@ function accesso(){
             'rtype' : 'setEntry'
         },
         success: function (data) {
-            if(data.status == 'ok'){
+            if(data.status === 'ok'){
                 var message = data.message;
                 $('#entry').html('<a href="" data-toggle="modal" data-target="#access">\n' + '<div class="limit">\n' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\off.png">\n' +
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\off.png" alt="OFF">\n' +
                     '</div>\n' +
                     '<h4 class="my-3" style="color: black;">Uscita</h4>\n' +
                     '</a>\n' +
@@ -28,20 +31,20 @@ function accesso(){
                     '<h4 class="modal-title">Uscita dalla struttura</h4> ' +
                     '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
                     '</div> <div class="modal-body text-center"> <p class="text-center">Scannerizza per uscire dalla struttura.</p> ' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\qrcode.png"> ' +
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\qrcode.png" alt="qrcode"> ' +
                     '</div> <div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="uscita()">Uscita</button> ' +
                     '</div> </div> </div>');
 
                 $('#message').html('<p class="text-center">' + message + '</p>\n' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\allowed.png">');
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\allowed.png" alt="allowed">');
                 $('#accessinfo').modal('toggle');
                 location.reload();
 
-            } else if(data.status == 'error'){
+            } else if(data.status === 'error'){
                 var message = data.message;
 
                 $('#message').html('<p class="text-center">' + message + '</p>\n' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\denied.png">');
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\denied.png" alt="denied">');
                 $('#accessinfo').modal('toggle');
             }
 
@@ -53,6 +56,9 @@ function accesso(){
 
 };
 
+/**
+ * Funzione per l'uscita dalla struttura
+ */
 function uscita() {
 
     $.ajax({
@@ -63,11 +69,11 @@ function uscita() {
             'rtype' : 'setExit',
         },
         success: function (data) {
-            if(data.status == 'ok'){
+            if(data.status === 'ok'){
                 var message = data.message;
 
                 $('#entry').html('<a href="" data-toggle="modal" data-target="#access" id="accesso">\n' + '<div class="limit">\n' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\on.png">\n' +
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\on.png" alt="ON">\n' +
                     '</div>\n' +
                     '<h4 class="my-3" style="color: black;">Accesso</h4>\n' +
                     '</a>\n' +
@@ -79,23 +85,23 @@ function uscita() {
                     '<h4 class="modal-title">Accesso alla struttura</h4> ' +
                     '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
                     '</div> <div class="modal-body text-center"> <p class="text-center">Scannerizza per accedere alla struttura.</p> ' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\qrcode.png"> ' +
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\qrcode.png" alt="QRCODE"> ' +
                     '</div> <div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="accesso()">Accedi</button> ' +
                     '</div> </div> </div>');
 
                 $('#message').html('<p class="text-center">' + message + '</p>\n' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\allowed.png">');
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\allowed.png" alt="allowed">');
                 $('#accessinfo').modal('toggle');
 
                 setTimeout(function() {
                     location.reload();
                 }, 3000);
 
-            } else if(data.status == 'error'){
+            } else if(data.status === 'error'){
                 var message = data.message;
 
                 $('#message').html('<p class="text-center">' + message + '</p>\n' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\denied.png">');
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\denied.png" alt="DENIED">');
                 $('#accessinfo').modal('toggle');
             }
 
@@ -109,6 +115,9 @@ function uscita() {
 
 };
 
+/**
+ * Funzione per verificare lo status di entrata e uscita
+ */
 function checkEntry() {
 
     $.ajax({
@@ -121,7 +130,7 @@ function checkEntry() {
         success: function (data) {
             if(data.status === 'out'){
                 $('#entry').html('<a href="" data-toggle="modal" data-target="#access">\n' + '<div class="limit">\n' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\on.png">\n' +
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\on.png" alt="ON">\n' +
                     '</div>\n' +
                     '<h4 class="my-3" style="color: black;">Accesso</h4>\n' +
                     '</a>\n' +
@@ -133,7 +142,7 @@ function checkEntry() {
                     '<h4 class="modal-title">Accesso alla struttura</h4> ' +
                     '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
                     '</div> <div class="modal-body text-center"> <p class="text-center">Scannerizza per accedere alla struttura.</p> ' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\qrcode.png"> ' +
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\qrcode.png" alt="QRCODE"> ' +
                     '</div> <div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="accesso()">Accedi</button> ' +
                     '</div> </div> </div>');
                 $('#foodlink').addClass("noclickable");
@@ -142,7 +151,7 @@ function checkEntry() {
 
             } else if(data.status === 'in'){
                 $('#entry').html('<a href="" data-toggle="modal" data-target="#access">\n' + '<div class="limit">\n' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\off.png">\n' +
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\off.png" alt="OFF">\n' +
                     '</div>\n' +
                     '<h4 class="my-3" style="color: black;">Uscita</h4>\n' +
                     '</a>\n' +
@@ -154,7 +163,7 @@ function checkEntry() {
                     '<h4 class="modal-title">Uscita dalla struttura</h4> ' +
                     '<button type="button" class="close" data-dismiss="modal">&times;</button> ' +
                     '</div> <div class="modal-body text-center"> <p class="text-center">Scannerizza per uscire dalla struttura.</p> ' +
-                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\qrcode.png"> ' +
+                    '<img class="img-responsive" src="\\Maitai\\assets\\img\\qrcode.png" alt="QRCODE"> ' +
                     '</div> <div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="uscita()">Uscita</button> ' +
                     '</div> </div> </div>');
             }

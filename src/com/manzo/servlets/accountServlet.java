@@ -17,7 +17,6 @@ import java.sql.SQLException;
 public class accountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");

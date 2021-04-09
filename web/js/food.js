@@ -8,6 +8,9 @@ $(document).ready(function () {
     loadprod();
 });
 
+/**
+ * Funzione per il caricamento dei prodotti dal Database
+ */
 function loadprod() {
     $.ajax({
         url: './food',
@@ -66,6 +69,10 @@ function loadprod() {
 
 };
 
+/**
+ * Funzione per aggiungere i prodotti al carrello
+ * @param id
+ */
 function addToCart(id){
     let idstring = String(id);
     if(cart.has(idstring)){
@@ -100,6 +107,9 @@ function addToCart(id){
 
 };
 
+/**
+ * Funzione per svuotare il carello
+ */
 function emptycart() {
     cart = new Map();
     tot = 0;
@@ -122,7 +132,9 @@ function emptycart() {
     });
 };
 
-
+/**
+ * Funzione per mostrare il carrello ed effettuare il pagamento
+ */
 function cartshow() {
     if(cart.size === 0 ){
         alert("Il carrello è vuoto!");
@@ -138,8 +150,8 @@ function cartshow() {
         '</tr> ' +
         '</thead>' +
         '<tbody id="tabella">' +
-        '</tbody>'
-    '</table>';
+        '</tbody>' +
+        '</table>';
 
     $('#modalinfo').html(intestazione);
 
@@ -151,11 +163,14 @@ function cartshow() {
             }
         })
     });
-    $('#tabella').append('<tr class="text-center"> <th scope="row"> </th> <td> </td> <td> </td> <td>TOT '+ parseFloat(tot).toFixed(2) +'€</td> <td></td> </tr>\'')
+    $('#tabella').append('<tr class="text-center"> <th scope="row"> </th> <td> </td> <td> </td> <td>TOT '+ parseFloat(tot).toFixed(2) +'€</td> <td></td> </tr>\'');
     $('#cartmodal').modal('toggle');
 
 };
 
+/**
+ * Funzione per il pagamento dell'ordine
+ */
 function pagamento() {
     if(cart.size === 0 ){
         alert("Il carrello è vuoto!");
@@ -185,10 +200,15 @@ function pagamento() {
 
 }
 
+/**
+ * Parsing function per dettagli prodotti
+ * @param mp
+ * @returns {null}
+ */
 function mapToObj(mp){
     let obj = Object.create(null);
     mp.forEach(function (x,y) {
         obj[y] = x;
-    })
+    });
     return obj;
 }

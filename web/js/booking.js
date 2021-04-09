@@ -22,10 +22,10 @@ $(document).ready(function () {
                 var elem = el.parent();
                 var id = elem.node.id;
 
-                if($('\#'+ id).data('status')=='O'){
+                if($('\#'+ id).data('status')==='O'){
                     //Occupied
                 }
-                else if($('\#'+ id).data('status')=='S')                //Posto già selezionato
+                else if($('\#'+ id).data('status')==='S')                //Posto già selezionato
                 {
                     $('\#'+ id).find('path').removeClass().addClass('st0');
                     $('\#'+ id).data('status', 'D');
@@ -82,7 +82,7 @@ function insertRow(sel) {
 
 
 /**
- * Funzione per il caricamento dello stato dei posti
+ * Funzione per il caricamento dello stato dei posti dal DB
  */
 function seatState(){
     thisday = $('#selectday').val();
@@ -153,11 +153,11 @@ function selectTimeslot() {
 };
 
 function getTimeslot(ts){
-    if(ts == 1){
+    if(ts === 1){
         return 'Fullday';
-    } else if(ts == 2){
+    } else if(ts === 2){
         return 'Mattina';
-    } else if(ts == 3){
+    } else if(ts === 3){
         return 'Pomeriggio';
     }
 };
@@ -204,7 +204,7 @@ function loadDate() {
 
 
 /**
- * Funzione per il settaggio dei prezzi per postazione
+ * Funzione per il settaggio dei prezzi per ogni postazione
  * @param id
  * @returns {number}
  */
@@ -257,6 +257,7 @@ function pagamento() {
                 '<div class="modal-footer"> <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button> '+
                 '</div> </div> </div>';
 
+            $('#confirmpayment').html(mhead);
             $('#payment').modal('dispose');
             $('#confirmpayment').modal('toggle');
 

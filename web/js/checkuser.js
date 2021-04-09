@@ -2,6 +2,9 @@ $(document).ready(function () {
     takeusers();
 });
 
+/**
+ * Funzione per il caricamento della lista degli utenti su tabella
+ */
 function takeusers(){
     var intestazione = '<table class=\" table table-striped text-center\">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
@@ -14,7 +17,7 @@ function takeusers(){
         '</tr> ' +
         '</thead>' +
         '<tbody id="tabella">' +
-        '</tbody>'
+        '</tbody>' +
         '</table>';
 
     $('#users').html(intestazione);
@@ -30,7 +33,7 @@ function takeusers(){
             var users = data.Utenti;
             $.each(users, function(key, val){
                 console.log(val);
-               $('#tabella').append('<tr class="text-center"> <th scope="row"> '+ val.idUtente +'</th><td>'+ val.nome +'</td><td>'+ val.cognome +'</td> <td>'+ val.codFisc +'</td> <td>'+ val.ruolo +'</td> <td> <a href="#" class="prenotazione" id="' + val.idUtente + '" onclick="infouser('+ val.idUtente +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png"></a> </td> </tr>');
+               $('#tabella').append('<tr class="text-center"> <th scope="row"> '+ val.idUtente +'</th><td>'+ val.nome +'</td><td>'+ val.cognome +'</td> <td>'+ val.codFisc +'</td> <td>'+ val.ruolo +'</td> <td> <a href="#" class="prenotazione" id="' + val.idUtente + '" onclick="infouser('+ val.idUtente +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png" alt="INFO"></a> </td> </tr>');
             });
         },
         error: function (errorThrown) {
@@ -39,7 +42,10 @@ function takeusers(){
     });
 };
 
-
+/**
+ * Funzione per ottenere i dettagli riguardante un utente
+ * @param id
+ */
 function infouser(id) {
     var intestazione = '<table class=\" table table-striped text-center\">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
@@ -54,8 +60,8 @@ function infouser(id) {
         '</tr> ' +
         '</thead>' +
         '<tbody id="tabinfo">' +
-        '</tbody>'
-    '</table>';
+        '</tbody>' +
+        '</table>';
 
     $.ajax({
         url: './checkuser',
@@ -90,6 +96,10 @@ function infouser(id) {
 
 };
 
+/**
+ * Funzione per la rimozione di un utente dal DB
+ * @param id
+ */
 function removeUser(id) {
     $.ajax({
         url: './checkuser',

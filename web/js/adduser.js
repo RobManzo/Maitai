@@ -43,17 +43,20 @@ $(document).ready(function () {
     }
 };*/
 
+/**
+ * Funzioni check dei campi
+ */
 function emptyfields1() {
     $('#first input').on('keyup', function () {
         var empty = 0;
 
         $('#first input:text').map(function () {
-            if ($(this).val() == '') {
+            if ($(this).val() === '') {
                 empty += 1;
             }
         });
 
-        if (empty == 0 && checkCodFisc()){
+        if (empty === 0 && checkCodFisc()){
             $('#next-1').removeClass('disabled');
         } else {
             $('#next-1').addClass('disabled');
@@ -64,7 +67,6 @@ function emptyfields1() {
 function emptyfields2(){
     $('#second input').on('keyup',function () {
         var empty = 0;
-        var check = true;
 
         $('#second input:text').map(function() {
             if($(this).val() == ''){
@@ -72,7 +74,7 @@ function emptyfields2(){
             }
         });
 
-        if (empty == 0 && checkPass() && checkEmail() && checkPhone()){         //verifica prima che i campi non siano vuoti, poi passa alla checkpass e checkemail - Devo valutare le espressioni contemporaneamente
+        if (empty === 0 && checkPass() && checkEmail() && checkPhone()){         //verifica prima che i campi non siano vuoti, poi passa alla checkpass e checkemail - Devo valutare le espressioni contemporaneamente
             $('#next-2').removeClass('disabled');
 
         } else{
@@ -82,6 +84,10 @@ function emptyfields2(){
 
 };
 
+/**
+ * Funzione check codice fiscale
+ * @returns {boolean}
+ */
 function checkCodFisc(){
     var cod = $('#codfisc').val().toUpperCase();
     $('#codfisc').val(cod);
@@ -101,9 +107,12 @@ function checkCodFisc(){
     }
 };
 
+/**
+ * Funzione check campo email
+ * @returns {boolean}
+ */
 function checkEmail(){
-
-    if ($('#email').val() == $('#confirmemail').val() && $('#email').val() && $('#confirmemail').val()) {
+    if ($('#email').val() === $('#confirmemail').val() && $('#email').val() && $('#confirmemail').val()) {
         $('#emailhelp').html('Ok').css('color', 'green');
         $('#confemailhelp').html('Ok').css('color', 'green');
         $('#email').removeClass('wrong');
@@ -125,30 +134,18 @@ function checkEmail(){
     }
 };
 
-/*function checkRegex() {
-    var regex = /^[A-Za-z]+$/;
 
-    $('#nome').on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
-        if(!$('#nome').val().match(regex)){
-            $('#nome').html('');
-        }
-    });
-
-    $('#cognome').on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
-        if(!$('#cognome').val().match(regex)){
-            $('#cognome').val('');
-        }
-    });
-
-}*/
-
+/**
+ * Funzione check password
+ * @returns {boolean}
+ */
 function checkPass(){
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
 
     if(regex.test($('#password').val()) || $('#password').val() == '') {
         $('#passhelp').html('');
 
-        if ($('#password').val() == $('#confirmpassword').val() && $('#confirmpassword').val() && $('#password').val()) {
+        if ($('#password').val() === $('#confirmpassword').val() && $('#confirmpassword').val() && $('#password').val()) {
             $('#passhelp').html('Ok').css('color', 'green');
             $('#confpasshelp').html('Ok').css('color', 'green');
             $('#password').removeClass('wrong');
@@ -174,6 +171,10 @@ function checkPass(){
 
 };
 
+/**
+ * Funzione check campo telefono
+ * @returns {boolean}
+ */
 function checkPhone() {
     var regex = new RegExp("[0-9]{10}$");
 
@@ -189,7 +190,9 @@ function checkPhone() {
 
 };
 
-
+/**
+ * Funzione per il parsing delle provincie, caricandole da un file CSV
+ */
 var dati;
 function parseProvince() {
     $.ajax({
@@ -212,6 +215,7 @@ function parseProvince() {
     });
 
 }
+
 
 function submitform(){
     var nome = $('#nome').val();
@@ -246,7 +250,7 @@ function submitform(){
         success: function (data) {
             var text ='<div class="row" style="justify-content: center">' + data.Message +'</div> </div>';
 
-            if(data.RESPONSE == 'Correct'){
+            if(data.RESPONSE === 'Correct'){
                 $('#progressBar').css("width", "100%").removeClass('bg-danger').addClass('bg-success').html("COMPLETE");
                 $('#response').html(text);
                 setTimeout(function(){

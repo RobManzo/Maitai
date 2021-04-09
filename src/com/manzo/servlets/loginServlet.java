@@ -7,11 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.Map;
 
 import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
@@ -41,7 +39,7 @@ public class loginServlet extends HttpServlet {
                 throwables.printStackTrace();
             }
 
-        } else if (request.getParameter("Authentication") != null && request.getParameter("Authentication").equals("Error")) { //Credenziali sbagliate
+        } else if (request.getParameter("Authentication") != null && request.getParameter("Authentication").equals("Error")) {
             request.getSession().setAttribute("Login", "ERROR");
         }
         response.sendRedirect(request.getContextPath());
@@ -49,7 +47,7 @@ public class loginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getUserPrincipal() != null && request.getSession().getAttribute("user") == null ) { //Credenziali sbagliate
+        if (request.getUserPrincipal() != null && request.getSession().getAttribute("user") == null ) {
             doPost(request, response);
         }else{
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login.jsp");

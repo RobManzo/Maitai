@@ -3,7 +3,6 @@ package com.manzo.servlets;
 import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
 import com.manzo.misc.Miscellaneous;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

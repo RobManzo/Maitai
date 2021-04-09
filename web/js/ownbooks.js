@@ -3,6 +3,9 @@ $(document).ready(function () {
 
 });
 
+/**
+ * Funzione per visualizzare il riepilogo delle prenotazioni personali
+ */
 function booksum(){
 
     var intestazione = '<table class=\" table table-striped text-center\">' +
@@ -17,7 +20,7 @@ function booksum(){
         '</tr> ' +
         '</thead>' +
         '<tbody id="tabella">' +
-        '</tbody>'
+        '</tbody>' +
         '</table>';
 
     $('#booktab').html(intestazione);
@@ -54,7 +57,7 @@ function booksum(){
                     timeslot = "Pomeriggio";
                 } else timeslot = "Fullday";
 
-                $('#tabella').append('<tr class="text-center"> <th scope="row">' + val.idPrenotazione + '</th> <td>' + date + '</td> <td>' + timeslot + '</td> <td>' + state + '</td> <td>' + pos + '</td> <td> <a href="#" class="prenotazione" id="' + val.idPrenotazione + '" onclick="infopren('+ val.idPrenotazione +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png"></a> </td> <td></td>  </tr>');
+                $('#tabella').append('<tr class="text-center"> <th scope="row">' + val.idPrenotazione + '</th> <td>' + date + '</td> <td>' + timeslot + '</td> <td>' + state + '</td> <td>' + pos + '</td> <td> <a href="#" class="prenotazione" id="' + val.idPrenotazione + '" onclick="infopren('+ val.idPrenotazione +')"><img class="img-responsive" src="\\Maitai\\assets\\img\\lente.png" alt="INFO"></a> </td> <td></td>  </tr>');
             });
         },
         error: function (errorThrown) {
@@ -64,6 +67,10 @@ function booksum(){
 
 };
 
+/**
+ * Funzione per visualizzare le informazioni di una prenotazione
+ * @param id
+ */
 function infopren(id) {
     var intestazione = '<table class=\" table table-striped text-center\">' +
         ' <thead> <tr style="background-color: #844c04; color: wheat;"> ' +
@@ -75,8 +82,8 @@ function infopren(id) {
         '</tr> ' +
         '</thead>' +
         '<tbody id="tabella">' +
-        '</tbody>'
-    '</table>';
+        '</tbody>' +
+        '</table>';
 
     $.ajax({
         url: './ownbooks',
@@ -97,7 +104,7 @@ function infopren(id) {
 
             var datepren = dp.dayOfMonth + "/" + month + "/" + dp.year;
 
-            var today = data.Today
+            var today = data.Today;
             if(today.monthValue < 10){
                 nowmonth= "0" + today.monthValue;
             } else nowmoth = today.monthValue;
@@ -135,6 +142,10 @@ function infopren(id) {
 
 };
 
+/**
+ * Funzione per l'eliminazione della prenotazione selezionata
+ * @param id
+ */
 function delpren(id) {
     $.ajax({
         url: './ownbooks',

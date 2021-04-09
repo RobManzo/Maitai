@@ -34,27 +34,17 @@ $(document).ready(function () {
 
 });
 
-/*function checkvoid(elem) {
-    if (elem.val() == ''){
-        elem.siblings("small").html("Il campo non può essere vuoto.").css('color', 'red');
-        elem.addClass('wrong');
-    } else {
-        elem.siblings("small").html("");
-        elem.removeClass('wrong');
-    }
-};*/
-
 function emptyfields1() {
     $('#first input').on('keyup', function () {
         var empty = 0;
 
         $('#first input:text').map(function () {
-            if ($(this).val() == '') {
+            if ($(this).val() === '') {
                 empty += 1;
             }
         });
 
-        if (empty == 0 && checkCodFisc()){
+        if (empty === 0 && checkCodFisc()){
             $('#next-1').removeClass('disabled');
         } else {
             $('#next-1').addClass('disabled');
@@ -65,15 +55,14 @@ function emptyfields1() {
 function emptyfields2(){
     $('#second input').on('keyup',function () {
         var empty = 0;
-        var check = true;
 
         $('#second input:text').map(function() {
-            if($(this).val() == ''){
+            if($(this).val() === ''){
                 empty += 1;
             }
         });
 
-        if (empty == 0 && checkPass() && checkEmail() && checkPhone()){         //verifica prima che i campi non siano vuoti, poi passa alla checkpass e checkemail - Devo valutare le espressioni contemporaneamente
+        if (empty === 0 && checkPass() && checkEmail() && checkPhone()){         //verifica prima che i campi non siano vuoti, poi passa alla checkpass e checkemail - Devo valutare le espressioni contemporaneamente
             $('#next-2').removeClass('disabled');
 
         } else{
@@ -87,11 +76,11 @@ function checkCodFisc(){
     var cod = $('#codfisc').val().toUpperCase();
     $('#codfisc').val(cod);
 
-    if($('#codfisc').val().length == 16){
+    if($('#codfisc').val().length === 16){
         $('#codfisc').siblings("small").html("");
         $('#codfisc').removeClass('wrong');
         return true;
-    } else if($('#codfisc').val() == ''){
+    } else if($('#codfisc').val() === ''){
         $('#codfisc').siblings("small").html("");
         $('#codfisc').removeClass('wrong');
         return false;
@@ -104,7 +93,7 @@ function checkCodFisc(){
 
 function checkEmail(){
 
-    if ($('#email').val() == $('#confirmemail').val() && $('#email').val() && $('#confirmemail').val()) {
+    if ($('#email').val() === $('#confirmemail').val() && $('#email').val() && $('#confirmemail').val()) {
         $('#emailhelp').html('Ok').css('color', 'green');
         $('#confemailhelp').html('Ok').css('color', 'green');
         $('#email').removeClass('wrong');
@@ -126,30 +115,13 @@ function checkEmail(){
     }
 };
 
-/*function checkRegex() {
-    var regex = /^[A-Za-z]+$/;
-
-    $('#nome').on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
-        if(!$('#nome').val().match(regex)){
-            $('#nome').html('');
-        }
-    });
-
-    $('#cognome').on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
-        if(!$('#cognome').val().match(regex)){
-            $('#cognome').val('');
-        }
-    });
-
-}*/
-
 function checkPass(){
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
 
-    if(regex.test($('#password').val()) || $('#password').val() == '') {
+    if(regex.test($('#password').val()) || $('#password').val() === '') {
         $('#passhelp').html('');
 
-        if ($('#password').val() == $('#confirmpassword').val() && $('#confirmpassword').val() && $('#password').val()) {
+        if ($('#password').val() === $('#confirmpassword').val() && $('#confirmpassword').val() && $('#password').val()) {
             $('#passhelp').html('Ok').css('color', 'green');
             $('#confpasshelp').html('Ok').css('color', 'green');
             $('#password').removeClass('wrong');
@@ -205,12 +177,6 @@ function parseProvince() {
                 "<option>" + val + "</option>";
 
         });
-        /*for(com in value){
-            console.log(com);
-            console.log(value);
-            document.getElementById("prov").innerHTML +=
-                "<option>" + com + "</option>";
-        }*/
     });
 
 }
@@ -246,7 +212,7 @@ function submitform(){
         success: function (data) {
             var text ='<div class="row" style="justify-content: center">' + data.Message +'</div> </div>';
 
-            if(data.RESPONSE == 'Correct'){
+            if(data.RESPONSE === 'Correct'){
                 $('#progressBar').css("width", "100%").removeClass('bg-danger').addClass('bg-success').html("COMPLETE");
                 $('#response').html(text);
                 setTimeout(function(){

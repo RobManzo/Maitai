@@ -1,7 +1,6 @@
 package com.manzo.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.manzo.entities.Ordine;
 import com.manzo.entities.Prenotazione;
 import com.manzo.misc.Database;
 
@@ -11,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;

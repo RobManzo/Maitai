@@ -2,9 +2,7 @@ package com.manzo.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.entities.Ordine;
-import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

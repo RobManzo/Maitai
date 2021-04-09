@@ -1,7 +1,6 @@
 package com.manzo.servlets;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.entities.Ordine;
 import com.manzo.entities.Prodotto;
@@ -37,7 +36,7 @@ public class foodServlet extends HttpServlet {
             }
             else if(request.getParameter("rtype").equals("upCart")){
                 ObjectMapper mapper = new ObjectMapper();
-                HashMap<Integer, Integer> carrello = mapper.readValue(request.getParameter("localcart"), new TypeReference<HashMap<Integer, Integer>>() {});
+                HashMap<Integer, Integer> carrello = mapper.readValue(request.getParameter("localcart"), new TypeReference<>() {});
                 request.getSession().setAttribute("cart", carrello);
                 System.out.println("Carrello Sessione: " + request.getSession().getAttribute("cart"));
                 pr.write("{\"Message\" :\"Prodotto aggiunto al carrello!\"}");

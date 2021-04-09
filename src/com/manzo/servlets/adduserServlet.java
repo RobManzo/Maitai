@@ -34,7 +34,6 @@ public class adduserServlet extends HttpServlet {
 
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
-            //ObjectMapper mapper = new ObjectMapper();                                   Classe per poter convertire un oggetto in stringa
             String status;
 
             System.out.println(name + surname + email + pass + confpass + phone + birthdate.toString() + codfisc );
