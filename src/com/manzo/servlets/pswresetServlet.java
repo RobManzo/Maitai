@@ -21,16 +21,16 @@ public class pswresetServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getParameter("rtype")!=null && request.getParameter("rtype").equals("pswReset")){
-            //Richiesta di reimpostazione password
+            // Richiesta di reimpostazione password
             String email = request.getParameter("email");
             String codfisc = request.getParameter("codfisc");
             try {
                 PrintWriter pr = response.getWriter();
                 response.setContentType("application/json");
-                //Generazione nuova password
+                // Generazione nuova password
                 String newpsw = Database.resetPassword(email, codfisc);
                 if(newpsw!=null){
-                    //Preparazione ed invio email con nuova password
+                    // Preparazione ed invio email con nuova password
                     String messaggio = "<p>Ciao, <br>"
                             + "Ecco a te la tua nuova password per accedere al portale.<br><br>"
                             + "Nuova Password: " + newpsw + "<br>"

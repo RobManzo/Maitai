@@ -24,7 +24,7 @@ public class accountServlet extends HttpServlet {
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("changepsw")){
-                //Cambio Password
+                // Cambio Password
                 String newpsw = request.getParameter("newpass");
                 Utente u = (Utente) request.getSession().getAttribute("user");
                 if(Database.changePassword(u.getIdUtente(), newpsw)){
@@ -36,7 +36,7 @@ public class accountServlet extends HttpServlet {
             }
 
             if(request.getParameter("rtype").equals("changetel")){
-                //Cambio numero di telefono
+                // Cambio numero di telefono
                 String newtel = request.getParameter("newtel");
                 Utente u = (Utente) request.getSession().getAttribute("user");
                 if(Database.changeTel(u.getIdUtente(), newtel)){
@@ -48,7 +48,7 @@ public class accountServlet extends HttpServlet {
             }
 
             if(request.getParameter("rtype").equals("changeaddr")){
-                //Cambio Indirizzo
+                // Cambio Indirizzo
                 String newaddr = request.getParameter("newaddr");
                 Utente u = (Utente) request.getSession().getAttribute("user");
                 if(Database.changeAddr(u.getIdUtente(), newaddr)){

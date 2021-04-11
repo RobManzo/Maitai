@@ -29,7 +29,7 @@ public class ownbooksServlet extends HttpServlet {
             Utente user = (Utente) request.getSession().getAttribute("user");
 
             if(request.getParameter("rtype").equals("getBooks")){
-                //Richiesta prenotazioni personali
+                // Richiesta prenotazioni personali
                 List<Prenotazione> prenotazioni = Database.getPrenotazioni(user);
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -37,14 +37,14 @@ public class ownbooksServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("getPren")){
-                //Richiesta dettagli della singola prenotazione
+                // Richiesta dettagli della singola prenotazione
                 Prenotazione prenotazione = Database.getPrenotazione(user,Integer.parseInt(request.getParameter("idPren")));
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Prenotazione\" :"+mapper.writeValueAsString(prenotazione)+", \"Today\" :"+mapper.writeValueAsString(LocalDate.now())+"}");
             }
 
             else if(request.getParameter("rtype").equals("delPren")){
-                //Cancellazione della prenotazione dalla piattaforma
+                // Cancellazione della prenotazione dalla piattaforma
                 if(Database.deletePrenotazione(user,Integer.parseInt(request.getParameter("idPren")))){
                     pr.write("{\"status\" : \"error\", \"message\" : \"Eliminazione effettuata con successo\"}");
                 } else pr.write("{\"status\" : \"error\", \"message\" : \"Errore durante l'eliminazione.\"}");

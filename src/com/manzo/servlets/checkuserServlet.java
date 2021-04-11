@@ -26,7 +26,7 @@ public class checkuserServlet extends HttpServlet {
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getUsers")){
-                //Richiesta della lista di tutti gli utenti
+                // Richiesta della lista di tutti gli utenti
                 Utente user = (Utente) request.getSession().getAttribute("user");
                 List<Utente> users = Database.getUsers(user.getRuolo());
                 ObjectMapper mapper = new ObjectMapper();
@@ -34,7 +34,7 @@ public class checkuserServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("getUserDet")){
-                //Richiesta dettagli del singolo utente
+                // Richiesta dettagli del singolo utente
                 Utente user = Database.takeUser(Integer.parseInt(request.getParameter("ID")));
                 if(user!=null){
                     ObjectMapper mapper = new ObjectMapper();
@@ -45,7 +45,7 @@ public class checkuserServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("removeUser")){
-                //Eliminazione utente dalla piattaforma
+                // Eliminazione utente dalla piattaforma
                 if(Database.deleteUser(Integer.parseInt(request.getParameter("ID")))){
                     pr.write("{\"Message\" :\" Utente rimosso con successo.\"}");
                 } else pr.write("{\"Message\" :\" Errore generico.\"}");

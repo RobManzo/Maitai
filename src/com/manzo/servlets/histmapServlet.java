@@ -28,14 +28,14 @@ public class histmapServlet extends HttpServlet {
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getBookings")){
-                //Richiesta dello storico delle prenotazioni
+                // Richiesta dello storico delle prenotazioni
                 List<Prenotazione> prenotazioni = Database.getPrenotazioni(true);
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Prenotazioni\" :"+ mapper.writeValueAsString(prenotazioni) +"}");
             }
 
             else if(request.getParameter("rtype").equals("getPren")){
-                //Richiesta dettagli singola prenotazione
+                // Richiesta dettagli singola prenotazione
                 Prenotazione prenotazione = Database.getPrenotazione(Integer.parseInt(request.getParameter("idPren")));
                 int idUser = Database.userByPrenotazione(Integer.parseInt(request.getParameter("idPren")));
                 ObjectMapper mapper = new ObjectMapper();
@@ -43,7 +43,7 @@ public class histmapServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("delPren")){
-                //Cancellazione prenotazione dalla piattaforma
+                // Cancellazione prenotazione dalla piattaforma
                 if(Database.deletePrenotazione(Integer.parseInt(request.getParameter("idPren")))){
                     pr.write("{\"status\" : \"error\", \"message\" : \"Eliminazione effettuata con successo\"}");
                 } else pr.write("{\"status\" : \"error\", \"message\" : \"Errore durante l'eliminazione.\"}");

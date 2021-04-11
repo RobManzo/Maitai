@@ -33,7 +33,7 @@ public class homeServlet extends HttpServlet {
             int userid =((Utente) request.getSession().getAttribute("user")).getIdUtente();
 
             if(request.getParameter("rtype").equals("setEntry")){
-                //Gestione dell'accesso alla struttura da parte di un cliente autorizzato
+                // Gestione dell'accesso alla struttura da parte di un cliente autorizzato
                 if(ts == -1){
                     pr.write("{\"status\" : \"error\", \"message\" : \"La struttura al momento è chiusa.\"}");
                     return;
@@ -47,7 +47,7 @@ public class homeServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("getEntry")){
-                //Richiesta stato di entrata/uscita di un cliente
+                // Richiesta stato di entrata/uscita di un cliente
                 if(Database.getEntry(data, userid) != 0){
                     request.getSession().setAttribute("entry", Database.getEntry(data, userid));
                     pr.write("{\"status\" : \"in\"}");
@@ -58,7 +58,7 @@ public class homeServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("setExit")){
-                //Gestione dell'uscita dalla struttura da parte di un cliente autorizzato
+                // Gestione dell'uscita dalla struttura da parte di un cliente autorizzato
                 if(Database.setExit(data,userid, time)){
                     request.getSession().setAttribute("cart", new HashMap<String, Integer>());
                     request.getSession().setAttribute("entry", null);

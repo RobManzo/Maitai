@@ -34,13 +34,13 @@ public class foodServlet extends HttpServlet {
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getProd")){
-                //Richiesta dell'elenco dei prodotti disponibili
+                // Richiesta dell'elenco dei prodotti disponibili
                 List<Prodotto> products = Database.getProd();
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Prodotto\" :"+ mapper.writeValueAsString(products) +"}");
             }
             else if(request.getParameter("rtype").equals("upCart")){
-                //Aggiunta prodotto al carrello
+                // Aggiunta prodotto al carrello
                 ObjectMapper mapper = new ObjectMapper();
                 HashMap<Integer, Integer> carrello = mapper.readValue(request.getParameter("localcart"), new TypeReference<>() {});
                 request.getSession().setAttribute("cart", carrello);
@@ -48,12 +48,12 @@ public class foodServlet extends HttpServlet {
                 pr.write("{\"Message\" :\"Prodotto aggiunto al carrello!\"}");
             }
             else if(request.getParameter("rtype").equals("getCart")){
-                //Richiesta dei prodotti presenti nel carrello
+                // Richiesta dei prodotti presenti nel carrello
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Carrello\" :"+ mapper.writeValueAsString(request.getSession().getAttribute("cart")) +"}");
             }
             else if(request.getParameter("rtype").equals("sendOrder")){
-                //Gestione dell'invio dell'ordine
+                // Gestione dell'invio dell'ordine
                 HashMap<Integer, Integer> products = (HashMap<Integer, Integer>) request.getSession().getAttribute("cart");
                 HashMap<Integer, Pair<Integer, BigDecimal>> prodsInOrder = new HashMap<>();
                 BigDecimal tot = new BigDecimal(0);

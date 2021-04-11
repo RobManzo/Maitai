@@ -26,14 +26,14 @@ public class kitchenServlet extends HttpServlet {
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getOrders")){
-                //Richiesta lista ordini odierni
+                // Richiesta lista ordini odierni
                 List<Ordine> ordini = Database.getOrders(true);
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Ordini\" :"+ mapper.writeValueAsString(ordini) +"}");
             }
 
             else if(request.getParameter("rtype").equals("getOrderDet")){
-                //Richiesta dettagli singolo ordine
+                // Richiesta dettagli singolo ordine
                 int orderId =  Integer.parseInt(request.getParameter("ID"));
                 Ordine order = Database.getOrder(orderId);
                 if(order!=null){
@@ -46,7 +46,7 @@ public class kitchenServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("orderReady")){
-                //Gestione stato dell'ordine
+                // Gestione stato dell'ordine
                 int id = Integer.parseInt(request.getParameter("ID"));
                 if(Database.setOrderStatus(id)){
                     pr.write("{\"Status\" :\"ok\", \"Message\" :\"\"}");

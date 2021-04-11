@@ -38,16 +38,16 @@ public class signinServlet extends HttpServlet {
             String status;
 
             if((error = Miscellaneous.checkForm(name, surname, email, pass, confpass, phone, birthdate.toString(), codfisc)) != null){
-                //Check dati inseriti
+                // Check dati inseriti
                 status = "{\"RESPONSE\" : \"Error\", \"Message\" : \"" + error + " Verrai reinderizzato all'inizio." + "\"}";
 
             } else if(Database.checkExist(email, codfisc)) {
-                //Verifica l'esistenza dell'account nel database
+                // Verifica l'esistenza dell'account nel database
                 status = "{\"RESPONSE\" : \"Error\", \"Message\" : \"Email o persona già registrata. Verrai reinderizzato all'inizio.\"}";
             } else {
                 //Effettua la registrazione dell'utente
                 Database.userSignIn(name, surname, email, codfisc, phone, birthdate, pass, address, province);
-                //Preparazione ed invio email di conferma registrazione
+                // Preparazione ed invio email di conferma registrazione
                 String messaggio = "<p>Ciao " + name + " " + surname + ", <br>"
                         + "La registrazione è andata a buon fine. Ti auguriamo una buona permanenza presso la nostra struttura.<br><br>"
                         + "Password: " + pass + "<br>"

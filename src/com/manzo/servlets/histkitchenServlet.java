@@ -26,14 +26,14 @@ public class histkitchenServlet extends HttpServlet {
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getOrders")){
-                //Richiesta dello storico degli ordini
+                // Richiesta dello storico degli ordini
                 List<Ordine> ordini = Database.getOrders(false);
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Ordini\" :"+ mapper.writeValueAsString(ordini) +"}");
             }
 
             else if(request.getParameter("rtype").equals("getOrderDet")){
-                //Richiesta dettagli singolo ordine
+                // Richiesta dettagli singolo ordine
                 int orderId =  Integer.parseInt(request.getParameter("ID"));
                 Ordine order = Database.getOrder(orderId);
                 if(order!=null){
@@ -45,7 +45,7 @@ public class histkitchenServlet extends HttpServlet {
                 }
             }
             else if(request.getParameter("rtype").equals("delOrder")){
-                //Cancellazione ordine dalla piattaforma
+                // Cancellazione ordine dalla piattaforma
                 if(Database.deleteOrder(Integer.parseInt(request.getParameter("ID")))){
                     pr.write("{\"Message\" : \"Cancellazione riuscita.\" }");
                 } else pr.write("{\"Message\" : \"Errore nella cancellazione.\" }");

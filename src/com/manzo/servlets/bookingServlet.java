@@ -33,6 +33,7 @@ public class bookingServlet extends HttpServlet {
             List<Integer> listocc;
 
             if(request.getParameter("rtype").equals("getSeats")){
+                // Richiesta posti occupati
                 int fascia = Integer.parseInt(request.getParameter("FasciaOraria"));
                 data = LocalDate.parse(request.getParameter("DataPrenotazione"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
@@ -40,6 +41,7 @@ public class bookingServlet extends HttpServlet {
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Id\" :"+ mapper.writeValueAsString(listocc) +"}");
             } else if(request.getParameter("rtype").equals("setBook")){
+                // Richiesta di invio prenotazione
                 Utente user = (Utente) request.getSession().getAttribute("user");
                 int fascia = Integer.parseInt(request.getParameter("FasciaOraria"));
                 data = LocalDate.parse(request.getParameter("DataPrenotazione"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -47,6 +49,7 @@ public class bookingServlet extends HttpServlet {
                 double prezzo = Double.parseDouble(request.getParameter("Prezzo"));
 
                 if(Miscellaneous.checkDate(data)){
+                    // Verifica data di prenotazione
                     pr.write("{\"status\" : \"error\", \"message\" : \"Data di prenotazione errata.\"}");
                 }
 
@@ -62,6 +65,8 @@ public class bookingServlet extends HttpServlet {
 
                 if(pos.isEmpty()){
                     if(Database.insertPrenotazione(user, fascia, data, postazioni, prezzo)){
+                        //Inserimento prenotazione nel database
+                        //Preparazione ed invio mail conferma prenotazione
                         String messaggio = "<p>Ciao " + user.getNome() + " " + user.getCognome() + ", <br>"
                                 + "Ti avvisiamo che la tua prenotazione per il "+ data.format(DateTimeFormatter.ofPattern("dd MM yyyy")) +" è stata correttamente inviata.<br><br>"
                                 + "Postazioni: " + postazioni + "<br>"

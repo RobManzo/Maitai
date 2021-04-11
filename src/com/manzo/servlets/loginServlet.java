@@ -23,14 +23,14 @@ import com.manzo.misc.Database;
 public class loginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        //Verifica delle credenziali
+        // Verifica delle credenziali
         if (request.getUserPrincipal() != null && request.getSession().getAttribute("user") == null ) {
             try {
                 Utente utente = Database.takeUser(request.getUserPrincipal().getName());
                 if (utente == null) {
                     response.sendError(400);
                 }
-                //Settaggio delle variabili di sessioni
+                // Settaggio delle variabili di sessioni
                 request.getSession().setAttribute("user", utente);
                 request.getSession().setAttribute("cart", new HashMap<String,Integer>());
                 request.getSession().setAttribute("userId", utente.getIdUtente());
@@ -42,7 +42,7 @@ public class loginServlet extends HttpServlet {
                 throwables.printStackTrace();
             }
         } else if (request.getParameter("Authentication") != null && request.getParameter("Authentication").equals("Error")) {
-            //Credenziali errate
+            // Credenziali errate
             request.getSession().setAttribute("Login", "ERROR");
             response.sendRedirect(request.getContextPath() + "/login");
         }

@@ -40,13 +40,13 @@ public class adduserServlet extends HttpServlet {
             System.out.println(name + surname + email + pass + confpass + phone + birthdate.toString() + codfisc );
 
             if((error = Miscellaneous.checkForm(name, surname, email, pass, confpass, phone, birthdate.toString(), codfisc)) != null){
-                //Verifica i dati inseriti dell'account da inserire
+                // Verifica i dati inseriti dell'account da inserire
                 status = "{\"RESPONSE\" : \"Error\", \"Message\" : \"" + error + " Verrai reinderizzato all'inizio." + "\"}";
             } else if(Database.checkExist(email, codfisc)) {
-                //Verifica l'esistenza dell'account nel database
+                // Verifica l'esistenza dell'account nel database
                 status = "{\"RESPONSE\" : \"Error\", \"Message\" : \"Email o persona già registrata. Verrai reinderizzato all'inizio.\"}";
             } else {
-                //Effettua la registrazione dell'utente
+                // Effettua la registrazione dell'utente
                 Database.userSignIn(name, surname, email, codfisc, phone, birthdate, pass, address, province, role);
                 status = "{\"RESPONSE\" : \"Correct\", \"Message\" : \"Registrazione effettuata. Verrai reinderizzato alla home.\"}";
             }
