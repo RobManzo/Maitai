@@ -1,14 +1,12 @@
 package com.manzo.entities;
 
 import javafx.util.Pair;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 
 public class Ordine {
-
     private int id;
     private LocalDate data;
     private LocalTime ora;

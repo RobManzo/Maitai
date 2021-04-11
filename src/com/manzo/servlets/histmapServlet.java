@@ -3,7 +3,6 @@ package com.manzo.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.entities.Prenotazione;
 import com.manzo.misc.Database;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

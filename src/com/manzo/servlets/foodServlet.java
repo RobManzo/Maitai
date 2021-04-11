@@ -44,7 +44,6 @@ public class foodServlet extends HttpServlet {
                 ObjectMapper mapper = new ObjectMapper();
                 HashMap<Integer, Integer> carrello = mapper.readValue(request.getParameter("localcart"), new TypeReference<>() {});
                 request.getSession().setAttribute("cart", carrello);
-                System.out.println("Carrello Sessione: " + request.getSession().getAttribute("cart"));
                 pr.write("{\"Message\" :\"Prodotto aggiunto al carrello!\"}");
             }
             else if(request.getParameter("rtype").equals("getCart")){
@@ -82,7 +81,6 @@ public class foodServlet extends HttpServlet {
             else if(request.getParameter("rtype").equals("emptyCart")){
                 //Svuota carrello
                 request.getSession().setAttribute("cart", new HashMap<Integer, Integer>());
-                System.out.println(request.getSession().getAttribute("cart"));
                 pr.write("{\"Message\" :\"Carrello svuotato!\"}");
             }
         }
@@ -94,7 +92,6 @@ public class foodServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println(request.getSession().getAttribute("entry"));
         int entry = (int) request.getSession().getAttribute("entry");
         if(entry != 0){
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/food.jsp");

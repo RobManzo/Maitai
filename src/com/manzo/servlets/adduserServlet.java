@@ -37,8 +37,6 @@ public class adduserServlet extends HttpServlet {
             response.setContentType("application/json");
             String status;
 
-            System.out.println(name + surname + email + pass + confpass + phone + birthdate.toString() + codfisc );
-
             if((error = Miscellaneous.checkForm(name, surname, email, pass, confpass, phone, birthdate.toString(), codfisc)) != null){
                 // Verifica i dati inseriti dell'account da inserire
                 status = "{\"RESPONSE\" : \"Error\", \"Message\" : \"" + error + " Verrai reinderizzato all'inizio." + "\"}";

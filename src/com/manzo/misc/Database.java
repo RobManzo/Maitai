@@ -576,7 +576,6 @@ public class Database {
                 if (result.wasNull()) {
                     result.updateTime("oraIngresso", Time.valueOf(thistime));
                     result.updateRow();
-                    System.out.println(result.getTime("oraIngresso"));
                     return result.getInt("idPrenotazione");
                 } else return 0;
             } else return 0;

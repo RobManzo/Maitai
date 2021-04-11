@@ -31,7 +31,6 @@ public class ahomeServlet extends HttpServlet {
             LocalTime time = LocalTime.now(ZoneId.of("GMT+2"));
             int ts = Miscellaneous.getTimeslot(time);
             int userid =((Utente) request.getSession().getAttribute("user")).getIdUtente();
-            System.out.println("ID: " +userid+ " \nPrenotazione: " +request.getSession().getAttribute("entry"));
 
             if(request.getParameter("rtype").equals("setEntry")){
                 // Gestione dell'accesso alla struttura da parte di un cliente autorizzato
