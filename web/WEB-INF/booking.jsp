@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 
 <head>
@@ -16,7 +16,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap) -->
     <link href="/Maitai/css/styles.css" rel="stylesheet" />
-
+    <script src="/Maitai/js/snap.svg.js"></script>
+    <script src="/Maitai/js/booking.js"></script>
 </head>
 
 <body>
@@ -86,13 +87,8 @@
     <script src="/Maitai/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Third party plugin JS-->
     <script src="/Maitai/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Contact form JS-->
-    <script src="/Maitai/assets/mail/jqBootstrapValidation.js"></script>
-    <script src="/Maitai/assets/mail/contact_me.js"></script>
     <!-- Core theme JS-->
     <script src="/Maitai/js/scripts.js"></script>
-    <script src="/Maitai/js/snap.svg.js"></script>
-    <script src="/Maitai/js/booking.js"></script>
 
 </body>
 

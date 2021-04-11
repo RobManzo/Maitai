@@ -1,13 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: powar
-  Date: 23/11/2020
-  Time: 16:43
-  To change this template use File | Settings | File Templates.
---%>
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 
   <head>
@@ -105,10 +96,7 @@
     <script src="/Maitai/jquery/jquery.min.js"></script>
     <script src="/Maitai/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Third party plugin JS-->
-      <script src="/Maitai/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Contact form JS-->
-    <script src="/Maitai/assets/mail/jqBootstrapValidation.js"></script>
-    <script src="/Maitai/assets/mail/contact_me.js"></script>
+    <script src="/Maitai/jquery-easing/jquery.easing.min.js"></script>
     <!-- Core theme JS-->
     <script src="/Maitai/js/scripts.js"></script>
 

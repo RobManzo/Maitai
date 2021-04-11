@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: powar
-  Date: 26/11/2020
-  Time: 12:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 
@@ -24,6 +17,7 @@
 
         <!-- Core theme CSS (includes Bootstrap) -->
         <link href="/Maitai/css/styles.css" rel="stylesheet" />
+        <script src="/Maitai/js/login.js"></script>
     </head>
 
     <body>
@@ -104,13 +98,8 @@
         <script src="/Maitai/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Third party plugin JS-->
         <script src="/Maitai/jquery-easing/jquery.easing.min.js"></script>
-        <!-- Contact form JS-->
-        <script src="/Maitai/assets/mail/jqBootstrapValidation.js"></script>
-        <script src="/Maitai/assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
         <script src="/Maitai/js/scripts.js"></script>
-        <script src="/Maitai/js/login.js"></script>
-
         <% if(request.getSession().getAttribute("Login") != null && request.getSession().getAttribute("Login").equals("ERROR")){ %>
             <script type="text/javascript">
                 loginerror();

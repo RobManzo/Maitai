@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 
     <head>
@@ -53,9 +53,6 @@
         <script src="/Maitai/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Third party plugin JS-->
         <script src="/Maitai/jquery-easing/jquery.easing.min.js"></script>
-        <!-- Contact form JS-->
-        <script src="/Maitai/assets/mail/jqBootstrapValidation.js"></script>
-        <script src="/Maitai/assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
         <script src="/Maitai/js/scripts.js"></script>
 
