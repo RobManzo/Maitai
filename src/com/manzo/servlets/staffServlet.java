@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+/**
+ * Classe per la visualizzazione della home dello staff
+ */
 @WebServlet(name="staffServlet", urlPatterns={"/staff"})
 public class staffServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)  { }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

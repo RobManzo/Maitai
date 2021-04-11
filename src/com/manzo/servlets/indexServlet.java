@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Classe per la visualizzazione della pagina principale
+ */
 @WebServlet(name="indexServlet", urlPatterns={""})
 public class indexServlet extends HttpServlet {
     @Override

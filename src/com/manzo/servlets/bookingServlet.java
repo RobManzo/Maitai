@@ -5,7 +5,6 @@ import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
 import com.manzo.misc.MailService;
 import com.manzo.misc.Miscellaneous;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,11 +18,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe per la visualizzazione del portale prenotazioni e per la gestione delle richieste
+ */
 @WebServlet(name="bookingServlet", urlPatterns={"/cliente/booking"})
 public class bookingServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");

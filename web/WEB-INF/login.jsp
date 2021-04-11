@@ -5,7 +5,7 @@
   Time: 12:13
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 
     <head>
@@ -46,15 +46,55 @@
                             <input class="form-check-input" type="checkbox"> Ricordami
                         </label>
                     </div>
-                    <div class="text-center">
+                    <div class="form-group text-center">
                         <button type="submit" class="btn btn-primary">Login</button>
                         <a href="${pageContext.request.contextPath}/signin">
                             <button type="button" class="btn btn-primary" >Registrati</button>
                         </a>
                     </div>
+                    <div class="form-group text-center">
+                        <a class="btn btn-warning align-self-center" href="" data-toggle="modal" data-target="#forgotpsw">Password Dimenticata</a>
+                    </div>
                 </form>
             </div>
         </section>
+
+        <div class="modal fade" id="forgotpsw">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content"  style="background-color: antiquewhite;">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Password Dimenticata</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <form method="post" id="resetpsw" action="">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="email">Email</label>
+                                    <input type="text" id="email" class="form-control" placeholder="Inserisci la tua Email">
+                                    <small></small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="codfisc">Codice Fiscale</label>
+                                    <input type="text" id="codfisc" class="form-control" placeholder="Inserisci Cod. Fiscale">
+                                    <small></small>
+                                </div>
+                            </div>
+                            <div class="form-row justify-content-between">
+                                <div class="form-group col-4">
+                                    <a class="btn btn-danger" id="annulla">Annulla</a>
+                                </div>
+                                <div class="form-group col-4" onclick="resetpsw()">
+                                    <a class="btn btn-danger" id="confirm">Conferma</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Footer-->
         <%@ include file="/WEB-INF/footer.jsp"%>
@@ -69,6 +109,14 @@
         <script src="/Maitai/assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
         <script src="/Maitai/js/scripts.js"></script>
+        <script src="/Maitai/js/login.js"></script>
+
+        <% if(request.getSession().getAttribute("Login") != null && request.getSession().getAttribute("Login").equals("ERROR")){ %>
+            <script type="text/javascript">
+                loginerror();
+            </script>
+
+        <% request.getSession().invalidate(); } %>
 
     </body>
 </html>

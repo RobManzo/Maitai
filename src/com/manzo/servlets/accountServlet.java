@@ -2,7 +2,6 @@ package com.manzo.servlets;
 
 import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,15 +12,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+/**
+ * Classe per la visualizzazione del portale account e la gestione delle richieste
+ */
 @WebServlet(name="accountServlet", urlPatterns={"/account"})
 public class accountServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("changepsw")){
+                //Cambio Password
                 String newpsw = request.getParameter("newpass");
                 Utente u = (Utente) request.getSession().getAttribute("user");
                 if(Database.changePassword(u.getIdUtente(), newpsw)){
@@ -33,6 +36,7 @@ public class accountServlet extends HttpServlet {
             }
 
             if(request.getParameter("rtype").equals("changetel")){
+                //Cambio numero di telefono
                 String newtel = request.getParameter("newtel");
                 Utente u = (Utente) request.getSession().getAttribute("user");
                 if(Database.changeTel(u.getIdUtente(), newtel)){
@@ -44,6 +48,7 @@ public class accountServlet extends HttpServlet {
             }
 
             if(request.getParameter("rtype").equals("changeaddr")){
+                //Cambio Indirizzo
                 String newaddr = request.getParameter("newaddr");
                 Utente u = (Utente) request.getSession().getAttribute("user");
                 if(Database.changeAddr(u.getIdUtente(), newaddr)){

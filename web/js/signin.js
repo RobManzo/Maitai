@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
     $('#next-1').addClass('disabled');
@@ -34,6 +33,9 @@ $(document).ready(function () {
 
 });
 
+/**
+ * Funzioni per la verifica campi vuoti in real-time
+ */
 function emptyfields1() {
     $('#first input').on('keyup', function () {
         var empty = 0;
@@ -72,6 +74,10 @@ function emptyfields2(){
 
 };
 
+/**
+ * Funzione di verifica del Codice Fiscale
+ * @returns {boolean}
+ */
 function checkCodFisc(){
     var cod = $('#codfisc').val().toUpperCase();
     $('#codfisc').val(cod);
@@ -91,8 +97,11 @@ function checkCodFisc(){
     }
 };
 
+/**
+ * Funzione per la verifica della email
+ * @returns {boolean}
+ */
 function checkEmail(){
-
     if ($('#email').val() === $('#confirmemail').val() && $('#email').val() && $('#confirmemail').val()) {
         $('#emailhelp').html('Ok').css('color', 'green');
         $('#confemailhelp').html('Ok').css('color', 'green');
@@ -115,6 +124,10 @@ function checkEmail(){
     }
 };
 
+/**
+ * Funzione per la verifica sintattica della password
+ * @returns {boolean}
+ */
 function checkPass(){
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
 
@@ -147,6 +160,10 @@ function checkPass(){
 
 };
 
+/**
+ * Funzione verifica numero di telefono
+ * @returns {boolean}
+ */
 function checkPhone() {
     var regex = new RegExp("[0-9]{10}$");
 
@@ -162,8 +179,9 @@ function checkPhone() {
 
 };
 
-
-
+/**
+ * Funzione per il caricamento delle provincie da file CSV su SELECT options
+ */
 var dati;
 function parseProvince() {
     $.ajax({
@@ -181,6 +199,9 @@ function parseProvince() {
 
 }
 
+/**
+ * Funzione per l'invio del form
+ */
 function submitform(){
     var nome = $('#nome').val();
     var cognome = $('#cognome').val();

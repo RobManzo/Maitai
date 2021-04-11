@@ -217,6 +217,9 @@ function setPrice(id) {
     } else return 12.00;
 };
 
+/**
+ * Funzione per il pagamento della prenotazione
+ */
 function pagamento() {
     if(selected.length === 0){
         $('#payment').modal('toggle');

@@ -15,22 +15,27 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Classe per la visualizzazione dello storico delle prenotazioni e per la gestione delle richieste
+ */
 @WebServlet(name="histmapServlet", urlPatterns={"/admin/histbook"})
 public class histmapServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getBookings")){
+                //Richiesta dello storico delle prenotazioni
                 List<Prenotazione> prenotazioni = Database.getPrenotazioni(true);
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Prenotazioni\" :"+ mapper.writeValueAsString(prenotazioni) +"}");
             }
 
             else if(request.getParameter("rtype").equals("getPren")){
+                //Richiesta dettagli singola prenotazione
                 Prenotazione prenotazione = Database.getPrenotazione(Integer.parseInt(request.getParameter("idPren")));
                 int idUser = Database.userByPrenotazione(Integer.parseInt(request.getParameter("idPren")));
                 ObjectMapper mapper = new ObjectMapper();
@@ -38,6 +43,7 @@ public class histmapServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("delPren")){
+                //Cancellazione prenotazione dalla piattaforma
                 if(Database.deletePrenotazione(Integer.parseInt(request.getParameter("idPren")))){
                     pr.write("{\"status\" : \"error\", \"message\" : \"Eliminazione effettuata con successo\"}");
                 } else pr.write("{\"status\" : \"error\", \"message\" : \"Errore durante l'eliminazione.\"}");

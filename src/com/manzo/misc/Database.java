@@ -19,7 +19,6 @@ import java.util.*;
 /**
  * Classe per la connessione con il Database. Gestisce tutti i metodi che
  * interagiscono con esso, consentendo di effettuare interrogazioni per manipolare i dati al suo interno.
- * @author Manzo Roberto
  */
 public class Database {
     /**
@@ -49,7 +48,6 @@ public class Database {
      * @return Utente
      * @throws SQLException
      */
-
     public static Utente takeUser(String email) throws SQLException {
         String query1 = "SELECT * FROM manzo.utenti AS U WHERE U.email=?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query1)) {
@@ -68,7 +66,7 @@ public class Database {
      * Metodo che dato l'id, ottiene l'utente dal DataBase
      *
      * @param ID
-     * @return
+     * @return Utente
      * @throws SQLException
      */
     public static Utente takeUser(int ID) throws SQLException {
@@ -89,7 +87,7 @@ public class Database {
      * Metodo che in base al ruolo del richiedente, ottiene la lista degli utenti
      *
      * @param role
-     * @return
+     * @return List<Utente>
      * @throws SQLException
      */
     public static List<Utente> getUsers(String role) throws SQLException{
@@ -123,7 +121,7 @@ public class Database {
      * Metodo che dato l'id, elimina l'utente
      *
      * @param id
-     * @return
+     * @return boolean
      * @throws SQLException
      */
     public static boolean deleteUser(int id) throws SQLException {
@@ -200,7 +198,8 @@ public class Database {
      * Ritorna TRUE se esiste un account con la stessa email, viceversa FALSE
      *
      * @param email
-     * @return
+     * @param codfisc
+     * @return boolean
      * @throws SQLException
      */
     public static boolean checkExist(String email, String codfisc) throws SQLException {
@@ -222,9 +221,9 @@ public class Database {
      * Metodo che genera una stringa di 8 caratteri con almeno un carattare minuscolo, uno maiuscolo e un numero
      *
      * @param length
-     * @return
+     * @return String
      */
-    public static String generateRandomPassword(int length) {
+    private static String generateRandomPassword(int length) {
         String character = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         String password = "";
         Random random = new Random();
@@ -244,30 +243,30 @@ public class Database {
      * Metodo per la reimpostazione della password
      *
      * @param email
-     * @return
+     * @param codfisc
+     * @return String
      * @throws SQLException
      */
-    public static String resetPassword(String email) throws SQLException {
-        String newpwd = generateRandomPassword(8);
-        String query = "UPDATE manzo.utenti SET pass=SHA2(?, 256) WHERE email=? ";
-        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, newpwd);
-            statement.setString(2, email);
-            int result = statement.executeUpdate();
-            if (result > 0) {
-                return newpwd;
-            } else {
-                return null;
-            }
-        }
-
+    public static String resetPassword(String email, String codfisc) throws SQLException {
+        if(checkExist(email, codfisc)){
+            String newpwd = generateRandomPassword(8);
+            String query = "UPDATE manzo.utenti SET pass=SHA2(?, 256) WHERE email=? ";
+            try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, newpwd);
+                statement.setString(2, email);
+                if(statement.executeUpdate()>0){
+                    return newpwd;
+                } else return null;
+             }
+        } else return null;
     }
 
     /**
      * Metodo per il cambio della password
      *
      * @param id
-     * @return
+     * @param newpsw
+     * @return boolean
      * @throws SQLException
      */
     public static boolean changePassword(int id, String newpsw) throws SQLException {
@@ -283,7 +282,8 @@ public class Database {
      * Metodo per il cambio del numero di telefono
      *
      * @param id
-     * @return
+     * @param newtel
+     * @return boolean
      * @throws SQLException
      */
     public static boolean changeTel(int id, String newtel) throws SQLException {
@@ -299,7 +299,8 @@ public class Database {
      * Metodo per il cambio del domicilio
      *
      * @param id
-     * @return
+     * @param newaddr
+     * @return boolean
      * @throws SQLException
      */
     public static boolean changeAddr(int id, String newaddr) throws SQLException {
@@ -315,13 +316,13 @@ public class Database {
      * Metodo per ottenere i posti occupati per ogni prenotazione di un determinato giorno
      * @param thisday
      * @param timeslot
-     * @return
+     * @return List<Integer>
      * @throws SQLException
      */
     public static List<Integer> getPosti(LocalDate thisday, int timeslot) throws SQLException {
         String query = "SELECT * FROM manzo.prenotazioni AS P WHERE P.dataPrenotazione=? AND P.fasciaOraria=?";
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            List<Integer> pren = new ArrayList<Integer>();
+            List<Integer> pren = new ArrayList<>();
             statement.setDate(1, Date.valueOf(thisday));
             statement.setInt(2, timeslot);
             ResultSet result = statement.executeQuery();
@@ -339,7 +340,7 @@ public class Database {
      *
      * @param u
      * @param id
-     * @return
+     * @return Prenotazione
      * @throws SQLException
      */
     public static Prenotazione getPrenotazione(Utente u, int id) throws SQLException {
@@ -370,7 +371,7 @@ public class Database {
      * Metodo per ottenere la prenotazione specificata (Staff)
      *
      * @param id
-     * @return
+     * @return Prenotazione
      * @throws SQLException
      */
     public static Prenotazione getPrenotazione(int id) throws SQLException {
@@ -399,7 +400,7 @@ public class Database {
     /**
      * Metodo per ottenere l'utente che ha effettuato una determinata prenotazione
      * @param id
-     * @return
+     * @return int
      * @throws SQLException
      */
     public static int userByPrenotazione(int id) throws SQLException{
@@ -418,7 +419,7 @@ public class Database {
      * Metodo per ottenere la lista delle prenotazioni riguardo un utente
      *
      * @param u
-     * @return
+     * @return List<Prenotazione>
      * @throws SQLException
      */
     public static List<Prenotazione> getPrenotazioni(Utente u) throws SQLException {
@@ -447,7 +448,8 @@ public class Database {
     /**
      * Metodo per ottenere la lista delle prenotazioni (Odierne o Complessive)
      *
-     * @return
+     * @param type
+     * @return List<Prenotazione>
      * @throws SQLException
      */
     public static List<Prenotazione> getPrenotazioni(boolean type) throws SQLException {
@@ -503,7 +505,7 @@ public class Database {
      * @param datapren
      * @param pos
      * @param prezzo
-     * @return
+     * @return boolean
      * @throws SQLException
      */
     public static boolean insertPrenotazione(Utente u, int ts, LocalDate datapren, String pos, Double prezzo) throws SQLException {
@@ -523,7 +525,8 @@ public class Database {
      * Metodo per eliminare la prenotazione specificata
      *
      * @param u
-     * @return
+     * @param id
+     * @return boolean
      * @throws SQLException
      */
     public static boolean deletePrenotazione(Utente u, int id) throws SQLException {
@@ -539,7 +542,7 @@ public class Database {
      * Metodo per eliminare la prenotazione specificata (ADMIN)
      *
      * @param id
-     * @return
+     * @return boolean
      * @throws SQLException
      */
     public static boolean deletePrenotazione(int id) throws SQLException {
@@ -557,7 +560,8 @@ public class Database {
      * @param thisday
      * @param userId
      * @param ts
-     * @return
+     * @param thistime
+     * @return int
      * @throws SQLException
      */
     public static int setEntry(LocalDate thisday, int userId, int ts, LocalTime thistime) throws SQLException {
@@ -584,7 +588,7 @@ public class Database {
      * @param thisday
      * @param userId
      * @param thistime
-     * @return
+     * @return boolean
      * @throws SQLException
      */
     public static boolean setExit(LocalDate thisday, int userId, LocalTime thistime) throws SQLException {
@@ -611,7 +615,7 @@ public class Database {
      * Metodo per il settaggio dell'orario di uscita dalla struttura (Staff)
      * @param idPren
      * @param thistime
-     * @return
+     * @return boolean
      * @throws SQLException
      */
     public static boolean setExit(int idPren, LocalTime thistime) throws SQLException {
@@ -638,7 +642,7 @@ public class Database {
      *
      * @param thisday
      * @param userId
-     * @return
+     * @return int
      * @throws SQLException
      */
     public static int getEntry(LocalDate thisday, int userId) throws SQLException {
@@ -663,7 +667,7 @@ public class Database {
     /**
      * Metodo per ottenere tutti i prodotti presenti nel DB
      *
-     * @return
+     * @return List<Prodotto>
      * @throws SQLException
      */
     public static List<Prodotto> getProd() throws SQLException {
@@ -682,7 +686,7 @@ public class Database {
     /**
      * Metodo per ottenere il prodotto specificato
      * @param idProd
-     * @return
+     * @return Prodotto
      * @throws SQLException
      */
     public static Prodotto getProd(int idProd) throws SQLException {
@@ -702,7 +706,7 @@ public class Database {
      * Metodo per l'inserimento di un ordine di ristorazione
      * @param order
      * @param idPren
-     * @return
+     * @return int
      * @throws SQLException
      */
     public static int setOrder(Ordine order, int idPren) throws SQLException {
@@ -737,7 +741,7 @@ public class Database {
     /**
      * Metodo per ottenere l'ordine specificato
      * @param idOrdine
-     * @return
+     * @return Ordine
      * @throws SQLException
      */
     public static Ordine getOrder(int idOrdine) throws SQLException {
@@ -763,7 +767,7 @@ public class Database {
     /**
      * Metodo per ottenere la lista degli ordini (Odierni o Complessivi)
      * @param actual
-     * @return
+     * @return List<Ordine>
      * @throws SQLException
      */
     public static List<Ordine> getOrders(boolean actual) throws SQLException{
@@ -796,7 +800,7 @@ public class Database {
     /**
      * Metodo per l'eliminazione dell'ordine specificato
      * @param idOrdine
-     * @return
+     * @return boolean
      * @throws SQLException
      */
     public static boolean deleteOrder(int idOrdine) throws SQLException {
@@ -811,7 +815,7 @@ public class Database {
     /**
      * Metodo per il modificare lo stato dell'ordine di ristorazione
      * @param id
-     * @return
+     * @return boolean
      * @throws SQLException
      */
     public static boolean setOrderStatus(int id) throws SQLException{
@@ -835,7 +839,7 @@ public class Database {
     /**
      * Metodo per ottenere le postazione riguardanti una prenotazione
      * @param id
-     * @return
+     * @return String
      * @throws SQLException
      */
     public static String getSeat(int id) throws SQLException{

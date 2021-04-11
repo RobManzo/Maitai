@@ -7,13 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Classe per la gestione del logout dell'utente
+ */
 @WebServlet(name = "logoutServlet", urlPatterns={"/logout"})
 public class logoutServlet extends HttpServlet {
-        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
             response.sendRedirect(request.getContextPath());
         }
 
-        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
             request.getSession().invalidate();
             response.sendRedirect(request.getContextPath());
         }

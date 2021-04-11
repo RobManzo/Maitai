@@ -1,3 +1,6 @@
+/**
+ * Script per il funzionamento del tema bootstrap
+ */
 /*!
     * Start Bootstrap - Agency v6.0.3 (https://startbootstrap.com/theme/agency)
     * Copyright 2013-2020 Start Bootstrap

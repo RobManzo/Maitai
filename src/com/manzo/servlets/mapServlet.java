@@ -16,22 +16,27 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+/**
+ * Classe per la visualizzazione della paqina di riepilogo delle prenotazioni e per la gestione delle richieste
+ */
 @WebServlet(name="mapServlet", urlPatterns={"/staff/map"})
 public class mapServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getBookings")){
+                //Richiesta lista prenotazioni odierne
                 List<Prenotazione> prenotazioni = Database.getPrenotazioni(false);
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Prenotazioni\" :"+ mapper.writeValueAsString(prenotazioni) +"}");
             }
 
             else if(request.getParameter("rtype").equals("getPren")){
+                //Richiesta dettagli singola prenotazione
                 Prenotazione prenotazione = Database.getPrenotazione(Integer.parseInt(request.getParameter("idPren")));
                 int idUser = Database.userByPrenotazione(Integer.parseInt(request.getParameter("idPren")));
                 ObjectMapper mapper = new ObjectMapper();
@@ -39,6 +44,7 @@ public class mapServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("setExit")){
+                //Gestione di uscita di un cliente dalla struttura
                 if(Database.setExit(Integer.parseInt(request.getParameter("ID")), LocalTime.now())) pr.write("{\"Message\" : \"Utente con prenotazione # "+ request.getParameter("ID") +" è uscito. \"}");
                 else pr.write("{\"Message\" : \"Errore\"}");
             }

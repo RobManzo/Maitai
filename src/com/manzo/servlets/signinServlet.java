@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
+/**
+ * Classe per la visualizzazione della paqina di registrazione e per la gestione dell'inoltro dei dati
+ */
 @WebServlet(name="signinServlet", urlPatterns={"/signin"})
 public class signinServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             String name, surname, codfisc, address, province, email, pass, confpass, phone, error;
             name = request.getParameter("Nome");
@@ -36,12 +38,16 @@ public class signinServlet extends HttpServlet {
             String status;
 
             if((error = Miscellaneous.checkForm(name, surname, email, pass, confpass, phone, birthdate.toString(), codfisc)) != null){
+                //Check dati inseriti
                 status = "{\"RESPONSE\" : \"Error\", \"Message\" : \"" + error + " Verrai reinderizzato all'inizio." + "\"}";
 
             } else if(Database.checkExist(email, codfisc)) {
+                //Verifica l'esistenza dell'account nel database
                 status = "{\"RESPONSE\" : \"Error\", \"Message\" : \"Email o persona già registrata. Verrai reinderizzato all'inizio.\"}";
             } else {
+                //Effettua la registrazione dell'utente
                 Database.userSignIn(name, surname, email, codfisc, phone, birthdate, pass, address, province);
+                //Preparazione ed invio email di conferma registrazione
                 String messaggio = "<p>Ciao " + name + " " + surname + ", <br>"
                         + "La registrazione è andata a buon fine. Ti auguriamo una buona permanenza presso la nostra struttura.<br><br>"
                         + "Password: " + pass + "<br>"

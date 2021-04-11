@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manzo.entities.Prenotazione;
 import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,17 +15,21 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Classe per la visualizzazione della pagina delle prenotazioni del cliente e per la gestione delle richieste
+ */
 @WebServlet(name="ownbooksServlet", urlPatterns={"/cliente/ownbooks"})
 public class ownbooksServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
             Utente user = (Utente) request.getSession().getAttribute("user");
 
             if(request.getParameter("rtype").equals("getBooks")){
+                //Richiesta prenotazioni personali
                 List<Prenotazione> prenotazioni = Database.getPrenotazioni(user);
 
                 ObjectMapper mapper = new ObjectMapper();
@@ -34,12 +37,14 @@ public class ownbooksServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("getPren")){
+                //Richiesta dettagli della singola prenotazione
                 Prenotazione prenotazione = Database.getPrenotazione(user,Integer.parseInt(request.getParameter("idPren")));
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Prenotazione\" :"+mapper.writeValueAsString(prenotazione)+", \"Today\" :"+mapper.writeValueAsString(LocalDate.now())+"}");
             }
 
             else if(request.getParameter("rtype").equals("delPren")){
+                //Cancellazione della prenotazione dalla piattaforma
                 if(Database.deletePrenotazione(user,Integer.parseInt(request.getParameter("idPren")))){
                     pr.write("{\"status\" : \"error\", \"message\" : \"Eliminazione effettuata con successo\"}");
                 } else pr.write("{\"status\" : \"error\", \"message\" : \"Errore durante l'eliminazione.\"}");

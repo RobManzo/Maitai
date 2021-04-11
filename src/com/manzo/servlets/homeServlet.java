@@ -16,11 +16,14 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.HashMap;
 
+/**
+ * Classe per la visualizzazione della pagina principale dei clienti e per la gestione delle richieste
+ */
 @WebServlet(name="homeServlet", urlPatterns={"/cliente/home"})
 public class homeServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
@@ -28,10 +31,9 @@ public class homeServlet extends HttpServlet {
             LocalTime time = LocalTime.now(ZoneId.of("GMT+2"));
             int ts = Miscellaneous.getTimeslot(time);
             int userid =((Utente) request.getSession().getAttribute("user")).getIdUtente();
-            System.out.println("ID: " +userid+ " \nPrenotazione: " +request.getSession().getAttribute("entry"));
 
             if(request.getParameter("rtype").equals("setEntry")){
-
+                //Gestione dell'accesso alla struttura da parte di un cliente autorizzato
                 if(ts == -1){
                     pr.write("{\"status\" : \"error\", \"message\" : \"La struttura al momento è chiusa.\"}");
                     return;
@@ -45,6 +47,7 @@ public class homeServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("getEntry")){
+                //Richiesta stato di entrata/uscita di un cliente
                 if(Database.getEntry(data, userid) != 0){
                     request.getSession().setAttribute("entry", Database.getEntry(data, userid));
                     pr.write("{\"status\" : \"in\"}");
@@ -55,6 +58,7 @@ public class homeServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("setExit")){
+                //Gestione dell'uscita dalla struttura da parte di un cliente autorizzato
                 if(Database.setExit(data,userid, time)){
                     request.getSession().setAttribute("cart", new HashMap<String, Integer>());
                     request.getSession().setAttribute("entry", null);

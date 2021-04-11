@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Classe per la visualizzazione degli errori
+ */
 @WebServlet(name="errorServlet", urlPatterns={"/error"})
 public class errorServlet extends HttpServlet {
     @Override

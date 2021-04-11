@@ -7,10 +7,7 @@ import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 /**
- * Classe per l'invio delle mail.
- * Implementa l'interfaccia Runnable per permettere l'invio delle mail tramite un thread
- * durante lo svolgimento di altre operazioni.
- * @author Manzo Roberto
+ * Classe per la gestione dell'invio delle mail
  */
 public class MailService implements Runnable {
 
@@ -38,14 +35,14 @@ public class MailService implements Runnable {
     /**
      * Invia una mail dall'indirizzo email sorgente all'indirizzo email di destinazione.
      */
-    public void sendMail() throws MessagingException {
+    private void sendMail() throws MessagingException {
         // Imposta le proprietà del server SMTP.
         Properties properties = new Properties();
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
 
-        // Crea una nuova sessione con un autenticatore.
+        // Crea una nuova sessione con un autenticatore
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(indirizzoEmail, password);
@@ -59,17 +56,15 @@ public class MailService implements Runnable {
         msg.setSubject(oggetto);
         msg.setContent(messaggio, "text/html");
 
-        // creates message part
+        // Creazione del messaggio
         MimeBodyPart messageBodyPart = new MimeBodyPart();
         messageBodyPart.setContent(messaggio, "text/html");
-
-        // creates multi-part
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(messageBodyPart);
 
-        // Invia il messaggio al destinatario
+        // Invio del messaggio al destinatario
         Transport.send(msg);
-        System.out.println("Email inviata con successo a " + indirizzoDestinazione);
+        System.out.println("Email inviata con successo: " + indirizzoDestinazione);
     }
 
     /**

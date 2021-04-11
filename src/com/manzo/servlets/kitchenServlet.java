@@ -13,22 +13,27 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * Classe per la visualizzazione della pagina relativa alla cucina e alla gestione delle richieste
+ */
 @WebServlet(name="kitchenServlet", urlPatterns={"/kitchen"})
 public class kitchenServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getOrders")){
+                //Richiesta lista ordini odierni
                 List<Ordine> ordini = Database.getOrders(true);
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Ordini\" :"+ mapper.writeValueAsString(ordini) +"}");
             }
 
             else if(request.getParameter("rtype").equals("getOrderDet")){
+                //Richiesta dettagli singolo ordine
                 int orderId =  Integer.parseInt(request.getParameter("ID"));
                 Ordine order = Database.getOrder(orderId);
                 if(order!=null){
@@ -41,6 +46,7 @@ public class kitchenServlet extends HttpServlet {
             }
 
             else if(request.getParameter("rtype").equals("orderReady")){
+                //Gestione stato dell'ordine
                 int id = Integer.parseInt(request.getParameter("ID"));
                 if(Database.setOrderStatus(id)){
                     pr.write("{\"Status\" :\"ok\", \"Message\" :\"\"}");

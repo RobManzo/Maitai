@@ -8,7 +8,6 @@ import com.manzo.entities.Utente;
 import com.manzo.misc.Database;
 import com.manzo.misc.MailService;
 import javafx.util.Pair;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,20 +22,25 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Classe per la visualizzazione del portale ristorazione e per la gestione delle richieste
+ */
 @WebServlet(name="foodServlet", urlPatterns={"/cliente/food"})
 public class foodServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             PrintWriter pr = response.getWriter();
             response.setContentType("application/json");
 
             if(request.getParameter("rtype").equals("getProd")){
+                //Richiesta dell'elenco dei prodotti disponibili
                 List<Prodotto> products = Database.getProd();
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Prodotto\" :"+ mapper.writeValueAsString(products) +"}");
             }
             else if(request.getParameter("rtype").equals("upCart")){
+                //Aggiunta prodotto al carrello
                 ObjectMapper mapper = new ObjectMapper();
                 HashMap<Integer, Integer> carrello = mapper.readValue(request.getParameter("localcart"), new TypeReference<>() {});
                 request.getSession().setAttribute("cart", carrello);
@@ -44,10 +48,12 @@ public class foodServlet extends HttpServlet {
                 pr.write("{\"Message\" :\"Prodotto aggiunto al carrello!\"}");
             }
             else if(request.getParameter("rtype").equals("getCart")){
+                //Richiesta dei prodotti presenti nel carrello
                 ObjectMapper mapper = new ObjectMapper();
                 pr.write("{\"Carrello\" :"+ mapper.writeValueAsString(request.getSession().getAttribute("cart")) +"}");
             }
             else if(request.getParameter("rtype").equals("sendOrder")){
+                //Gestione dell'invio dell'ordine
                 HashMap<Integer, Integer> products = (HashMap<Integer, Integer>) request.getSession().getAttribute("cart");
                 HashMap<Integer, Pair<Integer, BigDecimal>> prodsInOrder = new HashMap<>();
                 BigDecimal tot = new BigDecimal(0);
@@ -74,6 +80,7 @@ public class foodServlet extends HttpServlet {
                 else pr.write("{\"Message\" :\"Errore durante l'ordine!\"}");
             }
             else if(request.getParameter("rtype").equals("emptyCart")){
+                //Svuota carrello
                 request.getSession().setAttribute("cart", new HashMap<Integer, Integer>());
                 System.out.println(request.getSession().getAttribute("cart"));
                 pr.write("{\"Message\" :\"Carrello svuotato!\"}");
